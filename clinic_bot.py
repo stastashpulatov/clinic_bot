@@ -507,17 +507,74 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         slot_duration=APPOINTMENT_DURATION
     )
     
+    # Если выбранная дата - сегодня, скрываем прошедшее время
+    try:
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        if date == today_str:
+            now_time = datetime.now().strftime('%H:%M')
+            original_count = len(all_slots)
+            all_slots = [slot for slot in all_slots if slot > now_time]
+            logger.info(f"Фильтрация времени на сегодня ({date}): было {original_count}, стало {len(all_slots)}")
+    except Exception as e:
+        logger.error(f"Ошибка при фильтрации времени: {e}")
+    
     # Создаём кнопки (по 3 в ряд)
     keyboard = []
     row = []
     
+
+    # Если слотов нет (или все отфильтрованы)
     if not all_slots:
-        # Если нет слотов вообще (например выходной)
-        await query.edit_message_text(
-            f"❌ К сожалению, на {date} нет записи.\n"
-            f"Пожалуйста, выберите другую дату."
-        )
-        return await back_to_dates(query, context) # Helper or copy-paste
+        message_text = f"❌ К сожалению, на {date} нет свободного времени."
+        
+        # Если сегодня и время прошло
+        try:
+            today_str = datetime.now().strftime('%Y-%m-%d')
+            if date == today_str:
+                now_check = datetime.now()
+                end_time_str = WORKING_HOURS.get('end', '18:00')
+                end_check = datetime.strptime(f"{today_str} {end_time_str}", "%Y-%m-%d %H:%M")
+                
+                if now_check > end_check:
+                    message_text = (
+                        f"❌ <b>Запись на сегодня закрыта.</b>\n\n"
+                        f"Мы принимаем записи до {end_time_str}.\n"
+                        f"Пожалуйста, выберите другой день."
+                    )
+        except Exception as e:
+            logger.error(f"Ошибка проверки времени: {e}")
+
+        await query.edit_message_text(message_text, parse_mode='HTML')
+        
+        # Логика возврата к выбору даты
+        keyboard = []
+        today = datetime.now()
+        
+        for i in range(7):
+            date_opt = today + timedelta(days=i)
+            # Пропускаем воскресенье
+            if date_opt.weekday() == 6:
+                continue
+                
+            date_str = date_opt.strftime('%Y-%m-%d')
+            display_date = date_opt.strftime('%d.%m.%Y (%A)')
+            
+            days_ru = {
+                'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
+                'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
+            }
+            for eng, ru in days_ru.items():
+                display_date = display_date.replace(eng, ru)
+            
+            keyboard.append([InlineKeyboardButton(display_date, callback_data=f"date_{date_str}")])
+        
+        keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_doctors")])
+        keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await query.message.reply_text("Выберите другую дату:", reply_markup=reply_markup)
+        return SELECT_DATE
+
         
     for i, slot in enumerate(all_slots):
         if slot in occupied_slots:

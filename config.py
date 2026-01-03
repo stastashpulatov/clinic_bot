@@ -64,9 +64,9 @@ CLINIC_INFO = {
 # Время работы врачей
 WORKING_HOURS = {
     'start': '09:00',
-    'end': '18:00',
-    'lunch_start': '13:00',
-    'lunch_end': '14:00'
+    'end': '14:00',
+    'lunch_start': '00:00',
+    'lunch_end': '00:00'
 }
 
 # Длительность приема (в минутах)
