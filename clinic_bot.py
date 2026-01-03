@@ -17,7 +17,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 import mysql.connector
 from mysql.connector import Error
 import asyncio
-from wordpress_api import WordPressAPI, calculate_available_slots
+from wordpress_api import WordPressAPI, calculate_available_slots, generate_day_slots
 from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION
 
 # Настройка логирования
@@ -262,9 +262,16 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
         await update.message.reply_text("❌ Система управления записями временно недоступна.")
         return
 
-    await update.message.reply_text("⏳ Ищу ваши записи...")
+    message = await update.message.reply_text("⏳ Ищу ваши записи...")
     
     appointments = wp_api.get_patient_appointments(user_id)
+    
+    # Удаляем сообщение о поиске
+    try:
+        await message.delete()
+    except Exception:
+        pass
+    
     
     if not appointments:
         await update.message.reply_text("📋 У вас пока нет активных записей.")
@@ -434,6 +441,11 @@ async def select_doctor(update: Update, context: ContextTypes.DEFAULT_TYPE):
             'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
             'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
         }
+        
+        # Пропускаем воскресенья (Sunday = 6)
+        if date.weekday() == 6:
+            continue
+            
         for eng, ru in days_ru.items():
             display_date = display_date.replace(eng, ru)
         
@@ -486,9 +498,8 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             logger.error(f"Ошибка получения слотов из WordPress: {e}")
     
-    # Вычисляем свободные слоты
-    available_slots = calculate_available_slots(
-        occupied_slots=occupied_slots,
+    # Получаем ВСЕ слоты на день
+    all_slots = generate_day_slots(
         start_time=WORKING_HOURS.get('start', '09:00'),
         end_time=WORKING_HOURS.get('end', '18:00'),
         lunch_start=WORKING_HOURS.get('lunch_start', '13:00'),
@@ -496,39 +507,26 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         slot_duration=APPOINTMENT_DURATION
     )
     
-    # Создаём кнопки только для свободных слотов (по 3 в ряд)
+    # Создаём кнопки (по 3 в ряд)
     keyboard = []
     row = []
     
-    if not available_slots:
-        # Если нет свободных слотов
+    if not all_slots:
+        # Если нет слотов вообще (например выходной)
         await query.edit_message_text(
-            f"❌ К сожалению, на {date} все слоты заняты.\n\n"
+            f"❌ К сожалению, на {date} нет записи.\n"
             f"Пожалуйста, выберите другую дату."
         )
-        # Возвращаемся к выбору даты
-        keyboard = []
-        today = datetime.now()
-        for i in range(7):
-            date_obj = today + timedelta(days=i)
-            date_str = date_obj.strftime('%Y-%m-%d')
-            display_date = date_obj.strftime('%d.%m.%Y (%A)')
-            days_ru = {
-                'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
-                'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
-            }
-            for eng, ru in days_ru.items():
-                display_date = display_date.replace(eng, ru)
-            keyboard.append([InlineKeyboardButton(display_date, callback_data=f"date_{date_str}")])
+        return await back_to_dates(query, context) # Helper or copy-paste
         
-        keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_doctors")])
-        keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await query.edit_message_text("Выберите другую дату:", reply_markup=reply_markup)
-        return SELECT_DATE
-    
-    for i, slot in enumerate(available_slots):
-        row.append(InlineKeyboardButton(f"✅ {slot}", callback_data=f"time_{slot}"))
+    for i, slot in enumerate(all_slots):
+        if slot in occupied_slots:
+            # Занятый слот
+            row.append(InlineKeyboardButton(f"❌ {slot}", callback_data=f"busy_{slot}"))
+        else:
+            # Свободный слот
+            row.append(InlineKeyboardButton(f"✅ {slot}", callback_data=f"time_{slot}"))
+            
         if (i + 1) % 3 == 0:
             keyboard.append(row)
             row = []
@@ -540,14 +538,12 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # Формируем сообщение с информацией о занятых слотах
+    # Формируем сообщение
+    available_count = len([s for s in all_slots if s not in occupied_slots])
+    
     message = f"📅 Выберите время приёма на {date}:\n\n"
-    message += f"✅ Свободных слотов: {len(available_slots)}\n"
-    if occupied_slots:
-        message += f"❌ Занятых слотов: {len(occupied_slots)}\n\n"
-        message += f"Занятые времена: {', '.join(occupied_slots[:5])}"
-        if len(occupied_slots) > 5:
-            message += f" и ещё {len(occupied_slots) - 5}..."
+    message += f"✅ Свободно: {available_count}\n"
+    message += f"❌ Занято: {len(occupied_slots)}\n"
     
     await query.edit_message_text(
         message,
@@ -567,11 +563,16 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if query.data == "back_to_dates":
         # Возврат к выбору даты
+        # ... (лучше вынести в отдельную функцию, но пока дублируем логику из select_doctor, но без state transition)
         keyboard = []
         today = datetime.now()
         
         for i in range(7):
             date = today + timedelta(days=i)
+            # Пропускаем воскресенье
+            if date.weekday() == 6:
+                continue
+                
             date_str = date.strftime('%Y-%m-%d')
             display_date = date.strftime('%d.%m.%Y (%A)')
             
@@ -590,6 +591,10 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         await query.edit_message_text("Выберите дату приёма:", reply_markup=reply_markup)
         return SELECT_DATE
+    
+    if query.data.startswith('busy_'):
+        await query.answer("⚠️ Это время уже занято, выберите другое.", show_alert=True)
+        return SELECT_TIME
     
     time = query.data.split('_')[1]
     context.user_data['time'] = time

@@ -107,6 +107,45 @@ class WordPressAPI:
             self.logger.error(f"Исключение при создании записи: {e}")
             return False, None
 
+
+    def get_patient_appointments(self, telegram_id):
+        """Получение записей пациента по Telegram ID"""
+        try:
+            # Используем endpoint /my-appointments
+            response = requests.get(
+                f"{self.site_url}/wp-json/clinic/v1/my-appointments",
+                params={'telegram_id': telegram_id},
+                headers=self.headers,
+                timeout=self.timeout,
+                verify=self.verify_ssl
+            )
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            self.logger.error(f"Ошибка получения записей пациента: {e}")
+            return []
+
+    def cancel_appointment(self, appointment_id):
+        """Отмена записи"""
+        try:
+            # Используем endpoint /cancel-appointment
+            response = requests.post(
+                f"{self.site_url}/wp-json/clinic/v1/cancel-appointment",
+                params={'appointment_id': appointment_id},
+                headers=self.headers,
+                timeout=self.timeout,
+                verify=self.verify_ssl
+            )
+            
+            if response.status_code == 200:
+                return True
+            
+            self.logger.error(f"Ошибка отмены записи: {response.text}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Ошибка отмены записи: {e}")
+            return False
+
 def calculate_available_slots(occupied_slots, start_time, end_time, lunch_start, lunch_end, slot_duration):
     """
     Вычисляет свободные слоты на основе занятых
@@ -133,6 +172,38 @@ def calculate_available_slots(occupied_slots, start_time, end_time, lunch_start,
             time_str = current.strftime("%H:%M")
             if time_str not in occupied_slots:
                 slots.append(time_str)
+        
+        current += timedelta(minutes=slot_duration)
+        
+    return slots
+
+def generate_day_slots(start_time, end_time, lunch_start, lunch_end, slot_duration):
+    """
+    Генерирует все возможные слоты на день (без учета занятости)
+    """
+    from datetime import datetime, timedelta
+    
+    slots = []
+    
+    # Парсим время
+    current = datetime.strptime(start_time, "%H:%M")
+    end = datetime.strptime(end_time, "%H:%M")
+    l_start = datetime.strptime(lunch_start, "%H:%M")
+    l_end = datetime.strptime(lunch_end, "%H:%M")
+    
+    while current < end:
+        # Проверяем обед
+        is_lunch = False
+        if l_start <= current < l_end:
+            is_lunch = True
+            
+        # Проверяем не попадает ли слот на обед (например начинается в 12:45 и идет 45 мин = 13:30)
+        # Но по старой логике (calculate_available_slots) проверялось только время начала.
+        # Оставим проверку только времени начала для совместимости с логикой calculate_available_slots
+        
+        if not is_lunch:
+            time_str = current.strftime("%H:%M")
+            slots.append(time_str)
         
         current += timedelta(minutes=slot_duration)
         
