@@ -70,7 +70,7 @@ WORKING_HOURS = {
 }
 
 # Длительность приема (в минутах)
-APPOINTMENT_DURATION = 45
+APPOINTMENT_DURATION = 15
 
 # Максимальное количество записей в день на одного врача
 MAX_APPOINTMENTS_PER_DAY = 16
