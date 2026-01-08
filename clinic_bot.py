@@ -18,7 +18,9 @@ import mysql.connector
 from mysql.connector import Error
 import asyncio
 from wordpress_api import WordPressAPI, calculate_available_slots, generate_day_slots
-from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION
+from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE
+import json
+from functools import wraps
 
 # Настройка логирования
 logging.basicConfig(
@@ -146,6 +148,39 @@ class ClinicDatabase:
         finally:
             if connection.is_connected():
                 cursor.close()
+                connection.close()
+
+    def get_all_appointments(self, limit=50):
+        """Получение всех записей (для админов)"""
+        connection = self.get_connection()
+        if not connection:
+            return []
+        
+        try:
+            cursor = connection.cursor(dictionary=True)
+            
+            query = f"""
+                SELECT 
+                    a.id, a.user_telegram_id, a.doctor_id, a.appointment_date, a.appointment_time, 
+                    a.user_name, a.user_phone, a.status, a.created_at,
+                    d.name as doctor_name
+                FROM {self.table_prefix}appointments a
+                LEFT JOIN {self.table_prefix}doctors d ON a.doctor_id = d.id
+                ORDER BY a.appointment_date DESC, a.appointment_time DESC
+                LIMIT %s
+            """
+            
+            cursor.execute(query, (limit,))
+            appointments = cursor.fetchall()
+            return appointments
+            
+        except Error as e:
+            logger.error(f"Ошибка получения всех записей: {e}")
+            return []
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
 # Инициализация
 db = ClinicDatabase(DB_CONFIG, TABLE_PREFIX)
@@ -255,9 +290,57 @@ async def info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(info_text, parse_mode='HTML')
 
 async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Команда /my - просмотр и отмена записей"""
+    """Команда /my - просмотр и отмена записей (для админов - все записи)"""
     user_id = update.effective_user.id
     
+    # === ЛОГИКА ДЛЯ АДМИНОВ ===
+    if user_id in ADMIN_IDS:
+        await update.message.reply_text("👮‍♂️ <b>Режим администратора</b>: Загружаю последние записи...", parse_mode='HTML')
+        
+        # Получаем записи через API плагина (все)
+        appointments = wp_api.get_all_appointments(limit=50)
+        
+        if not appointments:
+            await update.message.reply_text("📋 Записей не найдено.")
+            return
+
+        text = "📋 <b>ВСЕ ЗАПИСИ (Последние 50):</b>\n\n"
+        
+        for apt in appointments:
+            # Форматирование
+            dt_str = str(apt.get('appointment_date', 'N/A'))
+            tm_str = str(apt.get('appointment_time', 'N/A'))
+            
+            status_icon = "✅" if apt.get('status') == 'confirmed' else "❓"
+            
+            # Логика определения источника
+            src = apt.get('source')
+            if src == 'bot':
+                source_display = "🤖 Бот"
+            elif src == 'site':
+                source_display = "🌐 Сайт"
+            else:
+                source_display = "🤖 Бот" if apt.get('user_telegram_id') else "🌐 Сайт"
+            
+            text += (
+                f"{status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                f"📞 {apt.get('user_phone', 'Нет телефона')}\n"
+                f"👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                f"📅 {dt_str} в {tm_str}\n"
+                f"Источник: {source_display}\n"
+                f"────────────────\n"
+            )
+            
+        # Разбивка длинного сообщения
+        if len(text) > 4096:
+            parts = [text[i:i+4096] for i in range(0, len(text), 4096)]
+            for part in parts:
+                await update.message.reply_text(part, parse_mode='HTML')
+        else:
+            await update.message.reply_text(text, parse_mode='HTML')
+        return
+
+    # === ЛОГИКА ДЛЯ ОБЫЧНЫХ ПОЛЬЗОВАТЕЛЕЙ ===
     if not wp_api:
         await update.message.reply_text("❌ Система управления записями временно недоступна.")
         return
@@ -341,6 +424,149 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     
     await update.message.reply_text(help_text, parse_mode='HTML')
+
+
+# ============================================
+# АДМИНСКИЕ ФУНКЦИИ
+# ============================================
+
+def admin_required(func):
+    """Декоратор для проверки прав админа"""
+    @wraps(func)
+    async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in ADMIN_IDS:
+            # Тихо игнорируем или говорим что нет прав
+            await update.message.reply_text("⛔️ У вас нет прав для выполнения этой команды.")
+            return
+        return await func(update, context, *args, **kwargs)
+    return wrapper
+
+def load_pinned_numbers():
+    """Загрузка закрепленных номеров"""
+    if not os.path.exists(PINNED_NUMBERS_FILE):
+        return []
+    try:
+        with open(PINNED_NUMBERS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Ошибка чтения файла закрепленных номеров: {e}")
+        return []
+
+def save_pinned_numbers(numbers):
+    """Сохранение закрепленных номеров"""
+    try:
+        os.makedirs(os.path.dirname(PINNED_NUMBERS_FILE), exist_ok=True)
+        with open(PINNED_NUMBERS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(numbers, f, ensure_ascii=False, indent=2)
+        return True
+    except Exception as e:
+        logger.error(f"Ошибка сохранения файла закрепленных номеров: {e}")
+        return False
+
+@admin_required
+async def add_pin_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда /add_pin <номер>"""
+    if not context.args:
+        await update.message.reply_text("⚠️ Использование: /add_pin +998901234567")
+        return
+
+    phone = context.args[0]
+    # Простейшая очистка
+    clean_phone = phone.strip()
+    
+    numbers = load_pinned_numbers()
+    if clean_phone in numbers:
+        await update.message.reply_text(f"ℹ️ Номер {clean_phone} уже в списке.")
+        return
+        
+    numbers.append(clean_phone)
+    if save_pinned_numbers(numbers):
+        await update.message.reply_text(f"✅ Номер {clean_phone} успешно закреплен.")
+    else:
+        await update.message.reply_text("❌ Ошибка при сохранении.")
+
+@admin_required
+async def del_pin_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда /del_pin <номер>"""
+    if not context.args:
+        await update.message.reply_text("⚠️ Использование: /del_pin +998901234567")
+        return
+
+    phone = context.args[0]
+    numbers = load_pinned_numbers()
+    
+    if phone not in numbers:
+        await update.message.reply_text(f"ℹ️ Номер {phone} не найден в списке.")
+        return
+        
+    numbers.remove(phone)
+    if save_pinned_numbers(numbers):
+        await update.message.reply_text(f"✅ Номер {phone} удален из закрепленных.")
+    else:
+        await update.message.reply_text("❌ Ошибка при сохранении.")
+
+@admin_required
+async def pinned_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда /pinned - список закрепленных номеров"""
+    numbers = load_pinned_numbers()
+    
+    if not numbers:
+        await update.message.reply_text("📋 Список закрепленных номеров пуст.")
+        return
+        
+    text = "📌 <b>Закрепленные номера:</b>\n\n"
+    for i, num in enumerate(numbers, 1):
+        text += f"{i}. {num}\n"
+        
+    await update.message.reply_text(text, parse_mode='HTML')
+
+@admin_required
+async def list_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда /list - список записей из БД"""
+    await update.message.reply_text("⏳ Загружаю список записей...")
+    
+    try:
+        appointments = db.get_all_appointments(limit=20)
+        
+        if not appointments:
+            await update.message.reply_text("📋 Записей в базе не найдено.")
+            return
+
+        text = "📋 <b>Последние 20 записей:</b>\n\n"
+        
+        for apt in appointments:
+            # Форматирование даты и времени
+            dt_str = "N/A"
+            if apt.get('appointment_date'):
+                dt_str = str(apt['appointment_date'])
+            
+            tm_str = "N/A"    
+            if apt.get('appointment_time'):
+                tm_str = str(apt['appointment_time'])
+
+            status_icon = "✅" if apt.get('status') == 'confirmed' else "❓"
+            
+            text += (
+                f"{status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                f"📞 {apt.get('user_phone', 'Нет телефона')}\n"
+                f"👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                f"📅 {dt_str} в {tm_str}\n"
+                f"────────────────\n"
+            )
+            
+        # Разбиваем, если слишком длинное
+        if len(text) > 4096:
+            parts = [text[i:i+4096] for i in range(0, len(text), 4096)]
+            for part in parts:
+                await update.message.reply_text(part, parse_mode='HTML')
+        else:
+            await update.message.reply_text(text, parse_mode='HTML')
+            
+    except Exception as e:
+        logger.error(f"Ошибка в команде list: {e}")
+        await update.message.reply_text("❌ Произошла ошибка при получении списка.")
+
 
 async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /status - проверка состояния системы"""
@@ -762,7 +988,8 @@ async def post_init(application: Application):
         ("my", "📅 Мои записи (отмена)"),
         ("doctors", "👨‍⚕️ Наши врачи"),
         ("info", "🏥 О клинике"),
-        ("help", "❓ Помощь")
+        ("help", "❓ Помощь"),
+        # Admin commands are hidden from menu usually, or can be added if requested. 
     ]
     try:
         await application.bot.set_my_commands(commands)
@@ -821,7 +1048,11 @@ def main():
     application.add_handler(CommandHandler("info", info_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("status", status_command))
-    application.add_handler(CommandHandler("my", my_appointments_command)) # New command
+    application.add_handler(CommandHandler("my", my_appointments_command))
+    application.add_handler(CommandHandler("add_pin", add_pin_command))
+    application.add_handler(CommandHandler("del_pin", del_pin_command))
+    application.add_handler(CommandHandler("pinned", pinned_command))
+    application.add_handler(CommandHandler("list", list_command)) # New command
     application.add_handler(CallbackQueryHandler(cancel_appointment_callback, pattern="^cancel_apt_")) # New callback
     application.add_handler(conv_handler)
     

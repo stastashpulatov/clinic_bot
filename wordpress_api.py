@@ -146,6 +146,26 @@ class WordPressAPI:
             self.logger.error(f"Ошибка отмены записи: {e}")
             return False
 
+    def get_all_appointments(self, limit=50):
+        """Получение всех записей (для админов)"""
+        try:
+            params = {'limit': limit}
+            if self.api_key:
+                params['api_key'] = self.api_key
+                
+            response = requests.get(
+                f"{self.site_url}/wp-json/clinic/v1/all-appointments",
+                params=params,
+                headers=self.headers,
+                timeout=self.timeout,
+                verify=self.verify_ssl
+            )
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            self.logger.error(f"Ошибка получения всех записей: {e}")
+            return []
+
 def calculate_available_slots(occupied_slots, start_time, end_time, lunch_start, lunch_end, slot_duration):
     """
     Вычисляет свободные слоты на основе занятых
