@@ -271,9 +271,4 @@ def generate_day_slots(start_time, end_time, lunch_start, lunch_end, slot_durati
             slots.append(time_str)
             
         current += timedelta(minutes=slot_duration)
-        
-    return slots
-        
-        current += timedelta(minutes=slot_duration)
-        
-    return slots
+
