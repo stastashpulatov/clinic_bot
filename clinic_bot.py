@@ -794,19 +794,11 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         end_time=WORKING_HOURS.get('end', '18:00'),
         lunch_start=WORKING_HOURS.get('lunch_start', '13:00'),
         lunch_end=WORKING_HOURS.get('lunch_end', '14:00'),
-        slot_duration=APPOINTMENT_DURATION
+        slot_duration=APPOINTMENT_DURATION,
+        date_str=date
     )
     
-    # Если выбранная дата - сегодня, скрываем прошедшее время
-    try:
-        today_str = datetime.now().strftime('%Y-%m-%d')
-        if date == today_str:
-            now_time = datetime.now().strftime('%H:%M')
-            original_count = len(all_slots)
-            all_slots = [slot for slot in all_slots if slot > now_time]
-            logger.info(f"Фильтрация времени на сегодня ({date}): было {original_count}, стало {len(all_slots)}")
-    except Exception as e:
-        logger.error(f"Ошибка при фильтрации времени: {e}")
+    # (Старая ручная фильтрация удалена, теперь это делает generate_day_slots)
     
     # Создаём кнопки (по 3 в ряд)
     keyboard = []

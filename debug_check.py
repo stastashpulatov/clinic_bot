@@ -9,30 +9,25 @@ headers = {
     "User-Agent": "DebugScript/1.0"
 }
 
-# Тест обновления статуса
+# Тест получения списка (Debug)
 try:
-    print(f"Requesting {base_url}/all-appointments to get an ID...")
+    print(f"Fetching appointments from {base_url}/all-appointments...")
     
-    # Force test with Dummy ID to check if endpoint EXISTS (404 vs 200)
-    apt_id = 999999
-    
-    # 2. Пытаемся обновить статус (фейковый апдейт, чтобы проверить endpoint)
-    # Используем статус 1 (Confirmed) чтобы не портить данные
-    payload = {
-        'api_key': api_key, # API key sent as form data
-        'appointment_id': apt_id,
-        'status': 1 
-    }
-    
-    print(f"Posting to {base_url}/update-status with payload: {payload}")
-    update_resp = requests.post(
-        f"{base_url}/update-status", 
-        data=payload,
-        verify=True # Keep verify=True for production
+    resp = requests.get(
+        f"{base_url}/all-appointments", 
+        headers=headers, 
+        params={"limit": 10}, 
+        verify=True
     )
     
-    print(f"\nUpdate Status Code: {update_resp.status_code}")
-    print(f"Update Response: {update_resp.text}")
-
+    print(f"Status Code: {resp.status_code}")
+    
+    try:
+        data = resp.json()
+        print("Raw JSON Data:")
+        print(json.dumps(data, indent=2, ensure_ascii=False))
+    except:
+        print("Response text:", resp.text)
+        
 except Exception as e:
     print(f"Error: {e}")
