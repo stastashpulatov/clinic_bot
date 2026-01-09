@@ -221,9 +221,10 @@ def calculate_available_slots(occupied_slots, start_time, end_time, lunch_start,
         
     return slots
 
-def generate_day_slots(start_time, end_time, lunch_start, lunch_end, slot_duration):
+def generate_day_slots(start_time, end_time, lunch_start, lunch_end, slot_duration, date_str=None):
     """
-    Генерирует все возможные слоты на день (без учета занятости)
+    Генерирует все возможные слоты на день (без учета занятости).
+    Если передан date_str и он равен "сегодня", фильтрует прошедшее время.
     """
     from datetime import datetime, timedelta
     
@@ -235,19 +236,43 @@ def generate_day_slots(start_time, end_time, lunch_start, lunch_end, slot_durati
     l_start = datetime.strptime(lunch_start, "%H:%M")
     l_end = datetime.strptime(lunch_end, "%H:%M")
     
+    now = datetime.now()
+    is_today = False
+    
+    if date_str:
+        try:
+            # Формат даты ожидается YYYY-MM-DD
+            chk_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            if chk_date == now.date():
+                is_today = True
+        except:
+            pass
+            
+    current_time_minutes = now.hour * 60 + now.minute
+    
     while current < end:
         # Проверяем обед
         is_lunch = False
         if l_start <= current < l_end:
             is_lunch = True
             
-        # Проверяем не попадает ли слот на обед (например начинается в 12:45 и идет 45 мин = 13:30)
-        # Но по старой логике (calculate_available_slots) проверялось только время начала.
-        # Оставим проверку только времени начала для совместимости с логикой calculate_available_slots
-        
-        if not is_lunch:
+        # Фильтр прошедшего времени для "сегодня"
+        is_past = False
+        if is_today:
+            slot_minutes = current.hour * 60 + current.minute
+            # Даем запас 15 минут (не показывать слоты, которые начинаются через 5 мин, или уже начались)
+            # Или строго: если время слота < текущее время -> не показывать.
+            # Пользователь сказал "record ended" (запись закончилась) - значит, время прошло.
+            if slot_minutes <= current_time_minutes: 
+                is_past = True
+            
+        if not is_lunch and not is_past:
             time_str = current.strftime("%H:%M")
             slots.append(time_str)
+            
+        current += timedelta(minutes=slot_duration)
+        
+    return slots
         
         current += timedelta(minutes=slot_duration)
         

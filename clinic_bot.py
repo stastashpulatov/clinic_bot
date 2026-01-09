@@ -306,12 +306,20 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
 
         await update.message.reply_text(f"📋 <b>Найдено {len(appointments)} записей:</b>")
         
+        
         for apt in appointments:
             # Форматирование
             dt_str = str(apt.get('appointment_date', 'N/A'))
             tm_str = str(apt.get('appointment_time', 'N/A'))
             
-            status_icon = "✅" if apt.get('status') == 'confirmed' else "❓"
+            raw_status = apt.get('status')
+            status_icon = "❓"
+            if raw_status == 'confirmed':
+                status_icon = "🔵" # Blue circle for confirmed/pending
+            elif raw_status == 'visited':
+                status_icon = "✅" # Green check for visited
+            elif raw_status == 'noshow':
+                status_icon = "⛔" # No entry/Red for no-show
             
             # Логика определения источника
             src = apt.get('source')
@@ -330,18 +338,22 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
                 f"Источник: {source_display}\n"
             )
             
-            # Кнопки действий (Посетил / Не пришел)
+            # Кнопки действий (Только если статус не финальный)
+            # Если уже посетил или не пришел - можно не показывать кнопки, или кнопку сброса?
+            # Пока оставим, чтобы можно было исправить ошибку.
+            
             apt_id = apt.get('id')
-            # Используем telegram_id, который вернул API (или 0)
             user_tg_id = apt.get('telegram_id') or 0
             
-            keyboard = [
-                [
+            keyboard = []
+            # Показываем кнопки, если статус не финальный (или даем возможность поменять)
+            if raw_status == 'confirmed' or raw_status == 'pending':
+                keyboard.append([
                     InlineKeyboardButton("✅ Посетил", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
-                    InlineKeyboardButton("❌ Не пришел", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
-                ]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
+                    InlineKeyboardButton("⛔ Не пришел", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
+                ])
+            
+            reply_markup = InlineKeyboardMarkup(keyboard) if keyboard else None
             
             await update.message.reply_text(text, reply_markup=reply_markup, parse_mode='HTML')
 
@@ -429,16 +441,16 @@ async def handle_admin_action(update: Update, context: ContextTypes.DEFAULT_TYPE
         new_text = "✅ Отмечено: Посетил"
         user_msg = "🏥 <b>Спасибо за посещение нашего медицинского центра!</b>\nБудем рады видеть вас снова! Желаем крепкого здоровья! 🌟"
     else:
-        # Не пришел -> Status 0 (Cancelled / No Show)
-        success = wp_api.update_appointment_status(apt_id, 0)
-        new_text = "❌ Отмечено: Не пришел"
+        # Не пришел -> Status 5 (No Show) -- Changed from 0 to 5 so it stays visible in Admin List
+        success = wp_api.update_appointment_status(apt_id, 5)
+        new_text = "⛔ Отмечено: Не пришел"
         user_msg = "⚠️ <b>Вы пропустили запись.</b>\nМы отметили, что вы не пришли на прием. Если вы хотите записаться снова, используйте команду /book."
 
     if success:
         # Edit admin message to remove buttons and show status
-        original_text = query.message.text_html
-        # simple append
-        await query.edit_message_text(f"{original_text}\n\n<b>{new_text}</b>", parse_mode='HTML')
+        # original_text usually contains "Source: ..." etc. We append status.
+        # It's better to reconstruct line or just append.
+        await query.edit_message_text(f"{query.message.text_html}\n\n<b>{new_text}</b>", parse_mode='HTML')
         
         # Notify user if tg_id exists
         if user_tg_id > 0:

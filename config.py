@@ -7,7 +7,7 @@
 # ============================================
 
 # Токен бота (получить у @BotFather)
-BOT_TOKEN = "8236665007:AAEEltu2EySiD4EaIRjr7VWLkjf75gJJIaw"
+BOT_TOKEN = "7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4"
 
 # ID администраторов (список ID)
 ADMIN_IDS = [
