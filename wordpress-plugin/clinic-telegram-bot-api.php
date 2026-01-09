@@ -46,17 +46,140 @@ add_action('rest_api_init', function () {
         'permission_callback' => 'clinic_check_api_key'
     ));
 
-    // 6. Получение всех записей (для админов)
-    register_rest_route('clinic/v1', '/all-appointments', array(
-        'methods' => 'GET',
-        'callback' => 'clinic_get_all_appointments',
+    // 7. Обновление статуса записи
+    register_rest_route('clinic/v1', '/update-status', array(
+        'methods' => 'POST',
+        'callback' => 'clinic_update_appointment_status',
         'permission_callback' => 'clinic_check_api_key'
     ));
 });
 
+// ... (existing code) ...
+
 /**
- * Проверка API ключа
+ * Обновление статуса записи
  */
+function clinic_update_appointment_status($request)
+{
+    global $wpdb;
+    $table_name = 'ae3rf_kc_appointments';
+
+    $appointment_id = $request->get_param('appointment_id');
+    $status = $request->get_param('status');
+
+    if (!$appointment_id || !isset($status)) {
+        return new WP_Error('missing_params', 'ID and Status required');
+    }
+
+    // Обновляем статус
+    $result = $wpdb->update(
+        $table_name,
+        array('status' => $status),
+        array('id' => $appointment_id),
+        array('%d'),
+        array('%d')
+    );
+
+    if ($result === false) {
+        return new WP_Error('db_error', 'Update status failed');
+    }
+
+    return rest_ensure_response(array('success' => true, 'id' => $appointment_id, 'new_status' => $status));
+}
+
+/**
+ * Получение всех записей (для админов)
+ */
+function clinic_get_all_appointments($request)
+{
+    global $wpdb;
+    $table_name = 'ae3rf_kc_appointments';
+
+    $limit = $request->get_param('limit') ? intval($request->get_param('limit')) : 50;
+
+    // Получаем записи с сегодняшнего дня и будущие, исключая отмененные (status != 0)
+    $query = $wpdb->prepare(
+        "SELECT * FROM $table_name 
+         WHERE appointment_start_date >= CURDATE() 
+         AND status != 0
+         ORDER BY appointment_start_date ASC, appointment_start_time ASC
+         LIMIT %d",
+        $limit
+    );
+
+    $appointments = $wpdb->get_results($query);
+
+    $response = array();
+    foreach ($appointments as $apt) {
+        // Данные врача
+        $doctor_info = get_userdata($apt->doctor_id);
+        $doctor_name = $doctor_info ? $doctor_info->display_name : 'Врач #' . $apt->doctor_id;
+
+        // Данные пациента
+        $patient_name = 'Гость';
+        $patient_phone = '';
+        $telegram_id = null;
+
+        // Попытка 1: Если patient_id это WP User
+        if (!empty($apt->patient_id)) {
+            $patient_info = get_userdata($apt->patient_id);
+            if ($patient_info) {
+                $patient_name = $patient_info->display_name;
+                $patient_phone = get_user_meta($patient_info->ID, 'mobile_number', true);
+
+                // Пытаемся извлечь telegram_id из логина (tg_patient_12345)
+                if (preg_match('/tg_patient_(\d+)/', $patient_info->user_login, $matches)) {
+                    $telegram_id = $matches[1];
+                }
+            }
+        }
+
+        // Попытка 2: Проверяем, есть ли поля имени прямо в таблице
+        if (!empty($apt->first_name)) {
+            $patient_name = $apt->first_name . ' ' . $apt->last_name;
+        }
+        if (!empty($apt->mobile_number)) {
+            $patient_phone = $apt->mobile_number;
+        }
+
+        // Попытка 3: Из описания (для бота)
+        $source = 'site';
+        if (isset($apt->description) && strpos($apt->description, 'Telegram Бот') !== false) {
+            $source = 'bot';
+            if (preg_match('/Пациент: (.*?), Тел: (.*)/', $apt->description, $matches)) {
+                $patient_name = $matches[1];
+                $patient_phone = $matches[2];
+            }
+        }
+
+        $status_val = isset($apt->status) ? $apt->status : 0;
+        $status_str = 'pending';
+        // Карта статусов
+        if ($status_val == 1)
+            $status_str = 'confirmed';
+        elseif ($status_val == 0)
+            $status_str = 'cancelled';
+        elseif ($status_val == 4)
+            $status_str = 'visited'; // Наш новый статус
+        elseif ($status_val == 5)
+            $status_str = 'noshow'; // Наш новый статус
+
+        $response[] = array(
+            'id' => $apt->id,
+            'doctor_name' => $doctor_name,
+            'user_name' => $patient_name,
+            'user_phone' => $patient_phone,
+            'appointment_date' => $apt->appointment_start_date,
+            'appointment_time' => substr($apt->appointment_start_time, 0, 5),
+            'status' => $status_str,
+            'source' => $source,
+            'telegram_id' => $telegram_id,
+            'created_at' => isset($apt->created_at) ? $apt->created_at : ''
+        );
+    }
+
+    return rest_ensure_response($response);
+}
 function clinic_check_api_key($request)
 {
     // Разрешаем публичный доступ для тестов, если нужно, но лучше защита
@@ -337,93 +460,4 @@ function clinic_get_patient_appointments($request)
 /**
  * Получение всех записей (для админов)
  */
-function clinic_get_all_appointments($request)
-{
-    global $wpdb;
-    $table_name = 'ae3rf_kc_appointments';
-    $patient_table = 'ae3rf_kc_patient_details';
 
-    $limit = $request->get_param('limit') ? intval($request->get_param('limit')) : 50;
-
-    // Получаем последние записи с JOIN к таблице пациентов
-    // Важно: status!=0 (не отмененные) или все? Админам лучше все, но можно фильтровать.
-    // Пока берем все для истории.
-
-    // Получаем записи с сегодняшнего дня и будущие, исключая отмененные (status != 0)
-    $query = $wpdb->prepare(
-        "SELECT * FROM $table_name 
-         WHERE appointment_start_date >= CURDATE() 
-         AND status != 0
-         ORDER BY appointment_start_date ASC, appointment_start_time ASC
-         LIMIT %d",
-        $limit
-    );
-
-    $appointments = $wpdb->get_results($query);
-
-    // DEBUG: Если ошибка, возвращаем её
-    if ($wpdb->last_error) {
-        return rest_ensure_response(array(
-            'error' => $wpdb->last_error,
-            'query' => $query
-        ));
-    }
-
-    $response = array();
-    foreach ($appointments as $apt) {
-        // Данные врача
-        $doctor_info = get_userdata($apt->doctor_id);
-        $doctor_name = $doctor_info ? $doctor_info->display_name : 'Врач #' . $apt->doctor_id;
-
-        // Данные пациента
-        $patient_name = 'Гость';
-        $patient_phone = '';
-
-        // Попытка 1: Если patient_id это WP User
-        if (!empty($apt->patient_id)) {
-            $patient_info = get_userdata($apt->patient_id);
-            if ($patient_info) {
-                $patient_name = $patient_info->display_name;
-                $patient_phone = get_user_meta($patient_info->ID, 'mobile_number', true);
-            }
-        }
-
-        // Попытка 2: Проверяем, есть ли поля имени прямо в таблице (иногда бывают)
-        if (!empty($apt->first_name))
-            $patient_name = $apt->first_name . ' ' . $apt->last_name;
-        if (!empty($apt->mobile_number))
-            $patient_phone = $apt->mobile_number;
-
-        // Попытка 3: Из описания (для бота)
-        $source = 'site';
-        if (isset($apt->description) && strpos($apt->description, 'Telegram Бот') !== false) {
-            $source = 'bot';
-            if (preg_match('/Пациент: (.*?), Тел: (.*)/', $apt->description, $matches)) {
-                $patient_name = $matches[1];
-                $patient_phone = $matches[2];
-            }
-        }
-
-        $status_val = isset($apt->status) ? $apt->status : 0;
-        $status_str = 'pending';
-        if ($status_val == 1)
-            $status_str = 'confirmed';
-        elseif ($status_val == 0)
-            $status_str = 'cancelled';
-
-        $response[] = array(
-            'id' => $apt->id,
-            'doctor_name' => $doctor_name,
-            'user_name' => $patient_name,
-            'user_phone' => $patient_phone,
-            'appointment_date' => $apt->appointment_start_date,
-            'appointment_time' => substr($apt->appointment_start_time, 0, 5),
-            'status' => $status_str,
-            'source' => $source,
-            'created_at' => isset($apt->created_at) ? $apt->created_at : '',
-            'debug_pid' => $apt->patient_id // Debug
-        );
-    }
-
-    return rest_ensure_response($response);
-}

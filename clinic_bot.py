@@ -298,13 +298,13 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
         await update.message.reply_text("👮‍♂️ <b>Режим администратора</b>: Загружаю последние записи...", parse_mode='HTML')
         
         # Получаем записи через API плагина (все)
-        appointments = wp_api.get_all_appointments(limit=50)
+        appointments = wp_api.get_all_appointments(limit=20) # Limit to 20 to avoid spamming too much
         
         if not appointments:
             await update.message.reply_text("📋 Записей не найдено.")
             return
 
-        text = "📋 <b>ВСЕ ЗАПИСИ (Последние 50):</b>\n\n"
+        await update.message.reply_text(f"📋 <b>Найдено {len(appointments)} записей:</b>")
         
         for apt in appointments:
             # Форматирование
@@ -322,22 +322,29 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
             else:
                 source_display = "🤖 Бот" if apt.get('user_telegram_id') else "🌐 Сайт"
             
-            text += (
+            text = (
                 f"{status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
                 f"📞 {apt.get('user_phone', 'Нет телефона')}\n"
                 f"👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
                 f"📅 {dt_str} в {tm_str}\n"
                 f"Источник: {source_display}\n"
-                f"────────────────\n"
             )
             
-        # Разбивка длинного сообщения
-        if len(text) > 4096:
-            parts = [text[i:i+4096] for i in range(0, len(text), 4096)]
-            for part in parts:
-                await update.message.reply_text(part, parse_mode='HTML')
-        else:
-            await update.message.reply_text(text, parse_mode='HTML')
+            # Кнопки действий (Посетил / Не пришел)
+            apt_id = apt.get('id')
+            # Используем telegram_id, который вернул API (или 0)
+            user_tg_id = apt.get('telegram_id') or 0
+            
+            keyboard = [
+                [
+                    InlineKeyboardButton("✅ Посетил", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
+                    InlineKeyboardButton("❌ Не пришел", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
+                ]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await update.message.reply_text(text, reply_markup=reply_markup, parse_mode='HTML')
+
         return
 
     # === ЛОГИКА ДЛЯ ОБЫЧНЫХ ПОЛЬЗОВАТЕЛЕЙ ===
@@ -396,6 +403,51 @@ async def cancel_appointment_callback(update: Update, context: ContextTypes.DEFA
         )
     else:
         await query.answer("❌ Не удалось отменить запись. Возможно, она уже отменена или слишком поздно.", show_alert=True)
+
+async def handle_admin_action(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработка кнопок админа (Посетил/Не пришел)"""
+    query = update.callback_query
+    await query.answer()
+
+    if not wp_api:
+        await query.edit_message_text("❌ Ошибка: API отключен.")
+        return
+
+    data = query.data
+    # data format: adm_v_{id}_{tg_id} or adm_n_{id}_{tg_id}
+    parts = data.split('_')
+    if len(parts) < 4:
+        return
+        
+    action_type = parts[1] # 'v' or 'n'
+    apt_id = parts[2]
+    user_tg_id = int(parts[3])
+
+    if action_type == 'v':
+        # Посетил -> Status 4
+        success = wp_api.update_appointment_status(apt_id, 4)
+        new_text = "✅ Отмечено: Посетил"
+        user_msg = "🏥 <b>Спасибо за посещение нашего медицинского центра!</b>\nБудем рады видеть вас снова! Желаем крепкого здоровья! 🌟"
+    else:
+        # Не пришел -> Status 0 (Cancelled / No Show)
+        success = wp_api.update_appointment_status(apt_id, 0)
+        new_text = "❌ Отмечено: Не пришел"
+        user_msg = "⚠️ <b>Вы пропустили запись.</b>\nМы отметили, что вы не пришли на прием. Если вы хотите записаться снова, используйте команду /book."
+
+    if success:
+        # Edit admin message to remove buttons and show status
+        original_text = query.message.text_html
+        # simple append
+        await query.edit_message_text(f"{original_text}\n\n<b>{new_text}</b>", parse_mode='HTML')
+        
+        # Notify user if tg_id exists
+        if user_tg_id > 0:
+            try:
+                await context.bot.send_message(chat_id=user_tg_id, text=user_msg, parse_mode='HTML')
+            except Exception as e:
+                logger.error(f"Не удалось отправить уведомление пользователю {user_tg_id}: {e}")
+    else:
+        await query.edit_message_text(f"{query.message.text_html}\n\n❌ Ошибка обновления статуса", parse_mode='HTML')
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /help"""
@@ -1053,7 +1105,8 @@ def main():
     application.add_handler(CommandHandler("del_pin", del_pin_command))
     application.add_handler(CommandHandler("pinned", pinned_command))
     application.add_handler(CommandHandler("list", list_command)) # New command
-    application.add_handler(CallbackQueryHandler(cancel_appointment_callback, pattern="^cancel_apt_")) # New callback
+    application.add_handler(CallbackQueryHandler(cancel_appointment_callback, pattern="^cancel_apt_")) 
+    application.add_handler(CallbackQueryHandler(handle_admin_action, pattern="^adm_")) # Admin actions handlers
     application.add_handler(conv_handler)
     
     # Запускаем бота

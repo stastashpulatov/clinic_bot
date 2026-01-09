@@ -166,6 +166,30 @@ class WordPressAPI:
             self.logger.error(f"Ошибка получения всех записей: {e}")
             return []
 
+    def update_appointment_status(self, appointment_id, status_code):
+        """Обновление статуса записи"""
+        try:
+            payload = {'appointment_id': appointment_id, 'status': status_code}
+            if self.api_key:
+                payload['api_key'] = self.api_key
+                
+            response = requests.post(
+                f"{self.site_url}/wp-json/clinic/v1/update-status",
+                data=payload, # POST параметры
+                headers=self.headers,
+                timeout=self.timeout,
+                verify=self.verify_ssl
+            )
+            
+            if response.status_code == 200:
+                return True
+                
+            self.logger.error(f"Ошибка обновления статуса: {response.text}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Исключение при обновлении статуса: {e}")
+            return False
+
 def calculate_available_slots(occupied_slots, start_time, end_time, lunch_start, lunch_end, slot_duration):
     """
     Вычисляет свободные слоты на основе занятых

@@ -727,3 +727,41 @@ ModuleNotFoundError: No module named 'telegram'
 2026-01-08 18:45:59,929 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-08 18:45:59,930 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
 2026-01-08 18:45:59,930 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-08 22:12:27,642 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-08 22:12:29,421 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-08 22:12:29,422 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-08 22:12:30,450 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-08 22:12:30,509 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-08 22:12:30,872 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-08 22:12:31,032 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-08 22:12:31,033 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-08 22:12:31,174 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-08 22:12:31,177 - telegram.ext.Application - INFO - Application started
+2026-01-08 22:12:35,684 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:12:35,685 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:12:41,354 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:12:41,355 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:12:48,264 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:12:48,265 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:12:54,100 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:12:54,101 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:13:02,764 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:13:02,765 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:13:16,047 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:13:16,047 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:13:33,966 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:13:35,474 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:13:35,475 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:13:46,588 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:13:56,693 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:06,802 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:16,917 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:22,563 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:14:22,563 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:14:33,671 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:43,778 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:53,896 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:14:56,820 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-08 22:14:56,821 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-08 22:15:07,943 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-08 22:15:18,063 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
