@@ -225,17 +225,26 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"👋 Здравствуйте, {user.first_name}!\n\n"
         f"🏥 Добро пожаловать в медицинский центр Diason!\n\n"
         f"{db_status}\n\n"
-        f"📋 Основные команды:\n"
-        f"• /book - Запись на прием\n"
-        f"• /my - Мои записи\n"
-        f"• /doctors - Наши врачи\n"
-        f"• /info - О клинике\n"
-        f"• /help - Помощь\n"
-        f"• /status - Проверка системы\n\n"
-        f"📍 Мы работаем для вашего здоровья!"
+        f"Выберите действие из меню ниже 👇"
     )
     
-    await update.message.reply_text(welcome_text)
+    # Создаем главное меню с кнопками
+    from telegram import ReplyKeyboardMarkup, KeyboardButton
+    
+    keyboard = [
+        [KeyboardButton("📅 Записаться на прием")],
+        [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
+        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("❓ Помощь")]
+    ]
+    
+    # Добавляем админские кнопки для админов
+    if user.id in ADMIN_IDS:
+        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+    
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    
+    await update.message.reply_text(welcome_text, reply_markup=reply_markup)
+
 
 async def doctors_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /doctors"""
@@ -295,68 +304,105 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
     
     # === ЛОГИКА ДЛЯ АДМИНОВ ===
     if user_id in ADMIN_IDS:
-        await update.message.reply_text("👮‍♂️ <b>Режим администратора</b>: Загружаю последние записи...", parse_mode='HTML')
+        # Получаем текущий фильтр из контекста (по умолчанию 'all')
+        current_filter = context.user_data.get('admin_filter', 'all')
         
-        # Получаем записи через API плагина (все)
-        appointments = wp_api.get_all_appointments(limit=20) # Limit to 20 to avoid spamming too much
+        # Получаем отфильтрованные записи
+        appointments = wp_api.get_filtered_appointments(limit=50, status_filter=current_filter)
+        
+        # Определяем название фильтра для отображения
+        filter_names = {
+            'all': 'Все записи',
+            'confirmed': 'Подтвержденные',
+            'visited': 'Посетили',
+            'noshow': 'Не пришли'
+        }
+        filter_display = filter_names.get(current_filter, 'Все записи')
+        
+        # Формируем единое сообщение со всеми записями
+        message_text = f"👮‍♂️ <b>Режим администратора</b>\n📋 Фильтр: <b>{filter_display}</b>\n\n"
         
         if not appointments:
-            await update.message.reply_text("📋 Записей не найдено.")
-            return
-
-        await update.message.reply_text(f"📋 <b>Найдено {len(appointments)} записей:</b>")
+            message_text += "📭 Записей не найдено"
+        else:
+            message_text += f"<b>Найдено записей: {len(appointments)}</b>\n"
+            message_text += "━━━━━━━━━━━━━━━━━━━━\n\n"
+            
+            # Группируем записи по статусу для удобства
+            for i, apt in enumerate(appointments[:10], 1):  # Показываем первые 10
+                dt_str = str(apt.get('appointment_date', 'N/A'))
+                tm_str = str(apt.get('appointment_time', 'N/A'))[:5]  # Только HH:MM
+                
+                raw_status = apt.get('status')
+                if raw_status == 'confirmed' or raw_status == 'pending':
+                    status_icon = "🔵"
+                    status_text = "Ожидает"
+                elif raw_status == 'visited':
+                    status_icon = "✅"
+                    status_text = "Посетил"
+                elif raw_status == 'noshow':
+                    status_icon = "⛔"
+                    status_text = "Не пришел"
+                else:
+                    status_icon = "❓"
+                    status_text = "Неизвестно"
+                
+                # Источник
+                src = apt.get('source')
+                if src == 'bot' or (not src and apt.get('user_telegram_id')):
+                    source_icon = "🤖"
+                else:
+                    source_icon = "🌐"
+                
+                message_text += (
+                    f"{i}. {status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                    f"   📞 {apt.get('user_phone', 'Нет')}\n"
+                    f"   👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                    f"   📅 {dt_str} | 🕐 {tm_str}\n"
+                    f"   {source_icon} {status_text}\n\n"
+                )
+            
+            if len(appointments) > 10:
+                message_text += f"... и еще {len(appointments) - 10} записей\n\n"
         
+        # Создаем кнопки фильтров
+        filter_keyboard = [
+            [
+                InlineKeyboardButton("📋 Все" if current_filter == 'all' else "Все", callback_data="admin_filter_all"),
+                InlineKeyboardButton("🔵 Ожидают" if current_filter == 'confirmed' else "Ожидают", callback_data="admin_filter_confirmed"),
+            ],
+            [
+                InlineKeyboardButton("✅ Посетили" if current_filter == 'visited' else "Посетили", callback_data="admin_filter_visited"),
+                InlineKeyboardButton("⛔ Не пришли" if current_filter == 'noshow' else "Не пришли", callback_data="admin_filter_noshow"),
+            ],
+            [
+                InlineKeyboardButton("📊 Статистика", callback_data="admin_stats"),
+                InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")
+            ]
+        ]
         
-        for apt in appointments:
-            # Форматирование
-            dt_str = str(apt.get('appointment_date', 'N/A'))
-            tm_str = str(apt.get('appointment_time', 'N/A'))
-            
-            raw_status = apt.get('status')
-            status_icon = "❓"
-            if raw_status == 'confirmed':
-                status_icon = "🔵" # Blue circle for confirmed/pending
-            elif raw_status == 'visited':
-                status_icon = "✅" # Green check for visited
-            elif raw_status == 'noshow':
-                status_icon = "⛔" # No entry/Red for no-show
-            
-            # Логика определения источника
-            src = apt.get('source')
-            if src == 'bot':
-                source_display = "🤖 Бот"
-            elif src == 'site':
-                source_display = "🌐 Сайт"
-            else:
-                source_display = "🤖 Бот" if apt.get('user_telegram_id') else "🌐 Сайт"
-            
-            text = (
-                f"{status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
-                f"📞 {apt.get('user_phone', 'Нет телефона')}\n"
-                f"👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
-                f"📅 {dt_str} в {tm_str}\n"
-                f"Источник: {source_display}\n"
-            )
-            
-            # Кнопки действий (Только если статус не финальный)
-            # Если уже посетил или не пришел - можно не показывать кнопки, или кнопку сброса?
-            # Пока оставим, чтобы можно было исправить ошибку.
-            
-            apt_id = apt.get('id')
-            user_tg_id = apt.get('telegram_id') or 0
-            
-            keyboard = []
-            # Показываем кнопки, если статус не финальный (или даем возможность поменять)
-            if raw_status == 'confirmed' or raw_status == 'pending':
-                keyboard.append([
-                    InlineKeyboardButton("✅ Посетил", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
-                    InlineKeyboardButton("⛔ Не пришел", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
-                ])
-            
-            reply_markup = InlineKeyboardMarkup(keyboard) if keyboard else None
-            
-            await update.message.reply_text(text, reply_markup=reply_markup, parse_mode='HTML')
-
+        # Добавляем кнопки действий для подтвержденных записей
+        if current_filter in ['all', 'confirmed']:
+            confirmed_apts = [apt for apt in appointments if apt.get('status') in ['confirmed', 'pending']]
+            if confirmed_apts:
+                filter_keyboard.append([InlineKeyboardButton("━━━ Действия ━━━", callback_data="noop")])
+                for apt in confirmed_apts[:5]:  # Первые 5 подтвержденных
+                    apt_id = apt.get('id')
+                    user_tg_id = apt.get('telegram_id') or 0
+                    name = apt.get('user_name', 'Неизвестно')[:15]  # Обрезаем длинные имена
+                    filter_keyboard.append([
+                        InlineKeyboardButton(f"✅ {name}", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
+                        InlineKeyboardButton(f"⛔ {name}", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
+                    ])
+        
+        filter_markup = InlineKeyboardMarkup(filter_keyboard)
+        
+        await update.message.reply_text(
+            message_text,
+            reply_markup=filter_markup,
+            parse_mode='HTML'
+        )
+        
         return
 
     # === ЛОГИКА ДЛЯ ОБЫЧНЫХ ПОЛЬЗОВАТЕЛЕЙ ===
@@ -419,10 +465,14 @@ async def cancel_appointment_callback(update: Update, context: ContextTypes.DEFA
 async def handle_admin_action(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработка кнопок админа (Посетил/Не пришел)"""
     query = update.callback_query
-    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
 
     if not wp_api:
-        await query.edit_message_text("❌ Ошибка: API отключен.")
+        await query.answer("❌ API отключен", show_alert=True)
         return
 
     data = query.data
@@ -438,28 +488,308 @@ async def handle_admin_action(update: Update, context: ContextTypes.DEFAULT_TYPE
     if action_type == 'v':
         # Посетил -> Status 4
         success = wp_api.update_appointment_status(apt_id, 4)
-        new_text = "✅ Отмечено: Посетил"
+        action_text = "✅ Посетил"
         user_msg = "🏥 <b>Спасибо за посещение нашего медицинского центра!</b>\nБудем рады видеть вас снова! Желаем крепкого здоровья! 🌟"
     else:
-        # Не пришел -> Status 5 (No Show) -- Changed from 0 to 5 so it stays visible in Admin List
+        # Не пришел -> Status 5 (No Show)
         success = wp_api.update_appointment_status(apt_id, 5)
-        new_text = "⛔ Отмечено: Не пришел"
+        action_text = "⛔ Не пришел"
         user_msg = "⚠️ <b>Вы пропустили запись.</b>\nМы отметили, что вы не пришли на прием. Если вы хотите записаться снова, используйте команду /book."
 
-    if success:
-        # Edit admin message to remove buttons and show status
-        # original_text usually contains "Source: ..." etc. We append status.
-        # It's better to reconstruct line or just append.
-        await query.edit_message_text(f"{query.message.text_html}\n\n<b>{new_text}</b>", parse_mode='HTML')
-        
-        # Notify user if tg_id exists
-        if user_tg_id > 0:
-            try:
-                await context.bot.send_message(chat_id=user_tg_id, text=user_msg, parse_mode='HTML')
-            except Exception as e:
-                logger.error(f"Не удалось отправить уведомление пользователю {user_tg_id}: {e}")
+    if not success:
+        await query.answer("❌ Ошибка обновления статуса", show_alert=True)
+        return
+    
+    # Уведомляем пользователя
+    if user_tg_id > 0:
+        try:
+            await context.bot.send_message(chat_id=user_tg_id, text=user_msg, parse_mode='HTML')
+        except Exception as e:
+            logger.error(f"Не удалось отправить уведомление пользователю {user_tg_id}: {e}")
+    
+    # Показываем уведомление админу
+    await query.answer(f"{action_text} - статус обновлен!", show_alert=False)
+    
+    # Получаем текущий фильтр
+    current_filter = context.user_data.get('admin_filter', 'all')
+    
+    # Получаем обновленный список записей
+    appointments = wp_api.get_filtered_appointments(limit=50, status_filter=current_filter)
+    
+    # Определяем название фильтра
+    filter_names = {
+        'all': 'Все записи',
+        'confirmed': 'Подтвержденные',
+        'visited': 'Посетили',
+        'noshow': 'Не пришли'
+    }
+    filter_display = filter_names.get(current_filter, 'Все записи')
+    
+    # Формируем обновленное сообщение
+    message_text = f"👮‍♂️ <b>Режим администратора</b>\n📋 Фильтр: <b>{filter_display}</b>\n\n"
+    
+    if not appointments:
+        message_text += "📭 Записей не найдено"
     else:
-        await query.edit_message_text(f"{query.message.text_html}\n\n❌ Ошибка обновления статуса", parse_mode='HTML')
+        message_text += f"<b>Найдено записей: {len(appointments)}</b>\n"
+        message_text += "━━━━━━━━━━━━━━━━━━━━\n\n"
+        
+        for i, apt in enumerate(appointments[:10], 1):
+            dt_str = str(apt.get('appointment_date', 'N/A'))
+            tm_str = str(apt.get('appointment_time', 'N/A'))[:5]
+            
+            raw_status = apt.get('status')
+            if raw_status == 'confirmed' or raw_status == 'pending':
+                status_icon = "🔵"
+                status_text = "Ожидает"
+            elif raw_status == 'visited':
+                status_icon = "✅"
+                status_text = "Посетил"
+            elif raw_status == 'noshow':
+                status_icon = "⛔"
+                status_text = "Не пришел"
+            else:
+                status_icon = "❓"
+                status_text = "Неизвестно"
+            
+            src = apt.get('source')
+            if src == 'bot' or (not src and apt.get('user_telegram_id')):
+                source_icon = "🤖"
+            else:
+                source_icon = "🌐"
+            
+            message_text += (
+                f"{i}. {status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                f"   📞 {apt.get('user_phone', 'Нет')}\n"
+                f"   👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                f"   📅 {dt_str} | 🕐 {tm_str}\n"
+                f"   {source_icon} {status_text}\n\n"
+            )
+        
+        if len(appointments) > 10:
+            message_text += f"... и еще {len(appointments) - 10} записей\n\n"
+    
+    # Создаем кнопки фильтров
+    filter_keyboard = [
+        [
+            InlineKeyboardButton("📋 Все" if current_filter == 'all' else "Все", callback_data="admin_filter_all"),
+            InlineKeyboardButton("🔵 Ожидают" if current_filter == 'confirmed' else "Ожидают", callback_data="admin_filter_confirmed"),
+        ],
+        [
+            InlineKeyboardButton("✅ Посетили" if current_filter == 'visited' else "Посетили", callback_data="admin_filter_visited"),
+            InlineKeyboardButton("⛔ Не пришли" if current_filter == 'noshow' else "Не пришли", callback_data="admin_filter_noshow"),
+        ],
+        [
+            InlineKeyboardButton("📊 Статистика", callback_data="admin_stats"),
+            InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")
+        ]
+    ]
+    
+    # Добавляем кнопки действий для подтвержденных записей
+    if current_filter in ['all', 'confirmed']:
+        confirmed_apts = [apt for apt in appointments if apt.get('status') in ['confirmed', 'pending']]
+        if confirmed_apts:
+            filter_keyboard.append([InlineKeyboardButton("━━━ Действия ━━━", callback_data="noop")])
+            for apt in confirmed_apts[:5]:
+                apt_id_new = apt.get('id')
+                user_tg_id_new = apt.get('telegram_id') or 0
+                name = apt.get('user_name', 'Неизвестно')[:15]
+                filter_keyboard.append([
+                    InlineKeyboardButton(f"✅ {name}", callback_data=f"adm_v_{apt_id_new}_{user_tg_id_new}"),
+                    InlineKeyboardButton(f"⛔ {name}", callback_data=f"adm_n_{apt_id_new}_{user_tg_id_new}")
+                ])
+    
+    filter_markup = InlineKeyboardMarkup(filter_keyboard)
+    
+    # Обновляем сообщение
+    try:
+        await query.edit_message_text(
+            message_text,
+            reply_markup=filter_markup,
+            parse_mode='HTML'
+        )
+    except Exception as e:
+        logger.error(f"Ошибка обновления сообщения: {e}")
+        await query.answer("Список обновлен!", show_alert=False)
+
+
+async def handle_admin_filter(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработка переключения фильтров для админов"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    # Определяем выбранный фильтр
+    filter_map = {
+        'admin_filter_all': 'all',
+        'admin_filter_confirmed': 'confirmed',
+        'admin_filter_visited': 'visited',
+        'admin_filter_noshow': 'noshow'
+    }
+    
+    new_filter = filter_map.get(query.data, 'all')
+    context.user_data['admin_filter'] = new_filter
+    
+    # Получаем отфильтрованные записи
+    appointments = wp_api.get_filtered_appointments(limit=50, status_filter=new_filter)
+    
+    # Определяем название фильтра
+    filter_names = {
+        'all': 'Все записи',
+        'confirmed': 'Подтвержденные',
+        'visited': 'Посетили',
+        'noshow': 'Не пришли'
+    }
+    filter_display = filter_names.get(new_filter, 'Все записи')
+    
+    # Формируем единое сообщение со всеми записями
+    message_text = f"👮‍♂️ <b>Режим администратора</b>\n📋 Фильтр: <b>{filter_display}</b>\n\n"
+    
+    if not appointments:
+        message_text += "� Записей не найдено"
+    else:
+        message_text += f"<b>Найдено записей: {len(appointments)}</b>\n"
+        message_text += "━━━━━━━━━━━━━━━━━━━━\n\n"
+        
+        # Показываем первые 10 записей
+        for i, apt in enumerate(appointments[:10], 1):
+            dt_str = str(apt.get('appointment_date', 'N/A'))
+            tm_str = str(apt.get('appointment_time', 'N/A'))[:5]
+            
+            raw_status = apt.get('status')
+            if raw_status == 'confirmed' or raw_status == 'pending':
+                status_icon = "🔵"
+                status_text = "Ожидает"
+            elif raw_status == 'visited':
+                status_icon = "✅"
+                status_text = "Посетил"
+            elif raw_status == 'noshow':
+                status_icon = "⛔"
+                status_text = "Не пришел"
+            else:
+                status_icon = "❓"
+                status_text = "Неизвестно"
+            
+            # Источник
+            src = apt.get('source')
+            if src == 'bot' or (not src and apt.get('user_telegram_id')):
+                source_icon = "🤖"
+            else:
+                source_icon = "🌐"
+            
+            message_text += (
+                f"{i}. {status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                f"   📞 {apt.get('user_phone', 'Нет')}\n"
+                f"   👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                f"   📅 {dt_str} | 🕐 {tm_str}\n"
+                f"   {source_icon} {status_text}\n\n"
+            )
+        
+        if len(appointments) > 10:
+            message_text += f"... и еще {len(appointments) - 10} записей\n\n"
+    
+    # Создаем кнопки фильтров с выделением текущего
+    filter_keyboard = [
+        [
+            InlineKeyboardButton("📋 Все" if new_filter == 'all' else "Все", callback_data="admin_filter_all"),
+            InlineKeyboardButton("🔵 Ожидают" if new_filter == 'confirmed' else "Ожидают", callback_data="admin_filter_confirmed"),
+        ],
+        [
+            InlineKeyboardButton("✅ Посетили" if new_filter == 'visited' else "Посетили", callback_data="admin_filter_visited"),
+            InlineKeyboardButton("⛔ Не пришли" if new_filter == 'noshow' else "Не пришли", callback_data="admin_filter_noshow"),
+        ],
+        [
+            InlineKeyboardButton("📊 Статистика", callback_data="admin_stats"),
+            InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")
+        ]
+    ]
+    
+    # Добавляем кнопки действий для подтвержденных записей
+    if new_filter in ['all', 'confirmed']:
+        confirmed_apts = [apt for apt in appointments if apt.get('status') in ['confirmed', 'pending']]
+        if confirmed_apts:
+            filter_keyboard.append([InlineKeyboardButton("━━━ Действия ━━━", callback_data="noop")])
+            for apt in confirmed_apts[:5]:  # Первые 5 подтвержденных
+                apt_id = apt.get('id')
+                user_tg_id = apt.get('telegram_id') or 0
+                name = apt.get('user_name', 'Неизвестно')[:15]
+                filter_keyboard.append([
+                    InlineKeyboardButton(f"✅ {name}", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
+                    InlineKeyboardButton(f"⛔ {name}", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
+                ])
+    
+    filter_markup = InlineKeyboardMarkup(filter_keyboard)
+    
+    # Обновляем сообщение
+    await query.edit_message_text(
+        message_text,
+        reply_markup=filter_markup,
+        parse_mode='HTML'
+    )
+
+
+async def show_admin_statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показать статистику записей для админов"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    # Получаем все записи для подсчета статистики
+    all_appointments = wp_api.get_all_appointments(limit=200)
+    
+    # Подсчитываем по статусам
+    confirmed_count = 0
+    visited_count = 0
+    noshow_count = 0
+    
+    # Подсчитываем по источникам
+    bot_count = 0
+    site_count = 0
+    
+    for apt in all_appointments:
+        status = apt.get('status', '')
+        if status in ['confirmed', 'pending']:
+            confirmed_count += 1
+        elif status == 'visited':
+            visited_count += 1
+        elif status == 'noshow':
+            noshow_count += 1
+        
+        # Источник
+        src = apt.get('source')
+        if src == 'bot' or (not src and apt.get('user_telegram_id')):
+            bot_count += 1
+        else:
+            site_count += 1
+    
+    total_count = len(all_appointments)
+    
+    stats_text = (
+        "📊 <b>Статистика записей</b>\n\n"
+        "<b>По статусу:</b>\n"
+        f"🔵 Подтвержденные: {confirmed_count}\n"
+        f"✅ Посетили: {visited_count}\n"
+        f"⛔ Не пришли: {noshow_count}\n\n"
+        "<b>По источнику:</b>\n"
+        f"🤖 Бот: {bot_count}\n"
+        f"🌐 Сайт: {site_count}\n\n"
+        f"<b>Всего записей: {total_count}</b>"
+    )
+    
+    # Кнопка возврата к фильтрам
+    back_keyboard = [[InlineKeyboardButton("⬅️ Назад к записям", callback_data="admin_filter_all")]]
+    back_markup = InlineKeyboardMarkup(back_keyboard)
+    
+    await query.edit_message_text(stats_text, reply_markup=back_markup, parse_mode='HTML')
+
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /help"""
@@ -670,14 +1000,44 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.error(f"Ошибка в команде status: {e}")
         await update.message.reply_text("❌ Не удалось получить статус системы.")
 
+async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработка нажатий кнопок меню"""
+    text = update.message.text
+    
+    if text == "📅 Записаться на прием":
+        await book_start(update, context)
+    elif text == "📋 Мои записи":
+        await my_appointments_command(update, context)
+    elif text == "👨‍⚕️ Наши врачи":
+        await doctors_command(update, context)
+    elif text == "ℹ️ О клинике":
+        await info_command(update, context)
+    elif text == "❓ Помощь":
+        await help_command(update, context)
+    elif text == "👮‍♂️ Админ панель":
+        # Предлагаем выбор админских действий
+        keyboard = [
+            [InlineKeyboardButton("📋 Все записи", callback_data="admin_filter_all")],
+            [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")] # Нужно добавить обработчик
+        ]
+        # Проще пока перенаправить на /my, а экспорт через команду
+        await my_appointments_command(update, context)
+        await update.message.reply_text("💡 Для экспорта записей в Excel используйте команду /export")
+
 async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Начало процесса записи - выбор врача"""
+    """Начало процесса записи"""
+    # Если вызвано кнопкой меню, message будет, если командой - тоже
+async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Начало процесса записи"""
+    context.user_data.clear()
+    
+    # Получаем список врачей
     doctors = db.get_doctors()
     
     if not doctors:
         await update.message.reply_text(
-            "❌ Список врачей временно недоступен.\n"
-            "Пожалуйста, попробуйте позже или свяжитесь с администрацией."
+            "❌ К сожалению, список врачей временно недоступен.\n"
+            "Попробуйте позже или свяжитесь с нами по телефону."
         )
         return ConversationHandler.END
     
@@ -699,7 +1059,7 @@ async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_text(
-        "Выберите врача для записи:",
+        "👨‍⚕️ Выберите врача для записи:",
         reply_markup=reply_markup
     )
     
@@ -892,7 +1252,7 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return SELECT_TIME
 
 async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Обработка выбора времени"""
+    """Выбор времени"""
     query = update.callback_query
     await query.answer()
     
@@ -901,17 +1261,14 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ConversationHandler.END
     
     if query.data == "back_to_dates":
-        # Возврат к выбору даты
-        # ... (лучше вынести в отдельную функцию, но пока дублируем логику из select_doctor, но без state transition)
+        doctor_id = context.user_data.get('doctor_id')
+        
+        # Генерируем даты заново (как в select_doctor)
         keyboard = []
         today = datetime.now()
         
         for i in range(7):
             date = today + timedelta(days=i)
-            # Пропускаем воскресенье
-            if date.weekday() == 6:
-                continue
-                
             date_str = date.strftime('%Y-%m-%d')
             display_date = date.strftime('%d.%m.%Y (%A)')
             
@@ -919,11 +1276,6 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
                 'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
             }
-            for eng, ru in days_ru.items():
-                display_date = display_date.replace(eng, ru)
-            
-            keyboard.append([InlineKeyboardButton(display_date, callback_data=f"date_{date_str}")])
-        
         keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_doctors")])
         keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -944,78 +1296,157 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"🕐 Время: {time}\n\n"
         f"Теперь отправьте ваше ФИО и номер телефона в формате:\n\n"
         f"<b>Пример:</b>\n"
-        f"Иванов Иван Иванович\n"
-        f"+998901234567"
+        f"Иванов Иван Иванович\n",
+        parse_mode='HTML'
     )
+    # Удаляем инлайн-клавиатуру с выбором времени
+    await query.edit_message_reply_markup(reply_markup=None)
     
+    # Переходим к запросу контакта
+    return await request_contact(update, context)
+
+async def request_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Запрашиваем контакт после выбора времени"""
+    from telegram import ReplyKeyboardMarkup, KeyboardButton
+    
+    keyboard = [[KeyboardButton("📞 Поделиться номером телефона", request_contact=True)]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
+    
+    # Если это CallbackQuery, то update.message - это сообщение, к которому привязана кнопка
+    # Если это Message, то update.message - это само сообщение
+    message_to_reply = update.callback_query.message if update.callback_query else update.message
+    
+    await message_to_reply.reply_text(
+        f"✅ Вы выбрали время: {context.user_data['time']}\n\n"
+        f"Для завершения записи, пожалуйста, поделитесь вашим номером телефона 👇\n"
+        f"Нажмите кнопку ниже, чтобы отправить номер:",
+        reply_markup=reply_markup
+    )
     return CONFIRM_BOOKING
 
 async def confirm_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Подтверждение записи"""
-    user_message = update.message.text
-    lines = user_message.strip().split('\n')
+    """Получение контакта/имени и создание записи"""
+    message = update.message
     
-    if len(lines) < 2:
-        await update.message.reply_text(
-            "❌ Пожалуйста, отправьте данные в правильном формате:\n"
-            "ФИО\n"
-            "Номер телефона"
-        )
-        return CONFIRM_BOOKING
-    
-    user_name = lines[0].strip()
-    user_phone = lines[1].strip()
-    
-    # Базовая валидация номера телефона
-    if not user_phone.replace('+', '').replace(' ', '').isdigit():
-        await update.message.reply_text(
-            "❌ Номер телефона должен содержать только цифры и знак '+'.\n"
-            "Попробуйте снова:"
-        )
-        return CONFIRM_BOOKING
-    
-    
-    # Создаём запись через WordPress API
-    success = False
-    appointment_id = None
-    
-    if wp_api: # Changed from db.wp_api to wp_api as per context
-        success, appointment_id = wp_api.create_appointment(
-            doctor_id=context.user_data['doctor_id'],
-            date=context.user_data['date'],
-            time=context.user_data['time'],
-            patient_name=user_name,
-            patient_phone=user_phone,
-            telegram_id=update.effective_user.id
-        )
-    
-    # Если API недоступен или вернул ошибку, пытаемся в локальную БД (как резерв)
-    if not success:
-        # Можно попробовать локально, если нужно, но пока просто логируем
-        # success = db.create_appointment(...) 
-        pass
+    # 1. Если пришел КОНТАКТ
+    if message.contact:
+        phone = message.contact.phone_number
+        if not phone.startswith('+'):
+            phone = '+' + phone
+        context.user_data['phone'] = phone
         
-    if success:
-        await update.message.reply_text(
-            f"✅ <b>Запись успешно создана!</b>\n\n"
-            f"📋 <b>Ваши данные:</b>\n"
-            f"👤 ФИО: {user_name}\n"
-            f"📞 Телефон: {user_phone}\n"
-            f"📅 Дата: {context.user_data['date']}\n"
-            f"🕐 Время: {context.user_data['time']}\n\n"
-            f"💡 <b>Важно:</b>\n"
-            f"• Пожалуйста, приходите за 10 минут до приема\n"
-            f"• При себе иметь паспорт\n"
-            f"• При отмене записи сообщите заранее\n\n"
-            f"🏥 <b>Ждём вас в клинике!</b>",
+        # Спрашиваем имя (удаляем клавиатуру с кнопкой контакта)
+        from telegram import ReplyKeyboardRemove
+        await message.reply_text(
+            f"✅ Номер получен: {phone}\n\n"
+            f"Теперь введите ваше <b>Имя и Фамилию</b>:",
+            reply_markup=ReplyKeyboardRemove(),
             parse_mode='HTML'
         )
+        return CONFIRM_BOOKING
+
+    # 2. Если пришел ТЕКСТ (Имя)
+    if message.text and not message.contact:
+        # Если телефон еще не получен - просим телефон (вдруг пользователь ввел текст вместо кнопки)
+        if 'phone' not in context.user_data:
+             from telegram import ReplyKeyboardMarkup, KeyboardButton
+             keyboard = [[KeyboardButton("📞 Поделиться номером телефона", request_contact=True)]]
+             reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
+             await message.reply_text(
+                 "Пожалуйста, сначала отправьте номер телефона, нажав кнопку ниже 👇",
+                 reply_markup=reply_markup
+             )
+             return CONFIRM_BOOKING
+        # Если телефон есть, значит это ИМЯ
+        context.user_data['name'] = message.text
+        
+        # Все данные есть - СОЗДАЕМ ЗАПИСЬ
+        await finalize_booking(update, context)
+        return ConversationHandler.END
+
+async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Финальное создание записи"""
+    user_data = context.user_data
+    doctor_id = user_data['doctor_id']
+    date = user_data['date']
+    time = user_data['time']
+    # Добавляем секунды к времени, если их нет
+    if len(time) == 5:
+        time_full = time + ":00"
     else:
-        await update.message.reply_text(
-            "❌ Произошла ошибка при создании записи.\n"
-            "Пожалуйста, попробуйте позже или свяжитесь с администрацией."
-        )
+        time_full = time
+
+    name = user_data['name']
+    phone = user_data['phone']
+    user = update.effective_user
     
+    # 1. Создаем запись в WordPress
+    success, result = await wp_api.create_appointment(
+        doctor_id=doctor_id,
+        date=date,
+        time=time_full,
+        user_name=name,
+        user_phone=phone,
+        telegram_id=user.id
+    )
+    
+    # Отправляем главное меню обратно
+    from telegram import ReplyKeyboardMarkup, KeyboardButton
+    keyboard = [
+        [KeyboardButton("📅 Записаться на прием")],
+        [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
+        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("❓ Помощь")]
+    ]
+    if user.id in ADMIN_IDS:
+        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+    main_menu = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+
+    if success:
+        appointment_id = result.get('id')
+        logger.info(f"✅ Запись создана: ID {appointment_id}, {name} к врачу {doctor_id} на {date} {time}")
+        
+        await update.message.reply_text(
+            f"✅ <b>ВЫ УСПЕШНО ЗАПИСАНЫ!</b>\n\n"
+            f"�‍⚕️ Врач: <b>{user_data['doctor_name']}</b>\n"
+            f"📅 Дата: <b>{date}</b>\n"
+            f"🕐 Время: <b>{time}</b>\n"
+            f"👤 Пациент: <b>{name}</b>\n\n"
+            f"📞 Мы свяжемся с вами по номеру {phone} для подтверждения.\n"
+            f"� Ждем вас в клинике Diason!",
+            parse_mode='HTML',
+            reply_markup=main_menu
+        )
+        
+        # Оповещение админов
+        for admin_id in ADMIN_IDS:
+            try:
+                await context.bot.send_message(
+                    chat_id=admin_id,
+                    text=f"🆕 <b>НОВАЯ ЗАПИСЬ!</b>\n"
+                         f"� {name} ({phone})\n"
+                         f"👨‍⚕️ {user_data['doctor_name']}\n"
+                         f"� {date} {time}\n"
+                         f"🤖 Источник: Бот",
+                    parse_mode='HTML'
+                )
+            except Exception as e:
+                logger.error(f"Не удалось отправить уведомление админу {admin_id}: {e}")
+                
+    else:
+        logger.error(f"Ошибка создания записи: {result}")
+        error_msg = "Неизвестная ошибка"
+        if isinstance(result, str):
+            error_msg = result
+        elif isinstance(result, dict) and 'message' in result:
+             error_msg = result['message']
+             
+        await update.message.reply_text(
+            f"❌ <b>Ошибка при создании записи</b>\n"
+            f"{error_msg}\n"
+            f"Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.",
+            parse_mode='HTML',
+            reply_markup=main_menu
+        )
     return ConversationHandler.END
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1088,12 +1519,15 @@ def main():
     
     # Обработчик разговора для записи
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('book', book_start)],
+        entry_points=[CommandHandler('book', book_start), MessageHandler(filters.Regex("^📅 Записаться на прием$"), book_start)],
         states={
             SELECT_DOCTOR: [CallbackQueryHandler(select_doctor)],
             SELECT_DATE: [CallbackQueryHandler(select_date)],
             SELECT_TIME: [CallbackQueryHandler(select_time)],
-            CONFIRM_BOOKING: [MessageHandler(filters.TEXT & ~filters.COMMAND, confirm_booking)], # type: ignore
+            CONFIRM_BOOKING: [
+                MessageHandler(filters.CONTACT, confirm_booking),
+                MessageHandler(filters.TEXT & ~filters.COMMAND, confirm_booking)
+            ],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )
@@ -1110,9 +1544,83 @@ def main():
     application.add_handler(CommandHandler("pinned", pinned_command))
     application.add_handler(CommandHandler("list", list_command)) # New command
     application.add_handler(CallbackQueryHandler(cancel_appointment_callback, pattern="^cancel_apt_")) 
-    application.add_handler(CallbackQueryHandler(handle_admin_action, pattern="^adm_")) # Admin actions handlers
+    application.add_handler(CallbackQueryHandler(handle_admin_action, pattern="^adm_[vn]_")) # Admin actions handlers
+    application.add_handler(CallbackQueryHandler(handle_admin_filter, pattern="^admin_filter_")) # Admin filter handlers
+    application.add_handler(CallbackQueryHandler(show_admin_statistics, pattern="^admin_stats$")) # Admin statistics
     application.add_handler(conv_handler)
     
+    # Обработчик текстовых сообщений (для меню) должен быть ПОСЛЕ ConversationHandler
+    # чтобы не перехватывать ввод внутри диалога
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_menu))
+    
+    # Команда экспорта (только для админов)
+    from excel_export import create_appointments_excel
+    
+    async def generate_and_send_export(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Общая функция для генерации и отправки отчета"""
+        # Определяем, куда отвечать (message или callback query)
+        if update.callback_query:
+            message = update.callback_query.message
+            await update.callback_query.answer()
+            status_msg = await message.reply_text("⏳ Генерирую отчет...")
+        else:
+            status_msg = await update.message.reply_text("⏳ Генерирую отчет...")
+            
+        try:
+            # Получаем все записи (можно добавить фильтры по датам аргументами)
+            appointments = wp_api.get_filtered_appointments(limit=1000, status_filter='all')
+            if not appointments:
+                await status_msg.edit_text("📭 Записей не найдено.")
+                return
+
+            filepath = create_appointments_excel(appointments)
+            
+            await status_msg.chat.send_document(
+                document=open(filepath, 'rb'),
+                filename=os.path.basename(filepath),
+                caption="📊 Отчет по записям"
+            )
+            await status_msg.delete()
+            # Удаляем файл после отправки
+            os.remove(filepath)
+        except Exception as e:
+            logger.error(f"Ошибка экспорта: {e}")
+            await status_msg.edit_text("❌ Ошибка при создании отчета.")
+
+    async def export_excel_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Обработка кнопки экспорта"""
+        if update.effective_user.id not in ADMIN_IDS:
+             await update.callback_query.answer("⛔ Нет доступа", show_alert=True)
+             return
+        await generate_and_send_export(update, context)
+
+    async def export_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if update.effective_user.id not in ADMIN_IDS:
+             return
+        await generate_and_send_export(update, context)
+
+    application.add_handler(CommandHandler("export", export_command))
+    application.add_handler(CallbackQueryHandler(export_excel_callback, pattern="^admin_export_excel$")) # Export excel
+    
+    # Напоминания
+    from reminder_scheduler import check_reminders, handle_confirm_visit
+    application.add_handler(CallbackQueryHandler(handle_confirm_visit, pattern="^confirm_visit_"))
+    
+    # Планировщик (JobQueue)
+    if application.job_queue:
+        # Запускаем каждый день в 10:00 (но для теста можно и почаще, пока поставим раз в час для проверки завтрашнего дня)
+        # В продакшене лучше ставить определенное время, например run_daily
+        # Но run_repeating тоже ок для начала
+        application.job_queue.run_repeating(
+            check_reminders, 
+            interval=3600, # Каждый час
+            first=10, # Первый запуск через 10 сек
+            data={'wp_api': wp_api}
+        )
+        logger.info("⏰ Планировщик напоминаний запущен")
+    else:
+        logger.warning("⚠️ JobQueue не доступен!")
+
     # Запускаем бота
     logger.info("🤖 Бот запущен и готов к работе!")
     print("\n" + "="*60)

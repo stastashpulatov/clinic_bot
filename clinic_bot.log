@@ -1146,3 +1146,450 @@ ModuleNotFoundError: No module named 'telegram'
 2026-01-09 19:25:50,808 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-09 19:26:00,915 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-09 19:26:11,028 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 14:57:19,490 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 14:57:25,687 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 14:57:25,688 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 14:57:28,961 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 14:59:54,037 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 14:59:58,468 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 14:59:58,469 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 14:59:59,593 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 14:59:59,625 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 14:59:59,968 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 15:00:00,096 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 15:00:00,097 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 15:00:00,201 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 15:00:00,203 - telegram.ext.Application - INFO - Application started
+2026-01-11 15:00:10,623 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:20,726 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:30,925 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:40,260 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:00:41,062 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:41,428 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:00:41,428 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:00:42,481 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:00:42,518 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 15:00:42,818 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 15:00:42,943 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 15:00:42,944 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 15:00:43,044 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 15:00:43,047 - telegram.ext.Application - INFO - Application started
+2026-01-11 15:00:43,356 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:43,357 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:00:47,463 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:47,464 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:00:48,567 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:48,568 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:00:53,173 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:53,174 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:00:54,734 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:54,783 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:54,889 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:54,890 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:00:55,133 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:00:55,173 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:00:57,939 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:00:58,075 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:00:59,086 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:00:59,087 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:00,192 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:00,194 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:03,285 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:03,673 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:01:04,411 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:04,412 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:05,681 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:06,021 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:06,023 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:10,246 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:10,246 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:12,602 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:12,603 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:17,208 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:17,211 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:20,690 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:20,691 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:26,118 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:26,119 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:27,032 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Updater:start_polling:polling_task' coro=<network_retry_loop() done, defined at /home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/ext/_utils/networkloop.py:45> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[Task.task_wakeup()]>
+2026-01-11 15:01:27,033 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Application:7376506390:update_fetcher' coro=<Application._update_fetcher() done, defined at /home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/ext/_application.py:1231> wait_for=<Future cancelled>>
+2026-01-11 15:01:28,041 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:01:29,093 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:01:29,094 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:01:31,116 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:01:31,149 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 15:01:31,453 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 15:01:31,564 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 15:01:31,565 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 15:01:31,665 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 15:01:31,668 - telegram.ext.Application - INFO - Application started
+2026-01-11 15:01:31,965 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:31,966 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:35,445 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:35,446 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:36,453 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:36,548 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:36,678 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:01:36,790 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:01:38,510 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:38,679 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:01:39,709 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:39,710 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:40,810 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:40,811 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:40,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:01:44,916 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:44,917 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:46,087 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:46,088 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:01:50,796 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 15:01:50,797 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 15:02:02,405 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:02:12,515 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:02:22,642 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:02:32,753 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:02:42,860 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:02:52,964 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:03:00,304 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:03:00,305 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 15:03:00,305 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 15:05:08,894 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:05:11,711 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:05:11,712 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:05:12,833 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:05:12,885 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 15:05:13,189 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 15:05:13,306 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 15:05:13,307 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 15:05:13,447 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 15:05:13,449 - telegram.ext.Application - INFO - Application started
+2026-01-11 15:05:19,079 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:19,592 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:05:21,102 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:21,241 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:05:22,662 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:22,780 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:05:22,900 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:05:27,270 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:27,395 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:05:28,499 - __main__ - INFO - Получены занятые слоты из WordPress: []
+2026-01-11 15:05:28,669 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:05:31,068 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:31,180 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:05:31,309 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:05:41,197 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:44,226 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:05:45,542 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:05:55,430 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:05,537 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:15,705 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:25,842 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:35,950 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:46,056 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:48,372 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:06:49,729 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:06:52,998 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:06:53,151 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:06:58,510 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:02,758 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:03,079 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:07:04,236 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:07:12,946 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:23,050 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:26,362 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:26,683 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:07:26,812 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 400 Bad Request"
+2026-01-11 15:07:26,813 - __main__ - ERROR - Ошибка при обработке обновления: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-01-11 15:07:36,468 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:46,638 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:56,974 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:07:56,975 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 15:07:56,975 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 15:12:46,850 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:12:47,900 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:12:47,901 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 15:12:48,923 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 15:12:48,969 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 15:12:49,283 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 15:12:49,403 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 15:12:49,404 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 15:12:49,551 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 15:12:49,553 - telegram.ext.Application - INFO - Application started
+2026-01-11 15:12:55,399 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:12:56,829 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 15:12:59,467 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:12:59,593 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:13:00,821 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:13:03,218 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:13:03,345 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:13:04,504 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:13:09,203 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:13:09,327 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 15:13:10,578 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 15:13:19,333 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:13:29,436 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:13:35,599 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 15:13:35,600 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 15:13:35,600 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 19:20:16,435 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:20:19,297 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:20:19,298 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:20:20,452 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:20:20,512 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 19:20:20,906 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 19:20:21,166 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 19:20:21,168 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 19:20:21,267 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 19:20:21,270 - telegram.ext.Application - INFO - Application started
+2026-01-11 19:20:29,171 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:20:29,500 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:20:32,350 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:20:33,581 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:20:37,663 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:20:37,816 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:20:39,114 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:20:41,608 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:20:41,723 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:20:42,869 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:20:51,782 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:21:01,886 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:21:11,992 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:21:22,195 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:21:27,239 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:21:27,240 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 19:21:27,240 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 19:28:41,236 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:28:42,387 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:28:42,387 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:28:43,463 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:28:43,493 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 19:28:43,796 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 19:28:43,931 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 19:28:43,931 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 19:28:44,031 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 19:28:44,032 - telegram.ext.Application - INFO - Application started
+2026-01-11 19:28:50,933 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:28:51,274 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:28:52,961 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:28:54,095 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:29:04,051 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:14,157 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:24,297 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:34,435 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:38,350 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:45,501 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:45,815 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:29:47,664 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:29:50,725 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:50,836 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:29:51,998 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:29:54,403 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:54,514 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:29:55,753 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:29:56,893 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:29:57,001 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:29:58,243 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-11 19:30:07,098 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:30:17,198 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:30:27,300 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:30:37,399 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:30:47,549 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:30:57,684 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:07,825 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:17,923 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:28,097 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:38,195 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:48,372 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:31:58,510 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:32:08,647 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:32:18,745 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:32:28,867 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:32:38,784 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:32:38,784 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 19:32:38,784 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 19:32:58,716 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:32:59,851 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:32:59,851 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:33:00,975 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:33:01,003 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 19:33:01,310 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 19:33:01,422 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 19:33:01,422 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 19:33:01,526 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 19:33:01,527 - telegram.ext.Application - INFO - Application started
+2026-01-11 19:33:07,157 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:07,544 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:33:10,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:11,962 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 19:33:15,185 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:15,343 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:33:16,574 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 400 Bad Request"
+2026-01-11 19:33:16,575 - __main__ - ERROR - Ошибка при обработке обновления: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-01-11 19:33:18,066 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:18,188 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-11 19:33:19,443 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 400 Bad Request"
+2026-01-11 19:33:19,443 - __main__ - ERROR - Ошибка при обработке обновления: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-01-11 19:33:28,212 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:38,351 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:48,897 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:33:59,005 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:34:09,165 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:34:19,273 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:34:29,375 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:34:33,455 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 19:34:33,455 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 19:34:33,455 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 19:55:51,615 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:55:53,540 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 19:55:53,540 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 19:55:54,666 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:05:52,228 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:05:54,323 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:05:54,323 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:05:55,449 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:05:55,513 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-11 20:05:55,513 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 20:05:55,961 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 20:05:56,116 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 20:05:56,117 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 20:05:56,267 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 20:05:56,268 - telegram.ext.Application - INFO - Application started
+2026-01-11 20:06:07,118 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:06:07,118 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 20:06:07,118 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 20:06:46,269 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:06:47,368 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:06:47,369 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:06:48,496 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:06:48,562 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-11 20:06:48,562 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 20:06:48,901 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 20:06:49,021 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 20:06:49,021 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 20:06:49,213 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 20:06:49,214 - telegram.ext.Application - INFO - Application started
+2026-01-11 20:06:58,817 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:06:59,273 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:04,186 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:07:04,368 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:04,573 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:09,221 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:07:10,638 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:14,734 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:07:16,237 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:16,453 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:07:25,975 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:07:33,042 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:07:33,042 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 20:07:33,042 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 20:13:54,108 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:13:56,027 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:13:56,027 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:13:57,193 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:14:52,485 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:14:54,273 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:14:54,273 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:14:55,408 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:14:55,471 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-11 20:14:55,471 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 20:14:55,918 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 20:14:56,123 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 20:14:56,123 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 20:14:56,327 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 20:14:56,328 - telegram.ext.Application - INFO - Application started
+2026-01-11 20:15:06,699 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:15:16,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:15:27,045 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:15:37,181 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:15:47,311 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:15:57,432 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:07,592 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:17,727 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:27,864 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:37,999 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:48,243 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:16:58,356 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:08,510 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:18,754 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:28,993 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:39,123 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:49,247 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:17:59,404 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:18:09,550 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:18:19,783 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:18:29,900 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:18:40,050 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:18:50,195 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:00,433 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:10,553 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:20,709 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:30,947 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:32,923 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:19:34,064 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:19:34,064 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:19:35,250 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:19:35,317 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-11 20:19:35,317 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 20:19:36,101 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 20:19:36,258 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 20:19:36,258 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 20:19:36,483 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 20:19:36,484 - telegram.ext.Application - INFO - Application started
+2026-01-11 20:19:36,989 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:36,989 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:41,189 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:41,189 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:42,226 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:42,313 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:19:42,441 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:42,441 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:42,670 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:19:42,762 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:19:46,614 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:46,614 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:47,843 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:47,844 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:52,553 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:52,553 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:54,179 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:54,179 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:19:58,596 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-01-11 20:19:58,596 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-01-11 20:20:12,095 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:20:19,382 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:20:19,382 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 20:20:19,382 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-11 20:22:22,274 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:22:32,977 - wordpress_api - ERROR - Ошибка получения врачей: HTTPSConnectionPool(host='diason.uz', port=443): Read timed out. (read timeout=10)
+2026-01-11 20:22:32,977 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:22:32,977 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-11 20:22:35,062 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-11 20:22:35,138 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-11 20:22:35,138 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-11 20:22:35,881 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-11 20:22:36,086 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-11 20:22:36,086 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-11 20:22:36,292 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-11 20:22:36,293 - telegram.ext.Application - INFO - Application started
+2026-01-11 20:22:39,442 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:22:39,600 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:22:43,519 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:22:45,507 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:22:45,711 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:22:55,132 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:05,269 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:15,409 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:25,547 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:28,924 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:29,565 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:23:30,462 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:38,723 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:23:44,343 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:23:46,332 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:23:46,504 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-11 20:23:55,856 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:24:02,106 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-11 20:24:02,107 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-11 20:24:02,107 - telegram.ext.Application - INFO - Application.stop() complete

@@ -166,6 +166,32 @@ class WordPressAPI:
             self.logger.error(f"Ошибка получения всех записей: {e}")
             return []
 
+    def get_filtered_appointments(self, limit=50, status_filter=None):
+        """Получение записей с фильтрацией по статусу (для админов)
+        
+        Args:
+            limit: максимальное количество записей
+            status_filter: 'confirmed', 'visited', 'noshow', или None для всех
+        """
+        appointments = self.get_all_appointments(limit)
+        
+        if not status_filter or status_filter == 'all':
+            return appointments
+        
+        # Фильтруем по статусу
+        filtered = []
+        for apt in appointments:
+            status = apt.get('status', '')
+            
+            if status_filter == 'confirmed' and status in ['confirmed', 'pending']:
+                filtered.append(apt)
+            elif status_filter == 'visited' and status == 'visited':
+                filtered.append(apt)
+            elif status_filter == 'noshow' and status == 'noshow':
+                filtered.append(apt)
+        
+        return filtered
+
     def update_appointment_status(self, appointment_id, status_code):
         """Обновление статуса записи"""
         try:

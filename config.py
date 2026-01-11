@@ -1,21 +1,19 @@
-"""
-Конфигурация бота - все настройки в одном месте
-"""
+import os
+from dotenv import load_dotenv
+
+# Загрузка переменных окружения
+load_dotenv()
 
 # ============================================
 # НАСТРОЙКИ TELEGRAM БОТА
 # ============================================
 
 # Токен бота (получить у @BotFather)
-BOT_TOKEN = "7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # ID администраторов (список ID)
-ADMIN_IDS = [
-    1584646131,
-    47625973,
-    8550725349,
-    # Замените на ваш ID
-]
+admin_ids_str = os.getenv("ADMIN_IDS", "")
+ADMIN_IDS = [int(id_str) for id_str in admin_ids_str.split(",") if id_str.strip()]
 
 # Путь к файлу закрепленных номеров
 PINNED_NUMBERS_FILE = "data/pinned_numbers.json"
@@ -26,17 +24,17 @@ PINNED_NUMBERS_FILE = "data/pinned_numbers.json"
 
 # Данные из wp-config.php
 DB_CONFIG = {
-    "host": "localhost",
-    "database": "s1143023_da5on46",
-    "user": "s1143023_da5on46",
-    "password": "BZ64^A1Tw*&n",  # Внимание: '1Tw' а не 'ITW'
-    "port": 3306,
+    "host": os.getenv("DB_HOST", "localhost"),
+    "database": os.getenv("DB_NAME"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "port": int(os.getenv("DB_PORT", 3306)),
     "charset": "utf8mb4",
     "autocommit": True,
 }
 
 # Префикс таблиц (реальный, а не из wp-config.php)
-TABLE_PREFIX = "wp_"
+TABLE_PREFIX = os.getenv("TABLE_PREFIX", "wp_")
 
 # ============================================
 # НАСТРОЙКИ WORDPRESS API
@@ -45,10 +43,10 @@ TABLE_PREFIX = "wp_"
 # WordPress REST API для синхронизации записей
 WORDPRESS_CONFIG = {
     "enabled": True,  # Включить интеграцию с WordPress API
-    "site_url": "https://diason.uz",
-    "username": "sad489on",  # Оставляем для совместимости
-    "password": "OtV6Jnxspz6vCCfs2x",  # Оставляем для совместимости
-    "api_key": "tg_bot_secret_key_8451",  # ✅ НОВЫЙ API КЛЮЧ
+    "site_url": os.getenv("WP_SITE_URL"),
+    "username": os.getenv("WP_USERNAME"),  # Оставляем для совместимости
+    "password": os.getenv("WP_PASSWORD"),  # Оставляем для совместимости
+    "api_key": os.getenv("WP_API_KEY"),  # ✅ НОВЫЙ API КЛЮЧ
     "verify_ssl": True,  # Проверка SSL сертификата
     "timeout": 10,  # Таймаут запросов в секундах
     "retry_attempts": 3,  # Количество попыток при ошибке

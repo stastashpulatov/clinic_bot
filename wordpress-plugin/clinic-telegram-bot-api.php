@@ -387,13 +387,13 @@ function clinic_get_all_appointments($request)
         $limit = 50;
     }
 
-    // 2. Ищем будущие активные записи (исключаем отмененные, посещенные и no-show)
+    // Показываем только БУДУЩИЕ записи (от сегодня и на месяц вперед)
+    // Исключаем только отмененные (status=0)
     $query = "SELECT id, doctor_id, patient_id, appointment_start_date, appointment_start_time, status, description 
              FROM $table_name 
-             WHERE appointment_start_date >= CURDATE() 
-             AND status != 0 
-             AND status != 4 
-             AND status != 5
+             WHERE appointment_start_date >= CURDATE()
+             AND appointment_start_date <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH)
+             AND status != 0
              ORDER BY appointment_start_date ASC, appointment_start_time ASC";
 
     if ($limit > 0) {
