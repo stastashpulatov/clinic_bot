@@ -215,16 +215,24 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         doctors = db.get_doctors()
         doctors_count = len(doctors)
-        db_status = f"✅ База подключена ({doctors_count} врачей)"
     except Exception as e:
         logger.error(f"Ошибка при проверке подключения: {e}")
         doctors_count = 0
-        db_status = "⚠️ Проблема с подключением к базе"
+    
+    # Получаем часы работы
+    work_start = WORKING_HOURS.get('start', '09:00')
+    work_end = WORKING_HOURS.get('end', '18:00')
     
     welcome_text = (
-        f"👋 Здравствуйте, {user.first_name}!\n\n"
-        f"🏥 Добро пожаловать в медицинский центр Diason!\n\n"
-        f"{db_status}\n\n"
+        f"👋 Здравствуйте, <b>{user.first_name}</b>!\n\n"
+        f"🏥 Добро пожаловать в <b>медицинский центр Diason</b>!\n\n"
+        f"🤖 <b>Я помогу вам:</b>\n"
+        f"• 📅 Записаться на прием к врачу\n"
+        f"• 📋 Посмотреть ваши записи\n"
+        f"• 👨‍⚕️ Узнать о наших специалистах\n"
+        f"• ℹ️ Получить информацию о клинике\n\n"
+        f"⏰ <b>Часы работы:</b> {work_start} - {work_end}\n"
+        f"👨‍⚕️ <b>Врачей в базе:</b> {doctors_count}\n\n"
         f"Выберите действие из меню ниже 👇"
     )
     
@@ -234,7 +242,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [KeyboardButton("📅 Записаться на прием")],
         [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
-        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("❓ Помощь")]
+        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
+        [KeyboardButton("❓ Помощь")]
     ]
     
     # Добавляем админские кнопки для админов
@@ -243,7 +252,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     
-    await update.message.reply_text(welcome_text, reply_markup=reply_markup)
+    await update.message.reply_text(welcome_text, reply_markup=reply_markup, parse_mode='HTML')
+
 
 
 async def doctors_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -297,6 +307,35 @@ async def info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     
     await update.message.reply_text(info_text, parse_mode='HTML')
+
+
+async def contacts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда для отображения контактов клиники"""
+    # Получаем часы работы
+    work_start = WORKING_HOURS.get('start', '09:00')
+    work_end = WORKING_HOURS.get('end', '18:00')
+    lunch_start = WORKING_HOURS.get('lunch_start', '13:00')
+    lunch_end = WORKING_HOURS.get('lunch_end', '14:00')
+    
+    contacts_text = (
+        "📞 <b>Контактная информация</b>\n\n"
+        "🏥 <b>Медицинский центр Diason</b>\n\n"
+        "📱 <b>Телефон:</b> +998(71) 123-45-67\n"
+        "📧 <b>Email:</b> info@diason.uz\n"
+        "📍 <b>Адрес:</b> г. Ташкент, ул. Мирабад, 12\n\n"
+        "⏰ <b>Часы работы:</b>\n"
+        f"   Пн-Сб: {work_start} - {work_end}\n"
+        f"   Обед: {lunch_start} - {lunch_end}\n"
+        "   Вс: Выходной\n\n"
+        "🚗 <b>Как добраться:</b>\n"
+        "   Метро: станция Алайский базар\n"
+        "   Автобус: №№ 12, 45, 67\n\n"
+        "💬 Вы также можете записаться через этого бота!\n"
+        "Нажмите \"📅 Записаться на прием\""
+    )
+    
+    await update.message.reply_text(contacts_text, parse_mode='HTML')
+
 
 async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /my - просмотр и отмена записей (для админов - все записи)"""
@@ -1129,6 +1168,8 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await doctors_command(update, context)
     elif text == "ℹ️ О клинике":
         await info_command(update, context)
+    elif text == "📞 Контакты":
+        await contacts_command(update, context)
     elif text == "❓ Помощь":
         await help_command(update, context)
     elif text == "👮‍♂️ Админ панель":
@@ -1158,8 +1199,6 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Начало процесса записи"""
     # Если вызвано кнопкой меню, message будет, если командой - тоже
-async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Начало процесса записи"""
     context.user_data.clear()
     
     # Получаем список врачей
@@ -1526,7 +1565,8 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [KeyboardButton("📅 Записаться на прием")],
         [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
-        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("❓ Помощь")]
+        [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
+        [KeyboardButton("❓ Помощь")]
     ]
     if user.id in ADMIN_IDS:
         keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])

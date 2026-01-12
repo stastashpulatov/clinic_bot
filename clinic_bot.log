@@ -1632,3 +1632,23 @@ task: <Task pending name='Application:7376506390:update_fetcher' coro=<Applicati
 2026-01-12 14:42:41,805 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-12 14:42:41,930 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
 2026-01-12 14:42:43,274 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:48,401 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:48,833 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:50,147 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:55,708 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:56,107 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-12 14:42:59,175 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:59,396 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:59,602 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:43:01,728 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:43:01,855 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:43:03,505 - __main__ - INFO - Получены занятые слоты из WordPress: []
+2026-01-12 14:43:03,672 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:43:06,217 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:43:06,385 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:43:06,576 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:43:06,793 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageReplyMarkup "HTTP/1.1 400 Bad Request"
+2026-01-12 14:43:06,793 - __main__ - ERROR - Ошибка при обработке обновления: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-01-12 14:43:13,026 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:43:13,027 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-12 14:43:13,027 - telegram.ext.Application - INFO - Application.stop() complete
