@@ -1593,3 +1593,42 @@ task: <Task pending name='Application:7376506390:update_fetcher' coro=<Applicati
 2026-01-11 20:24:02,106 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-11 20:24:02,107 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
 2026-01-11 20:24:02,107 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-12 14:41:20,458 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-12 14:41:23,697 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-12 14:41:23,698 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-12 14:41:24,738 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-12 14:41:24,878 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-12 14:41:24,878 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-12 14:41:25,182 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-12 14:41:25,316 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-12 14:41:25,317 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-12 14:41:25,732 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-12 14:41:25,734 - telegram.ext.Application - INFO - Application started
+2026-01-12 14:41:36,544 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:41:46,644 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:41:56,745 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:06,846 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:09,565 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:10,618 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-12 14:42:13,187 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:13,319 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-12 14:42:15,377 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:17,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-12 14:42:18,042 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:18,159 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:19,929 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:25,321 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:29,521 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:29,740 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:31,003 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:34,982 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:36,404 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:36,537 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:36,655 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:37,945 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:38,103 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:38,228 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:41,120 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-12 14:42:41,805 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-12 14:42:41,930 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-12 14:42:43,274 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
