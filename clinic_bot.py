@@ -784,11 +784,128 @@ async def show_admin_statistics(update: Update, context: ContextTypes.DEFAULT_TY
         f"<b>Всего записей: {total_count}</b>"
     )
     
-    # Кнопка возврата к фильтрам
-    back_keyboard = [[InlineKeyboardButton("⬅️ Назад к записям", callback_data="admin_filter_all")]]
+    # Кнопка возврата к админ панели
+    back_keyboard = [[InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")]]
     back_markup = InlineKeyboardMarkup(back_keyboard)
     
     await query.edit_message_text(stats_text, reply_markup=back_markup, parse_mode='HTML')
+
+
+async def show_pinned_numbers_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показать закрепленные номера через callback"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    numbers = load_pinned_numbers()
+    
+    if not numbers:
+        text = "📌 <b>Закрепленные номера</b>\n\n📋 Список закрепленных номеров пуст."
+    else:
+        text = "📌 <b>Закрепленные номера:</b>\n\n"
+        for i, num in enumerate(numbers, 1):
+            text += f"{i}. {num}\n"
+        
+        text += f"\n<b>Всего номеров:</b> {len(numbers)}"
+    
+    # Кнопка возврата
+    back_keyboard = [[InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")]]
+    back_markup = InlineKeyboardMarkup(back_keyboard)
+    
+    await query.edit_message_text(text, reply_markup=back_markup, parse_mode='HTML')
+
+
+async def show_list_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показать список записей из БД через callback"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    try:
+        appointments = db.get_all_appointments(limit=20)
+        
+        if not appointments:
+            text = "📋 <b>Список записей (БД)</b>\n\n📭 Записей в базе не найдено."
+        else:
+            text = "📋 <b>Последние 20 записей из БД:</b>\n\n"
+            
+            for apt in appointments:
+                # Форматирование даты и времени
+                dt_str = "N/A"
+                if apt.get('appointment_date'):
+                    dt_str = str(apt['appointment_date'])
+                
+                tm_str = "N/A"    
+                if apt.get('appointment_time'):
+                    tm_str = str(apt['appointment_time'])
+
+                status_icon = "✅" if apt.get('status') == 'confirmed' else "❓"
+                
+                text += (
+                    f"{status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
+                    f"📞 {apt.get('user_phone', 'Нет телефона')}\n"
+                    f"👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
+                    f"📅 {dt_str} в {tm_str}\n"
+                    f"────────────────\n"
+                )
+        
+        # Кнопка возврата
+        back_keyboard = [[InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")]]
+        back_markup = InlineKeyboardMarkup(back_keyboard)
+        
+        # Разбиваем, если слишком длинное
+        if len(text) > 4096:
+            # Отправляем первую часть с кнопкой
+            await query.edit_message_text(text[:4096], parse_mode='HTML')
+            # Отправляем остальные части
+            parts = [text[i:i+4096] for i in range(4096, len(text), 4096)]
+            for part in parts[:-1]:
+                await query.message.reply_text(part, parse_mode='HTML')
+            # Последняя часть с кнопкой
+            await query.message.reply_text(parts[-1], reply_markup=back_markup, parse_mode='HTML')
+        else:
+            await query.edit_message_text(text, reply_markup=back_markup, parse_mode='HTML')
+            
+    except Exception as e:
+        logger.error(f"Ошибка в show_list_callback: {e}")
+        await query.edit_message_text("❌ Произошла ошибка при получении списка.", parse_mode='HTML')
+
+
+async def back_to_admin_panel_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Возврат в главное меню админ панели"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    # Показываем главное меню админ панели
+    keyboard = [
+        [InlineKeyboardButton("📋 Все записи", callback_data="admin_filter_all")],
+        [InlineKeyboardButton("📊 Статистика", callback_data="admin_stats")],
+        [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")],
+        [InlineKeyboardButton("📌 Закрепленные номера", callback_data="admin_pinned")],
+        [InlineKeyboardButton("📋 Список записей (БД)", callback_data="admin_list")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await query.edit_message_text(
+        "👮‍♂️ <b>Админ панель</b>\n\n"
+        "Выберите действие:",
+        reply_markup=reply_markup,
+        parse_mode='HTML'
+    )
+
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1015,14 +1132,28 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif text == "❓ Помощь":
         await help_command(update, context)
     elif text == "👮‍♂️ Админ панель":
+        # Проверяем права админа
+        user_id = update.effective_user.id
+        if user_id not in ADMIN_IDS:
+            await update.message.reply_text("⛔ У вас нет доступа к админ панели.")
+            return
+        
         # Предлагаем выбор админских действий
         keyboard = [
             [InlineKeyboardButton("📋 Все записи", callback_data="admin_filter_all")],
-            [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")] # Нужно добавить обработчик
+            [InlineKeyboardButton("📊 Статистика", callback_data="admin_stats")],
+            [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")],
+            [InlineKeyboardButton("📌 Закрепленные номера", callback_data="admin_pinned")],
+            [InlineKeyboardButton("📋 Список записей (БД)", callback_data="admin_list")]
         ]
-        # Проще пока перенаправить на /my, а экспорт через команду
-        await my_appointments_command(update, context)
-        await update.message.reply_text("💡 Для экспорта записей в Excel используйте команду /export")
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await update.message.reply_text(
+            "👮‍♂️ <b>Админ панель</b>\n\n"
+            "Выберите действие:",
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
 
 async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Начало процесса записи"""
@@ -1547,6 +1678,9 @@ def main():
     application.add_handler(CallbackQueryHandler(handle_admin_action, pattern="^adm_[vn]_")) # Admin actions handlers
     application.add_handler(CallbackQueryHandler(handle_admin_filter, pattern="^admin_filter_")) # Admin filter handlers
     application.add_handler(CallbackQueryHandler(show_admin_statistics, pattern="^admin_stats$")) # Admin statistics
+    application.add_handler(CallbackQueryHandler(show_pinned_numbers_callback, pattern="^admin_pinned$")) # Admin pinned numbers
+    application.add_handler(CallbackQueryHandler(show_list_callback, pattern="^admin_list$")) # Admin list from DB
+    application.add_handler(CallbackQueryHandler(back_to_admin_panel_callback, pattern="^back_to_admin_panel$")) # Back to admin panel
     application.add_handler(conv_handler)
     
     # Обработчик текстовых сообщений (для меню) должен быть ПОСЛЕ ConversationHandler
