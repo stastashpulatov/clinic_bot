@@ -33,6 +33,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+async def run_sync(func, *args, **kwargs):
+    """Запуск синхронной функции в отдельном потоке"""
+    loop = asyncio.get_running_loop()
+    from functools import partial
+    return await loop.run_in_executor(None, partial(func, *args, **kwargs))
+
 # Константы для ConversationHandler
 SELECT_DOCTOR, SELECT_DATE, SELECT_TIME, CONFIRM_BOOKING = range(4)
 
@@ -207,6 +213,18 @@ if WORDPRESS_CONFIG.get('enabled', False):
         logger.error(f"❌ Ошибка инициализации WordPress API: {e}")
         wp_api = None
 
+async def id_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда для получения ID пользователя"""
+    user_id = update.effective_user.id
+    is_admin = user_id in ADMIN_IDS
+    status = "АДМИН 👮‍♂️" if is_admin else "ПОЛЬЗОВАТЕЛЬ 👤"
+    
+    msg = f"🆔 Ваш ID: `{user_id}`\nСтатус: {status}\nАдминов в списке: {len(ADMIN_IDS)}"
+    if not is_admin:
+        msg += "\n(Если вы добавили ID, перезагрузите бота)"
+        
+    await update.message.reply_text(msg, parse_mode='Markdown')
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /start"""
     user = update.effective_user
@@ -239,16 +257,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Создаем главное меню с кнопками
     from telegram import ReplyKeyboardMarkup, KeyboardButton
     
-    keyboard = [
+    keyboard = []
+    
+    # Сначала добавляем админскую кнопку, если есть права
+    if user.id in ADMIN_IDS:
+        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+        
+    # Добавляем основные кнопки
+    keyboard.extend([
         [KeyboardButton("📅 Записаться на прием")],
         [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
         [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
         [KeyboardButton("❓ Помощь")]
-    ]
-    
-    # Добавляем админские кнопки для админов
-    if user.id in ADMIN_IDS:
-        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+    ])
     
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     
@@ -258,7 +279,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def doctors_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /doctors"""
-    await update.message.reply_text("👨‍⚕️ Получаю список врачей...")
+    # await update.message.reply_text("👨‍⚕️ Получаю список врачей...") # Removed to reduce noise
     
     doctors = db.get_doctors()
     
@@ -298,11 +319,11 @@ async def info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "✅ Ультразвуковые исследования\n"
         "✅ Физиотерапия и массаж\n"
         "✅ Профилактические осмотры\n\n"
-        "<b>Контактная информация:</b>\n"
-        "📍 Адрес: г. Ташкент, ул. Мирабад, 12\n"
-        "📞 Телефон: +998(71) 123-45-67\n"
-        "🕒 Часы работы: 9:00-18:00 (без выходных)\n"
-        "📧 Email: info@diason.uz\n\n"
+        f"<b>Контактная информация:</b>\n"
+        f"📍 Адрес: {CLINIC_INFO['address']}\n"
+        f"📞 Телефон: {CLINIC_INFO['phone']}\n"
+        f"🕒 Часы работы: {CLINIC_INFO['working_hours']}\n"
+        f"📧 Email: {CLINIC_INFO['email']}\n\n"
         "Мы заботимся о вашем здоровье!"
     )
     
@@ -317,19 +338,31 @@ async def contacts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lunch_start = WORKING_HOURS.get('lunch_start', '13:00')
     lunch_end = WORKING_HOURS.get('lunch_end', '14:00')
     
+    
+    lunch_str = ""
+    if lunch_start != "00:00" and lunch_end != "00:00":
+        lunch_str = f"   Обед: {lunch_start} - {lunch_end}\n"
+    elif lunch_start == lunch_end: # Если начало и конец совпадают (например "13:00" но мы так не пишем), или оба 00:00
+        lunch_str = "   Без обеда\n" if lunch_start == "00:00" else "" # Или просто не выводим
+        # В данном случае, если в конфиге 00:00, лучше просто не писать строку про обед, или написать "Без перерыва"
+        if lunch_start == "00:00":
+             lunch_str = "   Без перерыва\n"
+
+    from config import CLINIC_INFO
+    
     contacts_text = (
         "📞 <b>Контактная информация</b>\n\n"
-        "🏥 <b>Медицинский центр Diason</b>\n\n"
-        "📱 <b>Телефон:</b> +998(71) 123-45-67\n"
-        "📧 <b>Email:</b> info@diason.uz\n"
-        "📍 <b>Адрес:</b> г. Ташкент, ул. Мирабад, 12\n\n"
+        f"🏥 <b>{CLINIC_INFO['name']}</b>\n\n"
+        f"📱 <b>Телефон:</b> {CLINIC_INFO['phone']}\n"
+        f"📧 <b>Email:</b> {CLINIC_INFO['email']}\n"
+        f"📍 <b>Адрес:</b> {CLINIC_INFO['address']}\n\n"
         "⏰ <b>Часы работы:</b>\n"
         f"   Пн-Сб: {work_start} - {work_end}\n"
-        f"   Обед: {lunch_start} - {lunch_end}\n"
+        f"{lunch_str}"
         "   Вс: Выходной\n\n"
         "🚗 <b>Как добраться:</b>\n"
-        "   Метро: станция Алайский базар\n"
-        "   Автобус: №№ 12, 45, 67\n\n"
+        "   Метро: станция Буюк Ипак Йули\n"
+        "   Ориентир: гостиница Саёхат\n\n"
         "💬 Вы также можете записаться через этого бота!\n"
         "Нажмите \"📅 Записаться на прием\""
     )
@@ -341,108 +374,7 @@ async def my_appointments_command(update: Update, context: ContextTypes.DEFAULT_
     """Команда /my - просмотр и отмена записей (для админов - все записи)"""
     user_id = update.effective_user.id
     
-    # === ЛОГИКА ДЛЯ АДМИНОВ ===
-    if user_id in ADMIN_IDS:
-        # Получаем текущий фильтр из контекста (по умолчанию 'all')
-        current_filter = context.user_data.get('admin_filter', 'all')
-        
-        # Получаем отфильтрованные записи
-        appointments = wp_api.get_filtered_appointments(limit=50, status_filter=current_filter)
-        
-        # Определяем название фильтра для отображения
-        filter_names = {
-            'all': 'Все записи',
-            'confirmed': 'Подтвержденные',
-            'visited': 'Посетили',
-            'noshow': 'Не пришли'
-        }
-        filter_display = filter_names.get(current_filter, 'Все записи')
-        
-        # Формируем единое сообщение со всеми записями
-        message_text = f"👮‍♂️ <b>Режим администратора</b>\n📋 Фильтр: <b>{filter_display}</b>\n\n"
-        
-        if not appointments:
-            message_text += "📭 Записей не найдено"
-        else:
-            message_text += f"<b>Найдено записей: {len(appointments)}</b>\n"
-            message_text += "━━━━━━━━━━━━━━━━━━━━\n\n"
-            
-            # Группируем записи по статусу для удобства
-            for i, apt in enumerate(appointments[:10], 1):  # Показываем первые 10
-                dt_str = str(apt.get('appointment_date', 'N/A'))
-                tm_str = str(apt.get('appointment_time', 'N/A'))[:5]  # Только HH:MM
-                
-                raw_status = apt.get('status')
-                if raw_status == 'confirmed' or raw_status == 'pending':
-                    status_icon = "🔵"
-                    status_text = "Ожидает"
-                elif raw_status == 'visited':
-                    status_icon = "✅"
-                    status_text = "Посетил"
-                elif raw_status == 'noshow':
-                    status_icon = "⛔"
-                    status_text = "Не пришел"
-                else:
-                    status_icon = "❓"
-                    status_text = "Неизвестно"
-                
-                # Источник
-                src = apt.get('source')
-                if src == 'bot' or (not src and apt.get('user_telegram_id')):
-                    source_icon = "🤖"
-                else:
-                    source_icon = "🌐"
-                
-                message_text += (
-                    f"{i}. {status_icon} <b>{apt.get('user_name', 'Неизвестно')}</b>\n"
-                    f"   📞 {apt.get('user_phone', 'Нет')}\n"
-                    f"   👨‍⚕️ {apt.get('doctor_name', 'Врач удален')}\n"
-                    f"   📅 {dt_str} | 🕐 {tm_str}\n"
-                    f"   {source_icon} {status_text}\n\n"
-                )
-            
-            if len(appointments) > 10:
-                message_text += f"... и еще {len(appointments) - 10} записей\n\n"
-        
-        # Создаем кнопки фильтров
-        filter_keyboard = [
-            [
-                InlineKeyboardButton("📋 Все" if current_filter == 'all' else "Все", callback_data="admin_filter_all"),
-                InlineKeyboardButton("🔵 Ожидают" if current_filter == 'confirmed' else "Ожидают", callback_data="admin_filter_confirmed"),
-            ],
-            [
-                InlineKeyboardButton("✅ Посетили" if current_filter == 'visited' else "Посетили", callback_data="admin_filter_visited"),
-                InlineKeyboardButton("⛔ Не пришли" if current_filter == 'noshow' else "Не пришли", callback_data="admin_filter_noshow"),
-            ],
-            [
-                InlineKeyboardButton("📊 Статистика", callback_data="admin_stats"),
-                InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")
-            ]
-        ]
-        
-        # Добавляем кнопки действий для подтвержденных записей
-        if current_filter in ['all', 'confirmed']:
-            confirmed_apts = [apt for apt in appointments if apt.get('status') in ['confirmed', 'pending']]
-            if confirmed_apts:
-                filter_keyboard.append([InlineKeyboardButton("━━━ Действия ━━━", callback_data="noop")])
-                for apt in confirmed_apts[:5]:  # Первые 5 подтвержденных
-                    apt_id = apt.get('id')
-                    user_tg_id = apt.get('telegram_id') or 0
-                    name = apt.get('user_name', 'Неизвестно')[:15]  # Обрезаем длинные имена
-                    filter_keyboard.append([
-                        InlineKeyboardButton(f"✅ {name}", callback_data=f"adm_v_{apt_id}_{user_tg_id}"),
-                        InlineKeyboardButton(f"⛔ {name}", callback_data=f"adm_n_{apt_id}_{user_tg_id}")
-                    ])
-        
-        filter_markup = InlineKeyboardMarkup(filter_keyboard)
-        
-        await update.message.reply_text(
-            message_text,
-            reply_markup=filter_markup,
-            parse_mode='HTML'
-        )
-        
-        return
+    # === ЛОГИКА ДЛЯ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ ===
 
     # === ЛОГИКА ДЛЯ ОБЫЧНЫХ ПОЛЬЗОВАТЕЛЕЙ ===
     if not wp_api:
@@ -492,7 +424,7 @@ async def cancel_appointment_callback(update: Update, context: ContextTypes.DEFA
     apt_id = query.data.split('_')[2]
     
     # Пытаемся отменить
-    if wp_api and wp_api.cancel_appointment(apt_id):
+    if wp_api and await run_sync(wp_api.cancel_appointment, apt_id):
         await query.edit_message_text(
             f"{query.message.text_html}\n\n"
             f"✅ <b>ЗАПИСЬ ОТМЕНЕНА</b>",
@@ -526,12 +458,12 @@ async def handle_admin_action(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     if action_type == 'v':
         # Посетил -> Status 4
-        success = wp_api.update_appointment_status(apt_id, 4)
+        success = await run_sync(wp_api.update_appointment_status, apt_id, 4)
         action_text = "✅ Посетил"
         user_msg = "🏥 <b>Спасибо за посещение нашего медицинского центра!</b>\nБудем рады видеть вас снова! Желаем крепкого здоровья! 🌟"
     else:
         # Не пришел -> Status 5 (No Show)
-        success = wp_api.update_appointment_status(apt_id, 5)
+        success = await run_sync(wp_api.update_appointment_status, apt_id, 5)
         action_text = "⛔ Не пришел"
         user_msg = "⚠️ <b>Вы пропустили запись.</b>\nМы отметили, что вы не пришли на прием. Если вы хотите записаться снова, используйте команду /book."
 
@@ -1198,9 +1130,14 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Начало процесса записи"""
+    # Ограничение времени для ТЕКУЩЕГО дня проверяется позже при выборе даты
+    # (Removed global block)
+
+
     # Если вызвано кнопкой меню, message будет, если командой - тоже
     context.user_data.clear()
     
+    # Получаем список врачей
     # Получаем список врачей
     doctors = db.get_doctors()
     
@@ -1247,11 +1184,24 @@ async def select_doctor(update: Update, context: ContextTypes.DEFAULT_TYPE):
     doctor_id = int(query.data.split('_')[1])
     context.user_data['doctor_id'] = doctor_id
     
+    # Сохраняем имя врача для дальнейшего использования
+    doctors = db.get_doctors()
+    doctor_name = "Неизвестный врач"
+    for doc in doctors:
+        if doc['id'] == doctor_id:
+            doctor_name = doc['name']
+            break
+    context.user_data['doctor_name'] = doctor_name
+    
     # Генерируем даты на ближайшие 7 дней
     keyboard = []
     today = datetime.now()
     
     for i in range(7):
+        # Если сегодня и время > 14:00, пропускаем выбор сегодняшней даты
+        if i == 0 and today.hour >= 14:
+            continue
+            
         date = today + timedelta(days=i)
         date_str = date.strftime('%Y-%m-%d')
         display_date = date.strftime('%d.%m.%Y (%A)')
@@ -1460,19 +1410,13 @@ async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     time = query.data.split('_')[1]
     context.user_data['time'] = time
     
-    await query.edit_message_text(
-        f"Отлично! Вы выбрали:\n\n"
-        f"📅 Дата: {context.user_data['date']}\n"
-        f"🕐 Время: {time}\n\n"
-        f"Теперь отправьте ваше ФИО и номер телефона в формате:\n\n"
-        f"<b>Пример:</b>\n"
-        f"Иванов Иван Иванович\n",
-        parse_mode='HTML'
-    )
-    # Удаляем инлайн-клавиатуру с выбором времени
-    await query.edit_message_reply_markup(reply_markup=None)
-    
-    # Переходим к запросу контакта
+    # Удаляем сообщение с календарем/временем, чтобы не захламлять чат
+    try:
+        await query.message.delete()
+    except Exception:
+        pass
+        
+    # Сразу переходим к запросу контакта
     return await request_contact(update, context)
 
 async def request_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1483,14 +1427,18 @@ async def request_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     
     # Если это CallbackQuery, то update.message - это сообщение, к которому привязана кнопка
-    # Если это Message, то update.message - это само сообщение
-    message_to_reply = update.callback_query.message if update.callback_query else update.message
+    # Но мы его уже удалили в select_time, поэтому отправляем новое сообщение
     
-    await message_to_reply.reply_text(
-        f"✅ Вы выбрали время: {context.user_data['time']}\n\n"
-        f"Для завершения записи, пожалуйста, поделитесь вашим номером телефона 👇\n"
-        f"Нажмите кнопку ниже, чтобы отправить номер:",
-        reply_markup=reply_markup
+    # Используем effective_chat
+    chat_id = update.effective_chat.id
+    
+    await context.bot.send_message(
+        chat_id=chat_id,
+        text=f"✅ Вы выбрали время: <b>{context.user_data['time']}</b>\n\n"
+             f"Для завершения записи, пожалуйста, поделитесь вашим номером телефона 👇\n"
+             f"Нажмите кнопку ниже, чтобы отправить номер, или введите его вручную:",
+        reply_markup=reply_markup,
+        parse_mode='HTML'
     )
     return CONFIRM_BOOKING
 
@@ -1551,29 +1499,66 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     
     # 1. Создаем запись в WordPress
-    success, result = await wp_api.create_appointment(
-        doctor_id=doctor_id,
-        date=date,
-        time=time_full,
-        user_name=name,
-        user_phone=phone,
-        telegram_id=user.id
-    )
+    success = False
+    result = "WordPress API не подключен или ошибка сети"
+    
+    if wp_api:
+        try:
+            success, result = await run_sync(wp_api.create_appointment,
+                doctor_id=doctor_id,
+                date=date,
+                time=time_full,
+                patient_name=name,
+                patient_phone=phone,
+                telegram_id=user.id
+            )
+        except Exception as e:
+            logger.error(f"Ошибка вызова WP API: {e}")
+            result = str(e)
+    else:
+        logger.warning("WordPress API не инициализирован. Пропускаем сохранение на сайт.")
+    
+    # 2. Создаем запись в локальной БД (дублирование)
+    try:
+        db_success = db.create_appointment(
+            user_id=user.id,
+            doctor_id=doctor_id,
+            appointment_date=date,
+            appointment_time=time_full,
+            user_name=name,
+            user_phone=phone
+        )
+        if db_success:
+            logger.info(f"✅ Запись сохранена в локальной БД: {name} на {date} {time}")
+        else:
+            logger.warning(f"⚠️ Не удалось сохранить запись в локальную БД")
+    except Exception as e:
+        logger.error(f"❌ Ошибка сохранения в локальную БД: {e}")
     
     # Отправляем главное меню обратно
     from telegram import ReplyKeyboardMarkup, KeyboardButton
-    keyboard = [
+    
+    keyboard = []
+    # Сначала добавляем админскую кнопку, если есть права
+    if user.id in ADMIN_IDS:
+        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+        logger.info(f"✅ User {user.id} found in ADMIN_IDS. Added admin button.")
+    else:
+        logger.info(f"User {user.id} NOT in ADMIN_IDS: {ADMIN_IDS}")
+
+    keyboard.extend([
         [KeyboardButton("📅 Записаться на прием")],
         [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
         [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
         [KeyboardButton("❓ Помощь")]
-    ]
-    if user.id in ADMIN_IDS:
-        keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
+    ])
+    
+    logger.info(f"Keyboard rows: {len(keyboard)}")
+        
     main_menu = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
     if success:
-        appointment_id = result.get('id')
+        appointment_id = result
         logger.info(f"✅ Запись создана: ID {appointment_id}, {name} к врачу {doctor_id} на {date} {time}")
         
         await update.message.reply_text(
@@ -1588,11 +1573,23 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=main_menu
         )
         
+        # Меню для админов (всегда с кнопкой)
+        # Меню для админов (всегда с кнопкой)
+        admin_keyboard = [
+            [KeyboardButton("👮‍♂️ Админ панель")],
+            [KeyboardButton("📅 Записаться на прием")],
+            [KeyboardButton("📋 Мои записи"), KeyboardButton("👨‍⚕️ Наши врачи")],
+            [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
+            [KeyboardButton("❓ Помощь")]
+        ]
+        admin_menu = ReplyKeyboardMarkup(admin_keyboard, resize_keyboard=True)
+
         # Оповещение админов
         for admin_id in ADMIN_IDS:
             try:
                 await context.bot.send_message(
                     chat_id=admin_id,
+                    reply_markup=admin_menu,
                     text=f"🆕 <b>НОВАЯ ЗАПИСЬ!</b>\n"
                          f"� {name} ({phone})\n"
                          f"👨‍⚕️ {user_data['doctor_name']}\n"
@@ -1701,10 +1698,12 @@ def main():
             ],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
+        allow_reentry=True
     )
     
     # Регистрируем обработчики команд
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("id", id_command))
     application.add_handler(CommandHandler("doctors", doctors_command))
     application.add_handler(CommandHandler("info", info_command))
     application.add_handler(CommandHandler("help", help_command))

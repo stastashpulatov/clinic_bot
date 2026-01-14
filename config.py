@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 
 # Загрузка переменных окружения
-load_dotenv()
+# Загрузка переменных окружения
+# Используем абсолютный путь к файлу .env, чтобы избежать проблем при запуске из другой директории
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"), override=True)
 
 # ============================================
 # НАСТРОЙКИ TELEGRAM БОТА
@@ -60,19 +63,19 @@ WORDPRESS_CONFIG = {
 
 CLINIC_INFO = {
     "name": "Медицинский центр Diason",
-    "address": "г. Ташкент, ул. Мирабад, 12",
-    "phone": "+998(71) 123-45-67",
-    "email": "info@diason.uz",
-    "working_hours": "9:00-18:00 (без выходных)",
+    "address": "г. Ташкент, ул Буюк Ипак Йули, 276",
+    "phone": "+998(55) 516 11 00, +998(55) 516 18 18",
+    "email": "diason2new@gmail.com",
+    "working_hours": "09:00-15:00 (Вс выходной)",
     "website": "https://diason.uz",
 }
 
 # Время работы врачей
 WORKING_HOURS = {
     "start": "09:00",
-    "end": "18:00",
-    "lunch_start": "00:00",
-    "lunch_end": "00:00",
+    "end": "15:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
 }
 
 # Длительность приема (в минутах)
@@ -162,5 +165,6 @@ __all__ = [
     "BOT_SETTINGS",
     "MESSAGES",
     "KEYBOARDS",
+    "ADMIN_IDS",
 ]
 
