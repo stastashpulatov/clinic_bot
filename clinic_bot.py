@@ -18,7 +18,7 @@ import mysql.connector
 from mysql.connector import Error
 import asyncio
 from wordpress_api import WordPressAPI, calculate_available_slots, generate_day_slots
-from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE
+from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE, DB_CONFIG, TABLE_PREFIX, BOT_TOKEN, CLINIC_INFO
 import json
 from functools import wraps
 
@@ -41,21 +41,6 @@ async def run_sync(func, *args, **kwargs):
 
 # Константы для ConversationHandler
 SELECT_DOCTOR, SELECT_DATE, SELECT_TIME, CONFIRM_BOOKING = range(4)
-
-# РЕАЛЬНЫЕ РАБОЧИЕ ДАННЫЕ
-DB_CONFIG = {
-    'host': 'localhost',
-    'database': 's1143023_da5on46',
-    'user': 's1143023_da5on46',
-    'password': 'BZ64^A1Tw*&n',
-    'port': 3306,
-    'charset': 'utf8mb4'
-}
-
-# РЕАЛЬНЫЙ ПРЕФИКС ТАБЛИЦ
-TABLE_PREFIX = 'wp_'
-
-BOT_TOKEN = '7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4'
 
 # Глобальные переменные
 db = None
@@ -80,19 +65,10 @@ class ClinicDatabase:
     
     def get_doctors(self):
         """Получение списка врачей"""
-        # FORCED FALLBACK: Return hardcoded list directly
-        return [
-                {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": ""},
-                {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории"},
-                {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": ""},
-                {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": ""},
-                {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": ""},
-                {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": ""}
-        ]
-
         connection = self.get_connection()
         if not connection:
-            return []
+            logger.warning("Нет подключения к БД, используем резервный список врачей")
+            return self._get_fallback_doctors()
         
         try:
             cursor = connection.cursor(dictionary=True)
@@ -108,16 +84,31 @@ class ClinicDatabase:
             cursor.execute(query)
             doctors = cursor.fetchall()
             
+            if not doctors:
+                logger.info("Список врачей из БД пуст, используем резервный список")
+                return self._get_fallback_doctors()
+
             logger.info(f"Получено {len(doctors)} врачей")
             return doctors
             
         except Error as e:
             logger.error(f"Ошибка получения врачей: {e}")
-            return []
+            return self._get_fallback_doctors()
         finally:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
+
+    def _get_fallback_doctors(self):
+        """Резервный список врачей"""
+        return [
+            {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": ""},
+            {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории"},
+            {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": ""},
+            {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": ""},
+            {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": ""},
+            {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": ""}
+        ]
 
 
     
@@ -231,7 +222,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Проверяем подключение
     try:
-        doctors = db.get_doctors()
+        doctors = await run_sync(db.get_doctors)
         doctors_count = len(doctors)
     except Exception as e:
         logger.error(f"Ошибка при проверке подключения: {e}")
@@ -260,7 +251,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = []
     
     # Сначала добавляем админскую кнопку, если есть права
-    if user.id in ADMIN_IDS:
+    is_admin = user.id in ADMIN_IDS
+    logger.info(f"Start command: User {user.id} ({user.first_name}). Is Admin: {is_admin}. Admin list len: {len(ADMIN_IDS)}")
+    
+    if is_admin:
         keyboard.append([KeyboardButton("👮‍♂️ Админ панель")])
         
     # Добавляем основные кнопки
@@ -271,7 +265,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [KeyboardButton("❓ Помощь")]
     ])
     
-    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, is_persistent=True)
     
     await update.message.reply_text(welcome_text, reply_markup=reply_markup, parse_mode='HTML')
 
@@ -281,7 +275,7 @@ async def doctors_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Команда /doctors"""
     # await update.message.reply_text("👨‍⚕️ Получаю список врачей...") # Removed to reduce noise
     
-    doctors = db.get_doctors()
+    doctors = await run_sync(db.get_doctors)
     
     if not doctors:
         await update.message.reply_text(
@@ -1520,7 +1514,8 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # 2. Создаем запись в локальной БД (дублирование)
     try:
-        db_success = db.create_appointment(
+        db_success = await run_sync(
+            db.create_appointment,
             user_id=user.id,
             doctor_id=doctor_id,
             appointment_date=date,
@@ -1555,7 +1550,7 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     logger.info(f"Keyboard rows: {len(keyboard)}")
         
-    main_menu = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    main_menu = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, is_persistent=True)
 
     if success:
         appointment_id = result
@@ -1582,7 +1577,7 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [KeyboardButton("ℹ️ О клинике"), KeyboardButton("📞 Контакты")],
             [KeyboardButton("❓ Помощь")]
         ]
-        admin_menu = ReplyKeyboardMarkup(admin_keyboard, resize_keyboard=True)
+        admin_menu = ReplyKeyboardMarkup(admin_keyboard, resize_keyboard=True, is_persistent=True)
 
         # Оповещение админов
         for admin_id in ADMIN_IDS:
@@ -1593,7 +1588,7 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     text=f"🆕 <b>НОВАЯ ЗАПИСЬ!</b>\n"
                          f"� {name} ({phone})\n"
                          f"👨‍⚕️ {user_data['doctor_name']}\n"
-                         f"� {date} {time}\n"
+                         f"🗓️ {date} {time}\n"
                          f"🤖 Источник: Бот",
                     parse_mode='HTML'
                 )
@@ -1601,13 +1596,14 @@ async def finalize_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 logger.error(f"Не удалось отправить уведомление админу {admin_id}: {e}")
                 
     else:
-        logger.error(f"Ошибка создания записи: {result}")
+        # Failure case
+        logger.error(f"❌ Ошибка создания записи для {user.id}: {result}")
         error_msg = "Неизвестная ошибка"
         if isinstance(result, str):
             error_msg = result
         elif isinstance(result, dict) and 'message' in result:
              error_msg = result['message']
-             
+
         await update.message.reply_text(
             f"❌ <b>Ошибка при создании записи</b>\n"
             f"{error_msg}\n"

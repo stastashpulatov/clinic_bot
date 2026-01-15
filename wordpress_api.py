@@ -99,13 +99,15 @@ class WordPressAPI:
                 result = response.json()
                 if result.get('success'):
                     return True, result.get('id')
+                else:
+                    return False, result.get('message', 'Неизвестная ошибка от API')
             
             self.logger.error(f"Ошибка создания записи: {response.text}")
-            return False, None
+            return False, f"HTTP Error {response.status_code}: {response.text}"
             
         except Exception as e:
             self.logger.error(f"Исключение при создании записи: {e}")
-            return False, None
+            return False, str(e)
 
 
     def get_patient_appointments(self, telegram_id):
