@@ -3,9 +3,16 @@ from dotenv import load_dotenv
 
 # Загрузка переменных окружения
 # Загрузка переменных окружения
-# Используем абсолютный путь к файлу .env, чтобы избежать проблем при запуске из другой директории
+# Используем абсолютный путь к файлу .env
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, ".env"), override=True)
+env_path = os.path.join(BASE_DIR, ".env")
+load_dotenv(env_path, override=True)
+
+# Debug: Check if vars loaded
+if not os.getenv("BOT_TOKEN"):
+    print(f"DEBUG: .env path: {env_path}")
+    print(f"DEBUG: .env exists: {os.path.exists(env_path)}")
+    print("DEBUG: BOT_TOKEN not found in env!")
 
 # ============================================
 # НАСТРОЙКИ TELEGRAM БОТА

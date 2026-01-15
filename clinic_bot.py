@@ -18,7 +18,17 @@ import mysql.connector
 from mysql.connector import Error
 import asyncio
 from wordpress_api import WordPressAPI, calculate_available_slots, generate_day_slots
-from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE, DB_CONFIG, TABLE_PREFIX, BOT_TOKEN, CLINIC_INFO
+from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE, DB_CONFIG, TABLE_PREFIX, BOT_TOKEN
+try:
+    from config import CLINIC_INFO
+except ImportError:
+    # Fallback if config.py is old
+    CLINIC_INFO = {
+        "address": "г. Ташкент",
+        "phone": "+998(55) 516 11 00",
+        "working_hours": "09:00-15:00",
+        "email": "diason2new@gmail.com"
+    }
 import json
 from functools import wraps
 
