@@ -1433,14 +1433,26 @@ async def request_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Если это CallbackQuery, то update.message - это сообщение, к которому привязана кнопка
     # Но мы его уже удалили в select_time, поэтому отправляем новое сообщение
     
-    # Используем effective_chat
+    # Используем effective_user для проверки админа
+    user = update.effective_user
     chat_id = update.effective_chat.id
+    
+    msg_text = f"✅ Вы выбрали время: <b>{context.user_data['time']}</b>\n\n"
+    
+    if user.id in ADMIN_IDS:
+        msg_text += (
+            "Для завершения записи поделитесь номером телефона 👇\n"
+            "Нажмите кнопку или введите номер вручную (для админов):"
+        )
+    else:
+        msg_text += (
+            "Для завершения записи, пожалуйста, поделитесь вашим номером телефона 👇\n"
+            "Нажмите кнопку ниже, чтобы отправить номер:"
+        )
     
     await context.bot.send_message(
         chat_id=chat_id,
-        text=f"✅ Вы выбрали время: <b>{context.user_data['time']}</b>\n\n"
-             f"Для завершения записи, пожалуйста, поделитесь вашим номером телефона 👇\n"
-             f"Нажмите кнопку ниже, чтобы отправить номер, или введите его вручную:",
+        text=msg_text,
         reply_markup=reply_markup,
         parse_mode='HTML'
     )
@@ -1467,18 +1479,51 @@ async def confirm_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return CONFIRM_BOOKING
 
-    # 2. Если пришел ТЕКСТ (Имя)
+    # 2. Если пришел ТЕКСТ (Имя или телефон вручную)
     if message.text and not message.contact:
-        # Если телефон еще не получен - просим телефон (вдруг пользователь ввел текст вместо кнопки)
+        # Если телефон еще не получен
         if 'phone' not in context.user_data:
-             from telegram import ReplyKeyboardMarkup, KeyboardButton
-             keyboard = [[KeyboardButton("📞 Поделиться номером телефона", request_contact=True)]]
-             reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
-             await message.reply_text(
+            user = update.effective_user
+            
+            # АДМИН: Разрешаем ручной ввод
+            if user.id in ADMIN_IDS:
+                raw_phone = message.text.strip()
+                # Простая проверка: есть цифры и длина приемлемая
+                clean_phone = ''.join(filter(str.isdigit, raw_phone))
+                
+                if len(clean_phone) >= 7:
+                    if not raw_phone.startswith('+'):
+                         # Если ввели без плюса, можно добавить, но лучше оставить как есть или почистить
+                         # Для простоты сохраняем как ввел админ, но убеждаемся что это похоже на номер
+                         pass
+                    
+                    context.user_data['phone'] = raw_phone
+                    
+                    # Спрашиваем имя
+                    from telegram import ReplyKeyboardRemove
+                    await message.reply_text(
+                        f"✅ Номер принят вручную: {raw_phone}\n\n"
+                        f"Теперь введите <b>Имя и Фамилию</b> пациента:",
+                        reply_markup=ReplyKeyboardRemove(),
+                        parse_mode='HTML'
+                    )
+                    return CONFIRM_BOOKING
+                else:
+                    await message.reply_text(
+                        "❌ Номер кажется некорректным (слишком короткий).\n"
+                        "Введите нормальный номер или нажмите кнопку."
+                    )
+                    return CONFIRM_BOOKING
+            
+            # ОБЫЧНЫЙ ЮЗЕР: Требуем кнопку
+            from telegram import ReplyKeyboardMarkup, KeyboardButton
+            keyboard = [[KeyboardButton("📞 Поделиться номером телефона", request_contact=True)]]
+            reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
+            await message.reply_text(
                  "Пожалуйста, сначала отправьте номер телефона, нажав кнопку ниже 👇",
                  reply_markup=reply_markup
-             )
-             return CONFIRM_BOOKING
+            )
+            return CONFIRM_BOOKING
         # Если телефон есть, значит это ИМЯ
         context.user_data['name'] = message.text
         
