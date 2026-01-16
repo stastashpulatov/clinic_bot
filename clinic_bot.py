@@ -1202,9 +1202,14 @@ async def select_doctor(update: Update, context: ContextTypes.DEFAULT_TYPE):
     today = datetime.now()
     
     for i in range(7):
-        # Если сегодня и время > 14:00, пропускаем выбор сегодняшней даты
-        if i == 0 and today.hour >= 14:
-            continue
+        if i == 0:
+            deadline_hour = context.bot_data.get('metrics', {}).get('booking_deadline', 11) # fallback
+            from config import BOT_SETTINGS
+            deadline_hour = BOT_SETTINGS.get('same_day_booking_deadline', 11)
+            
+            if today.hour >= deadline_hour:
+                continue
+            
             
         date = today + timedelta(days=i)
         date_str = date.strftime('%Y-%m-%d')

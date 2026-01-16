@@ -3181,3 +3181,59 @@ task: <Task pending name='Application:7376506390:update_fetcher' coro=<Applicati
 2026-01-15 21:32:30,716 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-15 21:32:30,717 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
 2026-01-15 21:32:30,717 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-16 07:00:41,730 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-16 07:00:43,231 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-16 07:00:43,232 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-16 07:00:44,263 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-16 07:00:44,418 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-01-16 07:00:44,418 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-01-16 07:00:44,977 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-01-16 07:00:45,175 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-01-16 07:00:45,176 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-01-16 07:00:45,381 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-01-16 07:00:45,383 - telegram.ext.Application - INFO - Application started
+2026-01-16 07:00:53,366 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:00:53,377 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-01-16 07:00:53,377 - __main__ - WARNING - Нет подключения к БД, используем резервный список врачей
+2026-01-16 07:00:53,378 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-01-16 07:00:53,806 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:00:55,312 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:00:55,315 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-01-16 07:00:55,315 - __main__ - WARNING - Нет подключения к БД, используем резервный список врачей
+2026-01-16 07:00:55,443 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:00:56,848 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:00:56,960 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-16 07:00:56,963 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-01-16 07:00:56,963 - __main__ - WARNING - Нет подключения к БД, используем резервный список врачей
+2026-01-16 07:00:57,155 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-16 07:00:58,180 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:00:58,294 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-16 07:00:59,309 - __main__ - INFO - Получены занятые слоты из WordPress: []
+2026-01-16 07:00:59,477 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-01-16 07:01:00,842 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:00,956 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-01-16 07:01:01,150 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:01,356 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:09,336 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:09,838 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:19,479 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:20,532 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:21,575 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-01-16 07:01:21,575 - __main__ - WARNING - ⚠️ Не удалось сохранить запись в локальную БД
+2026-01-16 07:01:21,576 - __main__ - INFO - ✅ User 1584646131 found in ADMIN_IDS. Added admin button.
+2026-01-16 07:01:21,576 - __main__ - INFO - Keyboard rows: 5
+2026-01-16 07:01:21,576 - __main__ - INFO - ✅ Запись создана: ID 78, Станислав Ташпулатов к врачу 10 на 2026-01-16 10:00
+2026-01-16 07:01:22,004 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:22,147 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:22,299 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:22,479 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:25,270 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:25,448 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:26,592 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:26,751 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-01-16 07:01:35,454 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:45,591 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:01:55,730 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:02:00,014 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-01-16 07:02:00,015 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-01-16 07:02:00,015 - telegram.ext.Application - INFO - Application.stop() complete

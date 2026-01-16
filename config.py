@@ -80,13 +80,13 @@ CLINIC_INFO = {
 # Время работы врачей
 WORKING_HOURS = {
     "start": "09:00",
-    "end": "15:00",
-    "lunch_start": "13:00",
-    "lunch_end": "14:00",
+    "end": "14:15",
+    "lunch_start": "00:00",
+    "lunch_end": "00:00",
 }
 
 # Длительность приема (в минутах)
-APPOINTMENT_DURATION = 15
+APPOINTMENT_DURATION = 45
 
 # Максимальное количество записей в день на одного врача
 MAX_APPOINTMENTS_PER_DAY = 16
@@ -109,6 +109,7 @@ BOT_SETTINGS = {
     # Ограничения
     "max_doctors_per_page": 10,
     "max_appointments_per_user": 5,
+    "same_day_booking_deadline": 11, # Час дня (0-23), после которого нельзя записаться на сегодня
 }
 
 # ============================================
