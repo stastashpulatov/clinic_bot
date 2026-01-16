@@ -77,12 +77,24 @@ CLINIC_INFO = {
     "website": "https://diason.uz",
 }
 
-# Время работы врачей
+# Время работы врачей (по умолчанию)
 WORKING_HOURS = {
     "start": "09:00",
     "end": "14:15",
     "lunch_start": "00:00",
     "lunch_end": "00:00",
+}
+
+# Индивидуальные расписания врачей (по ID врача)
+# Если врача нет в этом словаре, используется WORKING_HOURS
+DOCTOR_SCHEDULES = {
+    2: {  # Диярова Лола - начинает работу в 9:45
+        "start": "09:45",
+        "end": "14:15",
+        "lunch_start": "00:00",
+        "lunch_end": "00:00",
+    },
+    # Другие врачи используют стандартное расписание из WORKING_HOURS
 }
 
 # Длительность приема (в минутах)
@@ -170,6 +182,7 @@ __all__ = [
     "TABLE_PREFIX",
     "CLINIC_INFO",
     "WORKING_HOURS",
+    "DOCTOR_SCHEDULES",
     "BOT_SETTINGS",
     "MESSAGES",
     "KEYBOARDS",

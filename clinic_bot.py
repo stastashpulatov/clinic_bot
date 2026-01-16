@@ -18,7 +18,7 @@ import mysql.connector
 from mysql.connector import Error
 import asyncio
 from wordpress_api import WordPressAPI, calculate_available_slots, generate_day_slots
-from config import WORDPRESS_CONFIG, WORKING_HOURS, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE, DB_CONFIG, TABLE_PREFIX, BOT_TOKEN
+from config import WORDPRESS_CONFIG, WORKING_HOURS, DOCTOR_SCHEDULES, APPOINTMENT_DURATION, ADMIN_IDS, PINNED_NUMBERS_FILE, DB_CONFIG, TABLE_PREFIX, BOT_TOKEN
 try:
     from config import CLINIC_INFO
 except ImportError:
@@ -1277,12 +1277,15 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             logger.error(f"Ошибка получения слотов из WordPress: {e}")
     
-    # Получаем ВСЕ слоты на день
+    # Получаем расписание для конкретного врача (или используем стандартное)
+    doctor_schedule = DOCTOR_SCHEDULES.get(doctor_id, WORKING_HOURS)
+    
+    # Получаем ВСЕ слоты на день с учетом индивидуального расписания врача
     all_slots = generate_day_slots(
-        start_time=WORKING_HOURS.get('start', '09:00'),
-        end_time=WORKING_HOURS.get('end', '18:00'),
-        lunch_start=WORKING_HOURS.get('lunch_start', '13:00'),
-        lunch_end=WORKING_HOURS.get('lunch_end', '14:00'),
+        start_time=doctor_schedule.get('start', '09:00'),
+        end_time=doctor_schedule.get('end', '18:00'),
+        lunch_start=doctor_schedule.get('lunch_start', '13:00'),
+        lunch_end=doctor_schedule.get('lunch_end', '14:00'),
         slot_duration=APPOINTMENT_DURATION,
         date_str=date
     )

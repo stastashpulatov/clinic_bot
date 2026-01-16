@@ -3237,3 +3237,7 @@ task: <Task pending name='Application:7376506390:update_fetcher' coro=<Applicati
 2026-01-16 07:02:00,014 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-01-16 07:02:00,015 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
 2026-01-16 07:02:00,015 - telegram.ext.Application - INFO - Application.stop() complete
+2026-01-16 18:21:50,877 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-01-16 18:21:52,085 - clinic_bot - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-01-16 18:21:52,093 - clinic_bot - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-01-16 18:21:52,094 - clinic_bot - WARNING - Нет подключения к БД, используем резервный список врачей
