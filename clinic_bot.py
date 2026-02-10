@@ -85,10 +85,13 @@ class ClinicDatabase:
             
             # Используем реальную таблицу врачей
             query = f"""
-                SELECT id, name, specialty, description 
+                SELECT id, 
+                       CONCAT_WS(' ', last_name, first_name, middle_name) as name,
+                       specialty, 
+                       description 
                 FROM {self.table_prefix}doctors 
                 WHERE is_active = 1 
-                ORDER BY name
+                ORDER BY last_name, first_name
             """
             
             cursor.execute(query)
@@ -132,9 +135,13 @@ class ClinicDatabase:
             
             # Получаем всех врачей, сортируем по статусу (активные первыми), затем по имени
             query = f"""
-                SELECT id, name, specialty, description, is_active 
+                SELECT id, 
+                       CONCAT_WS(' ', last_name, first_name, middle_name) as name,
+                       specialty, 
+                       description, 
+                       is_active 
                 FROM {self.table_prefix}doctors 
-                ORDER BY is_active DESC, name
+                ORDER BY is_active DESC, last_name, first_name
             """
             
             cursor.execute(query)
@@ -191,7 +198,11 @@ class ClinicDatabase:
             cursor = connection.cursor(dictionary=True)
             
             query = f"""
-                SELECT id, name, specialty, description, is_active 
+                SELECT id, 
+                       CONCAT_WS(' ', last_name, first_name, middle_name) as name,
+                       specialty, 
+                       description, 
+                       is_active 
                 FROM {self.table_prefix}doctors 
                 WHERE id = %s
             """
