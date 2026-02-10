@@ -120,6 +120,94 @@ class ClinicDatabase:
             {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": ""}
         ]
 
+    def get_all_doctors_for_admin(self):
+        """Получение всех врачей (включая неактивных) для админ панели"""
+        connection = self.get_connection()
+        if not connection:
+            logger.warning("Нет подключения к БД для получения списка врачей")
+            return []
+        
+        try:
+            cursor = connection.cursor(dictionary=True)
+            
+            # Получаем всех врачей, сортируем по статусу (активные первыми), затем по имени
+            query = f"""
+                SELECT id, name, specialty, description, is_active 
+                FROM {self.table_prefix}doctors 
+                ORDER BY is_active DESC, name
+            """
+            
+            cursor.execute(query)
+            doctors = cursor.fetchall()
+            
+            logger.info(f"Получено {len(doctors)} врачей для админ панели")
+            return doctors
+            
+        except Error as e:
+            logger.error(f"Ошибка получения всех врачей: {e}")
+            return []
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+    def toggle_doctor_status(self, doctor_id):
+        """Переключение статуса активности врача"""
+        connection = self.get_connection()
+        if not connection:
+            return False
+        
+        try:
+            cursor = connection.cursor()
+            
+            # Переключаем статус (1 -> 0 или 0 -> 1)
+            query = f"""
+                UPDATE {self.table_prefix}doctors 
+                SET is_active = 1 - is_active 
+                WHERE id = %s
+            """
+            
+            cursor.execute(query, (doctor_id,))
+            connection.commit()
+            
+            logger.info(f"Статус врача ID={doctor_id} изменен")
+            return True
+            
+        except Error as e:
+            logger.error(f"Ошибка изменения статуса врача: {e}")
+            return False
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+    def get_doctor_by_id(self, doctor_id):
+        """Получение информации о враче по ID"""
+        connection = self.get_connection()
+        if not connection:
+            return None
+        
+        try:
+            cursor = connection.cursor(dictionary=True)
+            
+            query = f"""
+                SELECT id, name, specialty, description, is_active 
+                FROM {self.table_prefix}doctors 
+                WHERE id = %s
+            """
+            
+            cursor.execute(query, (doctor_id,))
+            doctor = cursor.fetchone()
+            
+            return doctor
+            
+        except Error as e:
+            logger.error(f"Ошибка получения врача по ID: {e}")
+            return None
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
     
     def create_appointment(self, user_id, doctor_id, appointment_date, appointment_time, user_name, user_phone):
@@ -794,6 +882,130 @@ async def show_pinned_numbers_callback(update: Update, context: ContextTypes.DEF
     await query.edit_message_text(text, reply_markup=back_markup, parse_mode='HTML')
 
 
+async def show_doctor_management(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показать управление врачами для админов"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    # Получаем всех врачей (включая неактивных)
+    doctors = await run_sync(db.get_all_doctors_for_admin)
+    
+    if not doctors:
+        text = "👨‍⚕️ <b>Управление врачами</b>\n\n📭 Врачей в базе не найдено."
+        back_keyboard = [[InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")]]
+        back_markup = InlineKeyboardMarkup(back_keyboard)
+        await query.edit_message_text(text, reply_markup=back_markup, parse_mode='HTML')
+        return
+    
+    # Формируем сообщение со списком врачей
+    text = "👨‍⚕️ <b>Управление врачами</b>\n\n"
+    text += f"<b>Всего врачей:</b> {len(doctors)}\n"
+    text += "━━━━━━━━━━━━━━━━━━━━\n\n"
+    
+    # Создаем клавиатуру с кнопками для каждого врача
+    keyboard = []
+    
+    for doctor in doctors:
+        is_active = doctor.get('is_active', 0)
+        status_icon = "✅" if is_active else "⛔"
+        status_text = "Активен" if is_active else "Неактивен"
+        
+        # Добавляем информацию о враче в текст
+        text += (
+            f"{status_icon} <b>{doctor['name']}</b>\n"
+            f"   📍 {doctor.get('specialty', 'Специалист')}\n"
+            f"   Статус: {status_text}\n\n"
+        )
+        
+        # Создаем кнопку для переключения статуса
+        if is_active:
+            button_text = f"⛔ Деактивировать {doctor['name'][:15]}"
+        else:
+            button_text = f"✅ Активировать {doctor['name'][:15]}"
+        
+        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"toggle_doctor_{doctor['id']}")])
+    
+    # Добавляем кнопку возврата
+    keyboard.append([InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")])
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await query.edit_message_text(text, reply_markup=reply_markup, parse_mode='HTML')
+
+
+async def toggle_doctor_status_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработка переключения статуса врача"""
+    query = update.callback_query
+    await query.answer()
+    
+    user_id = update.effective_user.id
+    if user_id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+    
+    # Извлекаем ID врача из callback_data
+    doctor_id = int(query.data.split('_')[2])
+    
+    # Получаем информацию о враче до изменения
+    doctor = await run_sync(db.get_doctor_by_id, doctor_id)
+    if not doctor:
+        await query.answer("❌ Врач не найден", show_alert=True)
+        return
+    
+    old_status = doctor.get('is_active', 0)
+    
+    # Переключаем статус
+    success = await run_sync(db.toggle_doctor_status, doctor_id)
+    
+    if not success:
+        await query.answer("❌ Ошибка изменения статуса", show_alert=True)
+        return
+    
+    # Определяем новый статус и показываем уведомление
+    new_status = 1 - old_status
+    if new_status:
+        await query.answer(f"✅ Врач {doctor['name']} активирован", show_alert=False)
+    else:
+        await query.answer(f"⛔ Врач {doctor['name']} деактивирован", show_alert=False)
+    
+    # Обновляем список врачей
+    doctors = await run_sync(db.get_all_doctors_for_admin)
+    
+    # Формируем обновленное сообщение
+    text = "👨‍⚕️ <b>Управление врачами</b>\n\n"
+    text += f"<b>Всего врачей:</b> {len(doctors)}\n"
+    text += "━━━━━━━━━━━━━━━━━━━━\n\n"
+    
+    keyboard = []
+    
+    for doc in doctors:
+        is_active = doc.get('is_active', 0)
+        status_icon = "✅" if is_active else "⛔"
+        status_text = "Активен" if is_active else "Неактивен"
+        
+        text += (
+            f"{status_icon} <b>{doc['name']}</b>\n"
+            f"   📍 {doc.get('specialty', 'Специалист')}\n"
+            f"   Статус: {status_text}\n\n"
+        )
+        
+        if is_active:
+            button_text = f"⛔ Деактивировать {doc['name'][:15]}"
+        else:
+            button_text = f"✅ Активировать {doc['name'][:15]}"
+        
+        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"toggle_doctor_{doc['id']}")])
+    
+    keyboard.append([InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")])
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await query.edit_message_text(text, reply_markup=reply_markup, parse_mode='HTML')
+
+
 async def show_list_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Показать список записей из БД через callback"""
     query = update.callback_query
@@ -867,11 +1079,13 @@ async def back_to_admin_panel_callback(update: Update, context: ContextTypes.DEF
     # Показываем главное меню админ панели
     keyboard = [
         [InlineKeyboardButton("📋 Все записи", callback_data="admin_filter_all")],
+        [InlineKeyboardButton("👨‍⚕️ Управление врачами", callback_data="admin_doctors")],
         [InlineKeyboardButton("📊 Статистика", callback_data="admin_stats")],
         [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")],
         [InlineKeyboardButton("📌 Закрепленные номера", callback_data="admin_pinned")],
         [InlineKeyboardButton("📋 Список записей (БД)", callback_data="admin_list")]
     ]
+
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await query.edit_message_text(
@@ -1118,6 +1332,7 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Предлагаем выбор админских действий
         keyboard = [
             [InlineKeyboardButton("📋 Все записи", callback_data="admin_filter_all")],
+            [InlineKeyboardButton("👨‍⚕️ Управление врачами", callback_data="admin_doctors")],
             [InlineKeyboardButton("📊 Статистика", callback_data="admin_stats")],
             [InlineKeyboardButton("📊 Экспорт в Excel", callback_data="admin_export_excel")],
             [InlineKeyboardButton("📌 Закрепленные номера", callback_data="admin_pinned")],
@@ -1131,6 +1346,7 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=reply_markup,
             parse_mode='HTML'
         )
+
 
 async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Начало процесса записи"""
@@ -1777,8 +1993,11 @@ def main():
     application.add_handler(CallbackQueryHandler(handle_admin_filter, pattern="^admin_filter_")) # Admin filter handlers
     application.add_handler(CallbackQueryHandler(show_admin_statistics, pattern="^admin_stats$")) # Admin statistics
     application.add_handler(CallbackQueryHandler(show_pinned_numbers_callback, pattern="^admin_pinned$")) # Admin pinned numbers
+    application.add_handler(CallbackQueryHandler(show_doctor_management, pattern="^admin_doctors$")) # Admin doctor management
+    application.add_handler(CallbackQueryHandler(toggle_doctor_status_callback, pattern="^toggle_doctor_")) # Toggle doctor status
     application.add_handler(CallbackQueryHandler(show_list_callback, pattern="^admin_list$")) # Admin list from DB
     application.add_handler(CallbackQueryHandler(back_to_admin_panel_callback, pattern="^back_to_admin_panel$")) # Back to admin panel
+
     application.add_handler(conv_handler)
     
     # Обработчик текстовых сообщений (для меню) должен быть ПОСЛЕ ConversationHandler
