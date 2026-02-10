@@ -8,12 +8,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Список врачей из fallback list (то что нужно пользователю)
+# Лаборанты (Имомов, Адилова) удалены из активного списка
 FALLBACK_DOCTORS = [
-    {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": ""},
     {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории"},
     {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": ""},
     {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": ""},
-    {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": ""},
     {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": ""}
 ]
 
@@ -25,6 +24,20 @@ def split_name(full_name):
     middle_name = parts[2] if len(parts) > 2 else ""
     return first_name, last_name, middle_name
 
+def add_return_date_column(cursor):
+    """Добавление колонки return_date если её нет"""
+    try:
+        cursor.execute("SHOW COLUMNS FROM doctors LIKE 'return_date'")
+        result = cursor.fetchone()
+        if not result:
+            logger.info("Добавление колонки return_date...")
+            cursor.execute("ALTER TABLE doctors ADD COLUMN return_date DATE NULL DEFAULT NULL")
+            logger.info("Колонка return_date добавлена успешно")
+        else:
+            logger.info("Колонка return_date уже существует")
+    except Exception as e:
+        logger.error(f"Ошибка при добавлении колонки: {e}")
+
 def init_doctors():
     try:
         # Подключение к БД
@@ -32,6 +45,9 @@ def init_doctors():
         cursor = conn.cursor()
         
         logger.info("Подключение к БД успешно")
+        
+        # 0. Миграция схемы (добавление return_date)
+        add_return_date_column(cursor)
         
         # 1. Сначала деактивируем всех врачей (soft delete)
         logger.info("Деактивация всех текущих врачей...")
@@ -66,7 +82,7 @@ def init_doctors():
             
         conn.commit()
         logger.info("✅ База данных успешно синхронизирована!")
-        logger.info("Все врачи из списка теперь активны, остальные деактивированы.")
+        logger.info("Активные врачи обновлены, лаборанты скрыты, колонка return_date проверена.")
         
     except Exception as e:
         logger.error(f"Ошибка: {e}")

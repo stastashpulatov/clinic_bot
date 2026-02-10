@@ -84,13 +84,15 @@ class ClinicDatabase:
             cursor = connection.cursor(dictionary=True)
             
             # Используем реальную таблицу врачей
+            # Выбираем активных врачей ИЛИ тех, у кого есть дата возвращения (в отпуске)
             query = f"""
                 SELECT id, 
                        CONCAT_WS(' ', last_name, first_name, middle_name) as name,
                        specialty, 
-                       description 
+                       description,
+                       return_date
                 FROM {self.table_prefix}doctors 
-                WHERE is_active = 1 
+                WHERE is_active = 1 OR (return_date IS NOT NULL AND return_date >= CURDATE())
                 ORDER BY last_name, first_name
             """
             
@@ -139,7 +141,8 @@ class ClinicDatabase:
                        CONCAT_WS(' ', last_name, first_name, middle_name) as name,
                        specialty, 
                        description, 
-                       is_active 
+                       is_active,
+                       return_date
                 FROM {self.table_prefix}doctors 
                 ORDER BY is_active DESC, last_name, first_name
             """
@@ -158,7 +161,7 @@ class ClinicDatabase:
                 cursor.close()
                 connection.close()
 
-    def toggle_doctor_status(self, doctor_id):
+    def update_doctor_status(self, doctor_id, is_active, return_date=None):
         """Переключение статуса активности врача"""
         connection = self.get_connection()
         if not connection:
@@ -167,17 +170,17 @@ class ClinicDatabase:
         try:
             cursor = connection.cursor()
             
-            # Переключаем статус (1 -> 0 или 0 -> 1)
+            # Обновляем статус и дату возвращения
             query = f"""
                 UPDATE {self.table_prefix}doctors 
-                SET is_active = 1 - is_active 
+                SET is_active = %s, return_date = %s
                 WHERE id = %s
             """
             
-            cursor.execute(query, (doctor_id,))
+            cursor.execute(query, (is_active, return_date, doctor_id))
             connection.commit()
             
-            logger.info(f"Статус врача ID={doctor_id} изменен")
+            logger.info(f"Статус врача ID={doctor_id} изменен: active={is_active}, return={return_date}")
             return True
             
         except Error as e:
@@ -202,7 +205,8 @@ class ClinicDatabase:
                        CONCAT_WS(' ', last_name, first_name, middle_name) as name,
                        specialty, 
                        description, 
-                       is_active 
+                       is_active,
+                       return_date
                 FROM {self.table_prefix}doctors 
                 WHERE id = %s
             """
@@ -921,25 +925,29 @@ async def show_doctor_management(update: Update, context: ContextTypes.DEFAULT_T
     # Создаем клавиатуру с кнопками для каждого врача
     keyboard = []
     
-    for doctor in doctors:
-        is_active = doctor.get('is_active', 0)
+    for doc in doctors:
+        is_active = doc.get('is_active', 0)
         status_icon = "✅" if is_active else "⛔"
         status_text = "Активен" if is_active else "Неактивен"
         
-        # Добавляем информацию о враче в текст
+        # Если врач в отпуске
+        if not is_active and doc.get('return_date'):
+            status_icon = "🏖"
+            status_text = f"В отпуске до {doc['return_date']}"
+            
         text += (
-            f"{status_icon} <b>{doctor['name']}</b>\n"
-            f"   📍 {doctor.get('specialty', 'Специалист')}\n"
+            f"{status_icon} <b>{doc['name']}</b>\n"
+            f"   📍 {doc.get('specialty', 'Специалист')}\n"
             f"   Статус: {status_text}\n\n"
         )
         
         # Создаем кнопку для переключения статуса
         if is_active:
-            button_text = f"⛔ Деактивировать {doctor['name'][:15]}"
+            button_text = f"⛔ Деактивировать"
         else:
-            button_text = f"✅ Активировать {doctor['name'][:15]}"
+            button_text = f"✅ Активировать"
         
-        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"toggle_doctor_{doctor['id']}")])
+        keyboard.append([InlineKeyboardButton(f"{status_icon} {doc['name']} — {button_text}", callback_data=f"toggle_doctor_{doc['id']}")])
     
     # Добавляем кнопку возврата
     keyboard.append([InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")])
@@ -948,73 +956,74 @@ async def show_doctor_management(update: Update, context: ContextTypes.DEFAULT_T
     await query.edit_message_text(text, reply_markup=reply_markup, parse_mode='HTML')
 
 
-async def toggle_doctor_status_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработка переключения статуса врача"""
+async def handle_doctor_status_change(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработка изменения статуса врача (включая отпуск)"""
     query = update.callback_query
     await query.answer()
     
-    user_id = update.effective_user.id
-    if user_id not in ADMIN_IDS:
-        await query.answer("⛔ Нет доступа", show_alert=True)
-        return
+    data = query.data
     
-    # Извлекаем ID врача из callback_data
-    doctor_id = int(query.data.split('_')[2])
-    
-    # Получаем информацию о враче до изменения
-    doctor = await run_sync(db.get_doctor_by_id, doctor_id)
-    if not doctor:
-        await query.answer("❌ Врач не найден", show_alert=True)
-        return
-    
-    old_status = doctor.get('is_active', 0)
-    
-    # Переключаем статус
-    success = await run_sync(db.toggle_doctor_status, doctor_id)
-    
-    if not success:
-        await query.answer("❌ Ошибка изменения статуса", show_alert=True)
-        return
-    
-    # Определяем новый статус и показываем уведомление
-    new_status = 1 - old_status
-    if new_status:
-        await query.answer(f"✅ Врач {doctor['name']} активирован", show_alert=False)
-    else:
-        await query.answer(f"⛔ Врач {doctor['name']} деактивирован", show_alert=False)
-    
-    # Обновляем список врачей
-    doctors = await run_sync(db.get_all_doctors_for_admin)
-    
-    # Формируем обновленное сообщение
-    text = "👨‍⚕️ <b>Управление врачами</b>\n\n"
-    text += f"<b>Всего врачей:</b> {len(doctors)}\n"
-    text += "━━━━━━━━━━━━━━━━━━━━\n\n"
-    
-    keyboard = []
-    
-    for doc in doctors:
-        is_active = doc.get('is_active', 0)
-        status_icon = "✅" if is_active else "⛔"
-        status_text = "Активен" if is_active else "Неактивен"
+    if data.startswith("toggle_doctor_"):
+        doctor_id = int(data.split('_')[2])
+        doctor = await run_sync(db.get_doctor_by_id, doctor_id)
         
-        text += (
-            f"{status_icon} <b>{doc['name']}</b>\n"
-            f"   📍 {doc.get('specialty', 'Специалист')}\n"
-            f"   Статус: {status_text}\n\n"
-        )
-        
-        if is_active:
-            button_text = f"⛔ Деактивировать {doc['name'][:15]}"
+        if not doctor:
+            await query.answer("❌ Врач не найден", show_alert=True)
+            return
+            
+        # Если врач активен -> предлагаем варианты деактивации
+        if doctor['is_active']:
+            keyboard = [
+                [InlineKeyboardButton("⛔ Отключить навсегда", callback_data=f"doc_perm_{doctor_id}")],
+                [InlineKeyboardButton("🏖 Отправить в отпуск", callback_data=f"doc_vacation_{doctor_id}")],
+                [InlineKeyboardButton("🔙 Отмена", callback_data="admin_doctors")]
+            ]
+            await query.edit_message_text(
+                f"Выберите действие для врача <b>{doctor['name']}</b>:",
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode='HTML'
+            )
+            return
+            
+        # Если врач неактивен -> активируем сразу
         else:
-            button_text = f"✅ Активировать {doc['name'][:15]}"
+            await run_sync(db.update_doctor_status, doctor_id, 1, None)
+            await query.answer("✅ Врач активирован!", show_alert=True)
+            await show_doctor_management(update, context)
+            return
+
+    elif data.startswith("doc_perm_"):
+        doctor_id = int(data.split('_')[2])
+        await run_sync(db.update_doctor_status, doctor_id, 0, None)
+        await query.answer("⛔ Врач деактивирован", show_alert=True)
+        await show_doctor_management(update, context)
+
+    elif data.startswith("doc_vacation_"):
+        doctor_id = int(data.split('_')[2])
+        # Предлагаем длительность отпуска
+        keyboard = [
+            [InlineKeyboardButton("1 неделя", callback_data=f"vac_set_{doctor_id}_7")],
+            [InlineKeyboardButton("2 недели", callback_data=f"vac_set_{doctor_id}_14")],
+            [InlineKeyboardButton("1 месяц", callback_data=f"vac_set_{doctor_id}_30")],
+            [InlineKeyboardButton("🔙 Назад", callback_data=f"toggle_doctor_{doctor_id}")]
+        ]
+        await query.edit_message_text(
+            "На какой срок отправить в отпуск?",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+
+    elif data.startswith("vac_set_"):
+        parts = data.split('_')
+        doctor_id = int(parts[2])
+        days = int(parts[3])
         
-        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"toggle_doctor_{doc['id']}")])
-    
-    keyboard.append([InlineKeyboardButton("⬅️ Назад в админ панель", callback_data="back_to_admin_panel")])
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    
-    await query.edit_message_text(text, reply_markup=reply_markup, parse_mode='HTML')
+        from datetime import datetime, timedelta
+        return_date = (datetime.now() + timedelta(days=days)).date()
+        
+        await run_sync(db.update_doctor_status, doctor_id, 0, return_date)
+        await query.answer(f"🏖 Врач отправлен в отпуск до {return_date}", show_alert=True)
+        await show_doctor_management(update, context)
+
 
 
 async def show_list_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -1390,7 +1399,14 @@ async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if len(specialty) > 20:
             specialty = specialty[:17] + "..."
         
-        button_text = f"👨‍⚕️ {name} - {specialty}"
+        # Если врач в отпуске
+        vacation_text = ""
+        if doctor.get('return_date'):
+             from datetime import date
+             if isinstance(doctor['return_date'], date) and doctor['return_date'] >= date.today():
+                 vacation_text = f" (🏖 до {doctor['return_date'].strftime('%d.%m')})"
+        
+        button_text = f"👨‍⚕️ {name} - {specialty}{vacation_text}"
         keyboard.append([InlineKeyboardButton(button_text, callback_data=f"doctor_{doctor['id']}")])
     
     keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
@@ -1418,27 +1434,50 @@ async def select_doctor(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Сохраняем имя врача для дальнейшего использования
     doctors = db.get_doctors()
     doctor_name = "Неизвестный врач"
+    return_date = None
+    
     for doc in doctors:
         if doc['id'] == doctor_id:
             doctor_name = doc['name']
+            if doc.get('return_date'):
+                return_date = doc['return_date']
             break
     context.user_data['doctor_name'] = doctor_name
     
-    # Генерируем даты на ближайшие 7 дней
+    # Определяем начальную дату (сегодня или дата возвращения)
+    start_date = datetime.now()
+    message_text = "Выберите дату приёма:"
+    
+    if return_date:
+        # Проверяем тип данных (может быть str или date)
+        if isinstance(return_date, str):
+            from datetime import datetime
+            return_date = datetime.strptime(return_date, '%Y-%m-%d').date()
+            
+        current_date = datetime.now().date()
+        if return_date > current_date:
+            # Врач в отпуске
+            start_date = datetime.combine(return_date, datetime.min.time())
+            message_text = (
+                f"🏖 Врач <b>{doctor_name}</b> в отпуске до {return_date.strftime('%d.%m.%Y')}.\n"
+                "Выберите дату после возвращения:"
+            )
+            await query.answer(f"🏖 Врач в отпуске до {return_date}", show_alert=True)
+
+    # Генерируем даты на ближайшие 7 дней от start_date
     keyboard = []
-    today = datetime.now()
     
     for i in range(7):
-        if i == 0:
+        date = start_date + timedelta(days=i)
+        
+        # Для сегодняшнего дня проверяем дедлайн (только если start_date == today)
+        if i == 0 and date.date() == datetime.now().date():
             deadline_hour = context.bot_data.get('metrics', {}).get('booking_deadline', 11) # fallback
             from config import BOT_SETTINGS
             deadline_hour = BOT_SETTINGS.get('same_day_booking_deadline', 11)
             
-            if today.hour >= deadline_hour:
+            if date.hour >= deadline_hour:
                 continue
-            
-            
-        date = today + timedelta(days=i)
         date_str = date.strftime('%Y-%m-%d')
         display_date = date.strftime('%d.%m.%Y (%A)')
         
@@ -2005,7 +2044,7 @@ def main():
     application.add_handler(CallbackQueryHandler(show_admin_statistics, pattern="^admin_stats$")) # Admin statistics
     application.add_handler(CallbackQueryHandler(show_pinned_numbers_callback, pattern="^admin_pinned$")) # Admin pinned numbers
     application.add_handler(CallbackQueryHandler(show_doctor_management, pattern="^admin_doctors$")) # Admin doctor management
-    application.add_handler(CallbackQueryHandler(toggle_doctor_status_callback, pattern="^toggle_doctor_")) # Toggle doctor status
+    application.add_handler(CallbackQueryHandler(handle_doctor_status_change, pattern="^(toggle_doctor_|doc_perm_|doc_vacation_|vac_set_)")) # Doctor status changes
     application.add_handler(CallbackQueryHandler(show_list_callback, pattern="^admin_list$")) # Admin list from DB
     application.add_handler(CallbackQueryHandler(back_to_admin_panel_callback, pattern="^back_to_admin_panel$")) # Back to admin panel
 
