@@ -211,3 +211,811 @@ O - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNc
 2026-02-11 18:17:53,083 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
 2026-02-11 18:17:53,084 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
 2026-02-11 18:17:53,084 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:02:37,027 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:02:39,720 - clinic_bot - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:02:39,726 - clinic_bot - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:05:06,030 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:05:08,087 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:05:08,088 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:05:09,073 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:05:09,310 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:05:09,311 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:05:09,697 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:05:09,821 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:05:09,822 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:05:09,924 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:05:09,926 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:05:10,226 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:05:10,233 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:05:10,233 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:05:10,233 - __main__ - INFO - Start command: User 6512298237 (タヒール). Is Admin: False. Admin list len: 3
+2026-02-11 20:05:10,502 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 403 Forbidden"
+2026-02-11 20:05:10,503 - __main__ - ERROR - Ошибка при обработке обновления: Forbidden: bot was blocked by the user
+2026-02-11 20:05:10,702 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 403 Forbidden"
+2026-02-11 20:05:10,705 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:05:10,705 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:05:10,706 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:05:10,894 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:05:20,326 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:05:30,423 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:05:40,521 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:05:50,620 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:06:00,718 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:06:07,797 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:06:07,798 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:06:07,798 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:09:08,366 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:09:10,301 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:09:10,302 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:09:11,406 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:09:11,485 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:09:11,485 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:09:11,853 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:09:12,046 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:09:12,047 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:09:12,144 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:09:12,145 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:09:22,443 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:29,106 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:29,112 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:09:29,112 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:09:29,113 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:09:29,498 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:31,532 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:31,653 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:32,858 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:32,975 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:33,479 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:33,484 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:09:33,484 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:09:33,615 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:34,785 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:34,787 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:09:34,787 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:09:34,910 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:42,614 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:42,920 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:09:44,319 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:44,423 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:09:44,424 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:09:44,424 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:09:45,655 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:45,760 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:09:45,761 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:09:45,761 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:09:53,248 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:09:53,249 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:09:53,249 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:10:14,525 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:10:15,541 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:10:15,541 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:10:16,552 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:10:16,629 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:10:16,629 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:10:16,946 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:10:17,126 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:10:17,127 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:10:17,230 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:10:17,232 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:10:17,529 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:17,535 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:10:17,535 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:10:17,535 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:10:17,672 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:10:22,010 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:22,013 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:10:22,013 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:10:22,154 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:10:23,184 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:23,296 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:10:23,297 - __main__ - INFO - select_doctor: Processing callback data: doctor_6
+2026-02-11 20:10:23,299 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:10:23,299 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:10:23,425 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 20:10:24,373 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:24,488 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:10:25,567 - __main__ - INFO - Получены занятые слоты из WordPress: ['09:00', '09:45', '10:30', '11:15', '12:00', '12:45', '13:30']
+2026-02-11 20:10:25,705 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 20:10:34,475 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:44,574 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:10:54,673 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:04,771 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:14,872 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:24,972 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:35,074 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:45,173 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:11:55,274 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:05,376 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:15,790 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:25,889 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:35,993 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:46,096 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:12:56,294 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:06,394 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:16,494 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:26,595 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:36,699 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:46,801 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:13:56,903 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:07,002 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:17,104 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:27,206 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:37,306 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:47,405 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:14:57,542 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:07,641 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:17,740 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:27,840 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:37,941 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:48,040 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:15:58,143 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:08,243 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:18,341 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:28,441 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:38,550 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:48,651 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:16:58,754 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:08,852 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:18,959 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:29,060 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:39,160 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:49,261 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:17:59,361 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:18:09,462 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:18:19,561 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:18:29,716 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:18:39,817 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:18:49,917 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:00,022 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:10,122 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:20,221 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:30,322 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:40,424 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:19:50,526 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:00,625 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:10,724 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:20,841 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:26,702 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-11 20:20:26,703 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-02-11 20:20:37,802 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:47,902 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:20:58,004 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:08,107 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:18,209 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:28,309 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:38,409 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:48,508 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:21:58,607 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:08,713 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:18,814 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:28,915 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:39,013 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:49,112 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:22:59,243 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:09,345 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:19,446 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:29,546 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:39,645 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:49,744 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:23:59,845 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:24:09,949 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:24:20,047 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:24:30,148 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:24:40,250 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:24:50,348 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:00,449 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:10,550 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:20,745 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:30,844 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:40,946 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:51,046 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:25:52,274 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:25:53,441 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:25:53,442 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:25:55,533 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:25:55,611 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:25:55,611 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:25:56,000 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:25:56,128 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:25:56,128 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:25:56,252 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:25:56,254 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:25:56,566 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-11 20:25:56,566 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-02-11 20:26:00,720 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 409 Conflict"
+2026-02-11 20:26:00,720 - __main__ - ERROR - Ошибка при обработке обновления: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2026-02-11 20:26:11,824 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:26:21,927 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:26:32,028 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:26:42,129 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:26:52,234 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:02,336 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:12,439 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:22,873 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:32,973 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:43,076 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:27:53,189 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:28:03,292 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:28:13,396 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:28:23,501 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:28:33,602 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:28:42,456 - telegram.ext.Updater - ERROR - Error while calling `get_updates` one more time to mark all fetched updates as read: %s. Suppressing error to ensure graceful shutdown. When polling for updates is restarted, updates may be fetched again. Please adjust timeouts via `ApplicationBuilder` or the parameter `get_updates_request` of `Bot`.
+Traceback (most recent call last):
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/request/_httpxrequest.py", line 279, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/ext/_updater.py", line 400, in _get_updates_cleanup
+    await self.bot.get_updates(
+    ...<4 lines>...
+    )
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/_bot.py", line 4780, in get_updates
+    await self._post(
+    ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    ),
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/_bot.py", line 703, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/_bot.py", line 732, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/request/_baserequest.py", line 198, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/request/_baserequest.py", line 305, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/home/kratos/clinic_bot/venv/lib/python3.14/site-packages/telegram/request/_httpxrequest.py", line 296, in do_request
+    raise TimedOut from err
+telegram.error.TimedOut: Timed out
+2026-02-11 20:28:42,467 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:28:42,467 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:29:43,758 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:29:45,546 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:29:45,546 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:29:46,596 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:29:46,667 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:29:46,667 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:29:47,034 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:29:47,251 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:29:47,251 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:29:47,351 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:29:47,352 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:29:57,647 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:07,750 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:17,859 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:27,959 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:38,057 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:48,168 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:30:58,267 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:08,368 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:18,472 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:28,574 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:38,674 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:48,775 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:31:58,877 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:08,979 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:19,081 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:29,183 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:39,283 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:49,387 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:32:59,495 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:09,595 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:10,373 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:10,378 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:33:10,378 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:33:10,379 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:33:10,772 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:15,239 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:15,240 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:33:15,240 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:33:22,599 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:33:24,404 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:33:24,405 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:33:25,393 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:33:25,477 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:33:25,477 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:33:25,853 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:33:26,082 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:33:26,083 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:33:26,181 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:33:26,183 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:33:26,490 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:26,495 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:33:26,495 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:33:26,495 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:33:26,626 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:31,018 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:31,141 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:32,378 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:32,520 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:32,916 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:32,920 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:33:32,920 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:33:33,047 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:34,549 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:34,551 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:33:34,551 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:33:34,757 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:35,824 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:36,110 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:33:37,109 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:37,218 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:33:37,219 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:33:37,219 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:33:39,611 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:39,726 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:33:39,727 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:33:39,727 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:33:40,509 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:40,627 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:33:40,628 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:33:40,628 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:33:41,176 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:33:41,303 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:33:41,304 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:33:41,305 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'get_all_doctors_for_admin'
+2026-02-11 20:33:51,295 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:01,400 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:11,503 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:21,606 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:31,708 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:41,820 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:34:51,925 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:02,030 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:12,132 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:22,235 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:32,340 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:42,442 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:35:52,546 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:02,649 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:12,752 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:22,875 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:32,984 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:43,086 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:36:53,190 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:03,293 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:13,400 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:23,504 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:33,614 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:43,718 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:52,614 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:37:52,614 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:37:52,615 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:39:20,818 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:39:22,655 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:39:22,655 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:39:23,733 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:39:23,817 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:39:23,817 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:39:24,219 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:39:24,387 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:39:24,388 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:39:24,493 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:39:24,495 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:39:34,794 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:39:44,894 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:39:54,994 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:05,095 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:15,194 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:25,300 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:35,400 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:45,501 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:40:55,602 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:05,703 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:15,804 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:25,906 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:36,007 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:46,109 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:41:56,210 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:06,309 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:16,409 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:26,509 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:36,610 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:46,710 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:56,814 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:59,061 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:42:59,066 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:42:59,066 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:42:59,066 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:42:59,489 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:03,069 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:03,070 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 20:43:03,071 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 20:43:09,137 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:43:11,213 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:43:11,213 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 20:43:12,345 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 20:43:12,413 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 20:43:12,413 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 20:43:12,714 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 20:43:12,822 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 20:43:12,823 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 20:43:12,934 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 20:43:12,936 - telegram.ext.Application - INFO - Application started
+2026-02-11 20:43:13,234 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:13,239 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:13,239 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:43:13,240 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 20:43:13,374 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:16,442 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:16,447 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:16,447 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:43:17,053 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:17,564 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:17,690 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:19,237 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:19,375 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:19,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:20,018 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:21,062 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:21,246 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:21,247 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:43:21,249 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:21,249 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:43:21,250 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: None
+2026-02-11 20:43:21,436 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 20:43:27,677 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:28,074 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:28,076 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:28,077 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:30,605 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:30,715 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:30,717 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:30,718 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:32,052 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:32,163 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:32,165 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:32,166 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:32,890 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:33,004 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:33,007 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:33,007 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:33,456 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:33,786 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:33,788 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:33,788 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:34,299 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:34,413 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:34,414 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:34,415 - __main__ - ERROR - Ошибка при обработке обновления: 'ClinicDatabase' object has no attribute 'local_doctors'
+2026-02-11 20:43:36,146 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:36,282 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 20:43:37,432 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:37,546 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 20:43:37,547 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 20:43:37,549 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 20:43:37,549 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 20:43:37,550 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: None
+2026-02-11 20:43:37,677 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 20:43:47,537 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:43:57,636 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:08,058 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:18,172 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:28,273 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:38,379 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:48,794 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 20:44:58,895 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:04,427 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:14,531 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:24,635 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:34,734 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:44,838 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:10:54,942 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:11:05,092 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:11:15,198 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:11:21,997 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:11:21,997 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 21:11:21,997 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 21:12:31,836 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:12:33,900 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:12:33,901 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:12:35,073 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:12:35,151 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 21:12:35,151 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 21:12:35,539 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 21:12:35,674 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 21:12:35,675 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 21:12:35,768 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 21:12:35,769 - telegram.ext.Application - INFO - Application started
+2026-02-11 21:12:46,067 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:12:56,165 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:06,262 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:16,363 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:26,462 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:36,559 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:46,664 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:48,174 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:48,180 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:13:48,180 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:13:48,180 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 21:13:48,653 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:13:51,582 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:51,583 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 21:13:51,583 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 21:13:53,172 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:13:54,408 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:13:54,408 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:13:55,543 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:13:55,620 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 21:13:55,620 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 21:13:55,927 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 21:13:56,173 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 21:13:56,173 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 21:13:56,587 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 21:13:56,589 - telegram.ext.Application - INFO - Application started
+2026-02-11 21:13:58,422 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:58,427 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:13:58,428 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:13:58,428 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 21:13:58,627 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:13:59,854 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:13:59,859 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:13:59,859 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:14:00,466 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:14:01,848 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:01,991 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:14:03,121 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:03,235 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:03,236 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 21:14:03,238 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:03,238 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:14:03,239 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: None
+2026-02-11 21:14:03,373 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:14:04,845 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:04,957 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:04,959 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:04,960 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:07,718 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:07,831 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:07,833 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:07,834 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:08,494 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:08,606 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:08,608 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:08,608 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:08,865 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:08,975 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:08,978 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:08,978 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:09,265 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:09,371 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:09,374 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:09,374 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:15,789 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:16,105 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:16,108 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:16,108 - __main__ - ERROR - Ошибка при обработке обновления: 'is_active'
+2026-02-11 21:14:17,851 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:17,988 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:14:18,933 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:19,070 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:14:19,073 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 21:14:19,075 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:14:19,075 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:14:19,075 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: None
+2026-02-11 21:14:19,207 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:14:29,045 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:39,194 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:14:49,301 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:16:48,566 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:16:49,617 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:16:49,617 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:16:50,615 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:16:50,690 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 21:16:50,690 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 21:16:51,059 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 21:16:51,168 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 21:16:51,168 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 21:16:51,266 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 21:16:51,267 - telegram.ext.Application - INFO - Application started
+2026-02-11 21:17:01,564 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:17:11,663 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:17:21,765 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:17:31,863 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:17:41,962 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:17:52,063 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:02,163 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:11,008 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:11,009 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-02-11 21:18:11,009 - telegram.ext.Application - INFO - Application.stop() complete
+2026-02-11 21:18:11,703 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:18:13,685 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:18:13,686 - wordpress_api - INFO - WordPress API инициализирован для https://diason.uz
+2026-02-11 21:18:14,908 - __main__ - INFO - ✅ WordPress API подключен: Подключение успешно
+2026-02-11 21:18:14,977 - __main__ - WARNING - ⚠️ JobQueue не доступен!
+2026-02-11 21:18:14,977 - __main__ - INFO - 🤖 Бот запущен и готов к работе!
+2026-02-11 21:18:15,277 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getMe "HTTP/1.1 200 OK"
+2026-02-11 21:18:15,398 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/setMyCommands "HTTP/1.1 200 OK"
+2026-02-11 21:18:15,399 - __main__ - INFO - ✅ Команды бота успешно установлены
+2026-02-11 21:18:15,495 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-11 21:18:15,497 - telegram.ext.Application - INFO - Application started
+2026-02-11 21:18:25,891 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:28,180 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:28,185 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:18:28,185 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:18:28,186 - __main__ - INFO - Start command: User 1584646131 (Станислав). Is Admin: True. Admin list len: 3
+2026-02-11 21:18:28,513 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:18:30,378 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:30,384 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:18:30,385 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:18:30,521 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:18:31,574 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:31,698 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:18:32,746 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:32,851 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:18:32,852 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 21:18:32,854 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:18:32,854 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:18:32,854 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: 1
+2026-02-11 21:18:32,977 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:18:36,196 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:36,199 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:18:36,199 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:18:36,350 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:18:37,603 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:37,713 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:18:37,714 - __main__ - INFO - select_doctor: Processing callback data: doctor_10
+2026-02-11 21:18:37,715 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:18:37,715 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:18:37,831 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:18:38,792 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:38,913 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:18:39,999 - __main__ - INFO - Получены занятые слоты из WordPress: []
+2026-02-11 21:18:40,122 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:18:48,890 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:49,030 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:18:49,460 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:18:49,897 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:18:59,132 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:09,229 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:19,327 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:29,424 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:39,521 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:49,619 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:53,500 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:53,923 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:19:53,926 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:19:53,926 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:19:54,075 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:19:55,275 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:55,393 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:19:55,394 - __main__ - INFO - select_doctor: Processing callback data: doctor_10
+2026-02-11 21:19:55,396 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:19:55,396 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:19:55,518 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:19:56,453 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:19:56,599 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:19:57,808 - __main__ - INFO - Получены занятые слоты из WordPress: []
+2026-02-11 21:19:57,932 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:20:06,552 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:15,902 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:16,368 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/sendMessage "HTTP/1.1 200 OK"
+2026-02-11 21:20:26,001 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:36,101 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:36,202 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:36,496 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:20:36,497 - __main__ - INFO - DEBUG: Calling get_all_doctors_for_admin...
+2026-02-11 21:20:36,499 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:20:36,499 - __main__ - WARNING - ⚠️ Нет подключения к БД, используем резервный список врачей
+2026-02-11 21:20:36,500 - __main__ - INFO - DEBUG: Received 6 doctors. First doc active status: 1
+2026-02-11 21:20:36,625 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:20:40,979 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:41,092 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:20:41,095 - __main__ - ERROR - Ошибка подключения: 2003: Can't connect to MySQL server on 'localhost:3306' (111 Connection refused)
+2026-02-11 21:20:41,239 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:20:44,048 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:20:44,153 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-11 21:20:44,268 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/editMessageText "HTTP/1.1 200 OK"
+2026-02-11 21:20:54,150 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:04,248 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:14,347 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:24,444 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:34,541 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:44,637 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:21:54,738 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:22:04,843 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
+2026-02-11 21:22:14,943 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7376506390:AAHCIbXDPvthv7rPNcS_Lkd7CNkofRTdCv4/getUpdates "HTTP/1.1 200 OK"
