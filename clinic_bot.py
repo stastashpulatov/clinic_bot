@@ -219,129 +219,152 @@ class ClinicDatabase:
                 cursor.close()
                 connection.close()
 
+        def _get_fallback_doctors(self):
+        """Fixing Doctor Management Issues
+        
+        
+        Debug Doctor Deactivation Issue
+        I checked the last 100 lines of clinic_bot.log. I am scanning the output for debug messages from 
+        show_doctor_management
+         or 
+        seed_doctors
+         execution logs. This will definitively tell me if the code is running the new version and if the database or fallback list is being used.
+        
+        Files Edited
+        clinic_bot.py
+        Progress Updates
+        1
+        Checking _get_fallback_doctors implementation
+        
+        2
+        Debugging doctor management logic with detailed logs
+        
+        3
+        Restarting bot with debug logging
+        
+        4
+        Checking process status and logs manually
+        
+        5
+        Diagnosing process launch failure
+        
+        6
+        Forcing is_active=1 in seed_doctors
+        
+        7
+        Restarting bot with forced activation in database
+        
+        8
+        Checking logs for activation confirmation
+        
+        9
+        Verifying bot process startup in logs
+        
+        10
+        Checking logs for database synchronization confirmation
+        
+        11
+        Checking grep results for DB sync message
+        
+        12
+        Checking logs for errors and connection status
+        
+        13
+        Analyzing grep output for errors
+        
+        14
+        Checking logs again with tail only
+        
+        15
+        Analyzing tail output and refining diagnosis
+        
+        Recent actions
+            python clinic_bot.py
+          File "/home/kratos/clinic_bot/clinic_bot.py", line 223
+            """
+            ^^^
+        IndentationError: expected an indented block after function definition on line 222
+        󰪢 0s 󰜥 󰉋  ••/clinic_bot 󰜥 󰘬 main 
+            
+        Review Changes
+            python clinic_bot.py
+          File "/home/kratos/clinic_bot/clinic_bot.py", line 223
+            """
+            ^^^
+        IndentationError: expected an indented block after function definition on line 222
+        󰪢 0s 󰜥 󰉋  ••/clinic_bot 󰜥 󰘬 main 
+            
+        
+        
+        
+        
+        Claude Sonnet 4.5
+        
+        Model
+        
+        
+        
+        
     def _get_fallback_doctors(self):
-        """Резервный список врачей"""
+        """
+        Резервный список врачей - ЭТАЛОННЫЙ СПИСОК
+        Этот список должен использоваться когда база данных недоступна
+        Все врачи из этого списка должны быть активны в БД
+        """
         return [
-            {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": "", "is_active": 1, "return_date": None},
-            {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории", "is_active": 1, "return_date": None},
-            {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": "", "is_active": 1, "return_date": None},
-            {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": "", "is_active": 1, "return_date": None},
-            {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": "", "is_active": 1, "return_date": None},
-            {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": "", "is_active": 1, "return_date": None}
+            {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": "", "return_date": None},
+            {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории", "return_date": None},
+            {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": "", "return_date": None},
+            {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": "", "return_date": None},
+            {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": "", "return_date": None},
+            {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": "", "return_date": None}
         ]
 
-    def get_all_doctors_for_admin(self):
-        """Получение всех врачей (включая неактивных) для админ панели"""
+    def get_doctors(self):
+        """
+        Получение списка врачей из БД
+        Возвращает только АКТИВНЫХ врачей (is_active = 1)
+        """
         connection = self.get_connection()
         if not connection:
-            logger.warning("Нет подключения к БД для получения списка врачей. Используем локальный кэш.")
-            return self.local_doctors
+            logger.warning("⚠️ Нет подключения к БД, используем резервный список врачей")
+            return self._get_fallback_doctors()
         
         try:
             cursor = connection.cursor(dictionary=True)
             
-            # Получаем всех врачей, сортируем по статусу (активные первыми), затем по имени
+            # ИСПРАВЛЕННЫЙ ЗАПРОС: выбираем только активных врачей
             query = f"""
                 SELECT id, 
                        CONCAT_WS(' ', last_name, first_name, middle_name) as name,
                        specialty, 
-                       description, 
-                       is_active,
-                       return_date
+                       description,
+                       return_date,
+                       is_active
                 FROM {self.table_prefix}doctors 
-                ORDER BY is_active DESC, last_name, first_name
+                WHERE is_active = 1
+                ORDER BY last_name, first_name
             """
             
             cursor.execute(query)
             doctors = cursor.fetchall()
             
-            logger.info(f"Получено {len(doctors)} врачей для админ панели")
+            if not doctors:
+                logger.warning("⚠️ Список врачей из БД пуст, используем резервный список")
+                return self._get_fallback_doctors()
+
+            logger.info(f"✅ Получено {len(doctors)} активных врачей из БД")
+            
+            # Проверка на наличие врачей в отпуске
+            for doc in doctors:
+                if doc.get('return_date'):
+                    logger.info(f"📅 Врач {doc['name']} вернется {doc['return_date']}")
+            
             return doctors
             
         except Error as e:
-            logger.error(f"Ошибка получения всех врачей: {e}")
-            return self.local_doctors
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-
-        if not doctors:
-             logger.info("Список врачей для админа пуст, используем локальный кэш")
-             return self.local_doctors
-             
-        return doctors
-
-    def upsert_doctor(self, wp_id, first_name, last_name, middle_name, specialty, description, is_active=1):
-        """Вставка или обновление врача из WordPress"""
-        connection = self.get_connection()
-        if not connection:
-            return False
-        
-        try:
-            cursor = connection.cursor()
-            
-            # Проверяем, существует ли врач с таким wp_id (предполагаем, что id из WP совпадает с id в БД, или добавляем поле wp_id)
-            # В текущей схеме мы используем id как Primary Key. Если id из WP это id, то:
-            
-            query = f"""
-                INSERT INTO {self.table_prefix}doctors 
-                (id, first_name, last_name, middle_name, specialty, description, is_active)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                ON DUPLICATE KEY UPDATE
-                first_name = VALUES(first_name),
-                last_name = VALUES(last_name),
-                middle_name = VALUES(middle_name),
-                specialty = VALUES(specialty),
-                description = VALUES(description),
-                is_active = VALUES(is_active)
-            """
-            
-            cursor.execute(query, (wp_id, first_name, last_name, middle_name, specialty, description, is_active))
-            connection.commit()
-            
-            return True
-            
-        except Error as e:
-            logger.error(f"Ошибка upsert врача: {e}")
-            return False
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-
-    def update_doctor_status(self, doctor_id, is_active, return_date=None):
-        """Переключение статуса активности врача"""
-        connection = self.get_connection()
-        if not connection:
-            # Обновляем в локальном кэше
-            for doc in self.local_doctors:
-                if doc['id'] == doctor_id:
-                    doc['is_active'] = is_active
-                    doc['return_date'] = return_date
-                    logger.info(f"Локальный статус врача ID={doctor_id} изменен: active={is_active}")
-                    return True
-            return False
-        
-        try:
-            cursor = connection.cursor()
-            
-            # Обновляем статус и дату возвращения
-            query = f"""
-                UPDATE {self.table_prefix}doctors 
-                SET is_active = %s, return_date = %s
-                WHERE id = %s
-            """
-            
-            cursor.execute(query, (is_active, return_date, doctor_id))
-            connection.commit()
-            
-            logger.info(f"Статус врача ID={doctor_id} изменен: active={is_active}, return={return_date}")
-            return True
-            
-        except Error as e:
-            logger.error(f"Ошибка изменения статуса врача: {e}")
-            return False
+            logger.error(f"❌ Ошибка получения врачей из БД: {e}")
+            return self._get_fallback_doctors()
         finally:
             if connection.is_connected():
                 cursor.close()
