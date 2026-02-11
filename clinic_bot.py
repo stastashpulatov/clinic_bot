@@ -67,12 +67,63 @@ class ClinicDatabase:
     def get_connection(self):
         """Подключение к БД"""
         try:
-            connection = mysql.connector.connect(**self.config)
+            # Копируем конфиг и добавляем таймаут
+            config = self.config.copy()
+            config['connect_timeout'] = 2
+            connection = mysql.connector.connect(**config)
             return connection
         except Error as e:
             logger.error(f"Ошибка подключения: {e}")
             return None
     
+    def create_tables(self):
+        """Создает необходимые таблицы в БД, если они не существуют."""
+        connection = self.get_connection()
+        if not connection:
+            logger.error("Не удалось подключиться к БД для создания таблиц.")
+            return
+
+        try:
+            cursor = connection.cursor()
+            
+            # Таблица для врачей
+            doctors_table_query = f"""
+            CREATE TABLE IF NOT EXISTS {self.table_prefix}doctors (
+                id INT PRIMARY KEY,
+                first_name VARCHAR(255) NOT NULL,
+                last_name VARCHAR(255) NOT NULL,
+                middle_name VARCHAR(255),
+                specialty VARCHAR(255),
+                description TEXT,
+                is_active BOOLEAN DEFAULT TRUE,
+                return_date DATE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """
+            cursor.execute(doctors_table_query)
+            
+            # Таблица для пользователей (если нужна)
+            users_table_query = f"""
+            CREATE TABLE IF NOT EXISTS {self.table_prefix}users (
+                id INT PRIMARY KEY,
+                username VARCHAR(255),
+                first_name VARCHAR(255),
+                last_name VARCHAR(255),
+                phone_number VARCHAR(20),
+                registration_date DATETIME DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """
+            cursor.execute(users_table_query)
+
+            connection.commit()
+            logger.info("Таблицы проверены/созданы успешно.")
+
+        except Error as e:
+            logger.error(f"Ошибка при создании таблиц: {e}")
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
     def get_doctors(self):
         """Получение списка врачей"""
         connection = self.get_connection()
@@ -114,23 +165,77 @@ class ClinicDatabase:
                 cursor.close()
                 connection.close()
 
+
+    def seed_doctors(self):
+        """Гарантированно заполняет таблицу врачей списком от пользователя"""
+        connection = self.get_connection()
+        if not connection:
+            return
+            
+        try:
+            cursor = connection.cursor()
+            
+            logger.info("Проверка и обновление списка врачей из конфигурации...")
+            fallback_doctors = self._get_fallback_doctors()
+            
+            query = f"""
+                INSERT INTO {self.table_prefix}doctors 
+                (id, first_name, last_name, middle_name, specialty, description, is_active)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE
+                first_name = VALUES(first_name),
+                last_name = VALUES(last_name),
+                middle_name = VALUES(middle_name),
+                specialty = VALUES(specialty),
+                description = VALUES(description),
+                is_active = 1,
+                return_date = NULL
+            """
+            
+            for doc in fallback_doctors:
+                # Разбиваем имя
+                parts = doc['name'].split()
+                last_name = parts[0] if len(parts) > 0 else "Unknown"
+                first_name = parts[1] if len(parts) > 1 else ""
+                middle_name = " ".join(parts[2:]) if len(parts) > 2 else ""
+                
+                cursor.execute(query, (
+                    doc['id'],
+                    first_name,
+                    last_name,
+                    middle_name,
+                    doc['specialty'],
+                    doc['description'],
+                    1 # Active by default for new inserts
+                ))
+            
+            connection.commit()
+            logger.info("Список врачей синхронизирован с конфигурацией")
+                
+        except Error as e:
+            logger.error(f"Ошибка при заполнении врачей: {e}")
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
     def _get_fallback_doctors(self):
         """Резервный список врачей"""
         return [
-            {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": ""},
-            {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории"},
-            {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": ""},
-            {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": ""},
-            {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": ""},
-            {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": ""}
+            {"id": 10, "name": "Имомов Сабир", "specialty": "Лаборант", "description": "", "is_active": 1, "return_date": None},
+            {"id": 6, "name": "Зеберг Дмитрий", "specialty": "Уролог", "description": "Врач высшей категории", "is_active": 1, "return_date": None},
+            {"id": 8, "name": "Стасюк Лариса", "specialty": "Невролог", "description": "", "is_active": 1, "return_date": None},
+            {"id": 7, "name": "Гафурова Нигора", "specialty": "УЗИ", "description": "", "is_active": 1, "return_date": None},
+            {"id": 9, "name": "Адилова Надира", "specialty": "Лаборант", "description": "", "is_active": 1, "return_date": None},
+            {"id": 2, "name": "Диярова Лола", "specialty": "Гинеколог", "description": "", "is_active": 1, "return_date": None}
         ]
 
     def get_all_doctors_for_admin(self):
         """Получение всех врачей (включая неактивных) для админ панели"""
         connection = self.get_connection()
         if not connection:
-            logger.warning("Нет подключения к БД для получения списка врачей")
-            return []
+            logger.warning("Нет подключения к БД для получения списка врачей. Используем локальный кэш.")
+            return self.local_doctors
         
         try:
             cursor = connection.cursor(dictionary=True)
@@ -155,7 +260,51 @@ class ClinicDatabase:
             
         except Error as e:
             logger.error(f"Ошибка получения всех врачей: {e}")
-            return []
+            return self.local_doctors
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+        if not doctors:
+             logger.info("Список врачей для админа пуст, используем локальный кэш")
+             return self.local_doctors
+             
+        return doctors
+
+    def upsert_doctor(self, wp_id, first_name, last_name, middle_name, specialty, description, is_active=1):
+        """Вставка или обновление врача из WordPress"""
+        connection = self.get_connection()
+        if not connection:
+            return False
+        
+        try:
+            cursor = connection.cursor()
+            
+            # Проверяем, существует ли врач с таким wp_id (предполагаем, что id из WP совпадает с id в БД, или добавляем поле wp_id)
+            # В текущей схеме мы используем id как Primary Key. Если id из WP это id, то:
+            
+            query = f"""
+                INSERT INTO {self.table_prefix}doctors 
+                (id, first_name, last_name, middle_name, specialty, description, is_active)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE
+                first_name = VALUES(first_name),
+                last_name = VALUES(last_name),
+                middle_name = VALUES(middle_name),
+                specialty = VALUES(specialty),
+                description = VALUES(description),
+                is_active = VALUES(is_active)
+            """
+            
+            cursor.execute(query, (wp_id, first_name, last_name, middle_name, specialty, description, is_active))
+            connection.commit()
+            
+            return True
+            
+        except Error as e:
+            logger.error(f"Ошибка upsert врача: {e}")
+            return False
         finally:
             if connection.is_connected():
                 cursor.close()
@@ -165,6 +314,13 @@ class ClinicDatabase:
         """Переключение статуса активности врача"""
         connection = self.get_connection()
         if not connection:
+            # Обновляем в локальном кэше
+            for doc in self.local_doctors:
+                if doc['id'] == doctor_id:
+                    doc['is_active'] = is_active
+                    doc['return_date'] = return_date
+                    logger.info(f"Локальный статус врача ID={doctor_id} изменен: active={is_active}")
+                    return True
             return False
         
         try:
@@ -195,6 +351,10 @@ class ClinicDatabase:
         """Получение информации о враче по ID"""
         connection = self.get_connection()
         if not connection:
+            # Ищем в локальном кэше
+            for doc in self.local_doctors:
+                if doc['id'] == doctor_id:
+                    return doc
             return None
         
         try:
@@ -908,7 +1068,9 @@ async def show_doctor_management(update: Update, context: ContextTypes.DEFAULT_T
         return
     
     # Получаем всех врачей (включая неактивных)
+    logger.info("DEBUG: Calling get_all_doctors_for_admin...")
     doctors = await run_sync(db.get_all_doctors_for_admin)
+    logger.info(f"DEBUG: Received {len(doctors) if doctors else 0} doctors. First doc active status: {doctors[0].get('is_active') if doctors else 'None'}")
     
     if not doctors:
         text = "👨‍⚕️ <b>Управление врачами</b>\n\n📭 Врачей в базе не найдено."
@@ -926,7 +1088,13 @@ async def show_doctor_management(update: Update, context: ContextTypes.DEFAULT_T
     keyboard = []
     
     for doc in doctors:
-        is_active = doc.get('is_active', 0)
+        is_active = doc.get('is_active', 0) 
+        # Convert to int explicitly to be safe
+        try:
+             is_active = int(is_active)
+        except:
+             is_active = 0
+             
         status_icon = "✅" if is_active else "⛔"
         status_text = "Активен" if is_active else "Неактивен"
         
@@ -997,6 +1165,8 @@ async def handle_doctor_status_change(update: Update, context: ContextTypes.DEFA
         await run_sync(db.update_doctor_status, doctor_id, 0, None)
         await query.answer("⛔ Врач деактивирован", show_alert=True)
         await show_doctor_management(update, context)
+
+
 
     elif data.startswith("doc_vacation_"):
         doctor_id = int(data.split('_')[2])
@@ -1402,9 +1572,19 @@ async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Если врач в отпуске
         vacation_text = ""
         if doctor.get('return_date'):
-             from datetime import date
-             if isinstance(doctor['return_date'], date) and doctor['return_date'] >= date.today():
-                 vacation_text = f" (🏖 до {doctor['return_date'].strftime('%d.%m')})"
+            return_date = doctor['return_date']
+            from datetime import datetime, date
+            
+            if isinstance(return_date, str):
+                try:
+                    return_date = datetime.strptime(return_date, '%Y-%m-%d').date()
+                except ValueError:
+                    return_date = None
+            elif isinstance(return_date, datetime):
+                return_date = return_date.date()
+                
+            if return_date and return_date >= date.today():
+                 vacation_text = f" (🏖 до {return_date.strftime('%d.%m')})"
         
         button_text = f"👨‍⚕️ {name} - {specialty}{vacation_text}"
         keyboard.append([InlineKeyboardButton(button_text, callback_data=f"doctor_{doctor['id']}")])
@@ -1422,187 +1602,87 @@ async def book_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def select_doctor(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработка выбора врача"""
     query = update.callback_query
-    await query.answer()
     
-    if query.data == "cancel":
-        await query.edit_message_text("Запись отменена.")
-        return ConversationHandler.END
-    
-    doctor_id = int(query.data.split('_')[1])
-    context.user_data['doctor_id'] = doctor_id
-    
-    # Сохраняем имя врача для дальнейшего использования
-    doctors = db.get_doctors()
-    doctor_name = "Неизвестный врач"
-    return_date = None
-    
-    for doc in doctors:
-        if doc['id'] == doctor_id:
-            doctor_name = doc['name']
-            if doc.get('return_date'):
-                return_date = doc['return_date']
-            break
-    context.user_data['doctor_name'] = doctor_name
-    
-    # Определяем начальную дату (сегодня или дата возвращения)
-    start_date = datetime.now()
-    message_text = "Выберите дату приёма:"
-    
-    if return_date:
-        # Проверяем тип данных (может быть str или date)
-        if isinstance(return_date, str):
-            from datetime import datetime
-            return_date = datetime.strptime(return_date, '%Y-%m-%d').date()
-            
-        current_date = datetime.now().date()
-        if return_date > current_date:
-            # Врач в отпуске
-            start_date = datetime.combine(return_date, datetime.min.time())
-            message_text = (
-                f"🏖 Врач <b>{doctor_name}</b> в отпуске до {return_date.strftime('%d.%m.%Y')}.\n"
-                "Выберите дату после возвращения:"
-            )
-            await query.answer(f"🏖 Врач в отпуске до {return_date}", show_alert=True)
-
-    # Генерируем даты на ближайшие 7 дней от start_date
-    keyboard = []
-    
-    for i in range(7):
-        date = start_date + timedelta(days=i)
+    try:
+        await query.answer()
         
-        # Для сегодняшнего дня проверяем дедлайн (только если start_date == today)
-        if i == 0 and date.date() == datetime.now().date():
-            deadline_hour = context.bot_data.get('metrics', {}).get('booking_deadline', 11) # fallback
-            from config import BOT_SETTINGS
-            deadline_hour = BOT_SETTINGS.get('same_day_booking_deadline', 11)
-            
-            if date.hour >= deadline_hour:
-                continue
-        date_str = date.strftime('%Y-%m-%d')
-        display_date = date.strftime('%d.%m.%Y (%A)')
+        if query.data == "cancel":
+            await query.edit_message_text("Запись отменена.")
+            return ConversationHandler.END
         
-        # Переводим день недели на русский
-        days_ru = {
-            'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
-            'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
-        }
+        logger.info(f"select_doctor: Processing callback data: {query.data}")
         
-        # Пропускаем воскресенья (Sunday = 6)
-        if date.weekday() == 6:
-            continue
-            
-        for eng, ru in days_ru.items():
-            display_date = display_date.replace(eng, ru)
+        doctor_id = int(query.data.split('_')[1])
+        context.user_data['doctor_id'] = doctor_id
         
-        keyboard.append([InlineKeyboardButton(display_date, callback_data=f"date_{date_str}")])
-    
-    keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_doctors")])
-    keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    
-    await query.edit_message_text(
-        "Выберите дату приёма:",
-        reply_markup=reply_markup
-    )
-    
-    return SELECT_DATE
-
-async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Обработка выбора даты"""
-    query = update.callback_query
-    await query.answer()
-    
-    if query.data == "cancel":
-        await query.edit_message_text("Запись отменена.")
-        return ConversationHandler.END
-    
-    if query.data == "back_to_doctors":
-        # Возврат к выбору врачей
+        # Сохраняем имя врача для дальнейшего использования
         doctors = db.get_doctors()
-        keyboard = []
-        for doctor in doctors:
-            button_text = f"👨‍⚕️ {doctor['name']} - {doctor.get('specialty', 'Специалист')}"
-            keyboard.append([InlineKeyboardButton(button_text, callback_data=f"doctor_{doctor['id']}")])
+        doctor_name = "Неизвестный врач"
+        return_date = None
         
-        keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
-        reply_markup = InlineKeyboardMarkup(keyboard)
+        for doc in doctors:
+            if doc['id'] == doctor_id:
+                doctor_name = doc['name']
+                if doc.get('return_date'):
+                    return_date = doc['return_date']
+                break
+        context.user_data['doctor_name'] = doctor_name
         
-        await query.edit_message_text("Выберите врача:", reply_markup=reply_markup)
-        return SELECT_DOCTOR
-    
-    date = query.data.split('_')[1]
-    context.user_data['date'] = date
-    doctor_id = context.user_data.get('doctor_id')
-    
-    # Получаем занятые слоты из WordPress API
-    occupied_slots = []
-    if wp_api:
-        try:
-            occupied_slots = wp_api.get_occupied_slots(doctor_id=doctor_id, date=date)
-            logger.info(f"Получены занятые слоты из WordPress: {occupied_slots}")
-        except Exception as e:
-            logger.error(f"Ошибка получения слотов из WordPress: {e}")
-    
-    # Получаем расписание для конкретного врача (или используем стандартное)
-    doctor_schedule = DOCTOR_SCHEDULES.get(doctor_id, WORKING_HOURS)
-    
-    # Получаем ВСЕ слоты на день с учетом индивидуального расписания врача
-    all_slots = generate_day_slots(
-        start_time=doctor_schedule.get('start', '09:00'),
-        end_time=doctor_schedule.get('end', '18:00'),
-        lunch_start=doctor_schedule.get('lunch_start', '13:00'),
-        lunch_end=doctor_schedule.get('lunch_end', '14:00'),
-        slot_duration=APPOINTMENT_DURATION,
-        date_str=date
-    )
-    
-    # (Старая ручная фильтрация удалена, теперь это делает generate_day_slots)
-    
-    # Создаём кнопки (по 3 в ряд)
-    keyboard = []
-    row = []
-    
-
-    # Если слотов нет (или все отфильтрованы)
-    if not all_slots:
-        message_text = f"❌ К сожалению, на {date} нет свободного времени."
+        # Определяем начальную дату (сегодня или дата возвращения)
+        start_date = datetime.now()
+        message_text = "Выберите дату приёма:"
         
-        # Если сегодня и время прошло
-        try:
-            today_str = datetime.now().strftime('%Y-%m-%d')
-            if date == today_str:
-                now_check = datetime.now()
-                end_time_str = WORKING_HOURS.get('end', '18:00')
-                end_check = datetime.strptime(f"{today_str} {end_time_str}", "%Y-%m-%d %H:%M")
+        if return_date:
+            # Проверяем тип данных (может быть str или date)
+            if isinstance(return_date, str):
+                try:
+                    return_date_obj = datetime.strptime(return_date, '%Y-%m-%d').date()
+                except ValueError:
+                    logger.error(f"Invalid date format for return_date: {return_date}")
+                    return_date_obj = None
+            elif isinstance(return_date, datetime):
+                return_date_obj = return_date.date()
+            else:
+                return_date_obj = return_date
                 
-                if now_check > end_check:
+            if return_date_obj:
+                current_date = datetime.now().date()
+                if return_date_obj > current_date:
+                    # Врач в отпуске
+                    start_date = datetime.combine(return_date_obj, datetime.min.time())
                     message_text = (
-                        f"❌ <b>Запись на сегодня закрыта.</b>\n\n"
-                        f"Мы принимаем записи до {end_time_str}.\n"
-                        f"Пожалуйста, выберите другой день."
+                        f"🏖 Врач <b>{doctor_name}</b> в отпуске до {return_date_obj.strftime('%d.%m.%Y')}.\n"
+                        "Выберите дату после возвращения:"
                     )
-        except Exception as e:
-            logger.error(f"Ошибка проверки времени: {e}")
+                    await query.answer(f"🏖 Врач в отпуске до {return_date_obj}", show_alert=True)
 
-        await query.edit_message_text(message_text, parse_mode='HTML')
-        
-        # Логика возврата к выбору даты
+        # Генерируем даты на ближайшие 7 дней от start_date
         keyboard = []
-        today = datetime.now()
         
         for i in range(7):
-            date_opt = today + timedelta(days=i)
-            # Пропускаем воскресенье
-            if date_opt.weekday() == 6:
-                continue
-                
-            date_str = date_opt.strftime('%Y-%m-%d')
-            display_date = date_opt.strftime('%d.%m.%Y (%A)')
+            date = start_date + timedelta(days=i)
             
+            # Для сегодняшнего дня проверяем дедлайн (только если start_date == today)
+            if i == 0 and date.date() == datetime.now().date():
+                deadline_hour = context.bot_data.get('metrics', {}).get('booking_deadline', 11) # fallback
+                from config import BOT_SETTINGS
+                deadline_hour = BOT_SETTINGS.get('same_day_booking_deadline', 11)
+                
+                if date.hour >= deadline_hour:
+                    continue
+            date_str = date.strftime('%Y-%m-%d')
+            display_date = date.strftime('%d.%m.%Y (%A)')
+            
+            # Переводим день недели на русский
             days_ru = {
                 'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
                 'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
             }
+            
+            # Пропускаем воскресенья (Sunday = 6)
+            if date.weekday() == 6:
+                continue
+                
             for eng, ru in days_ru.items():
                 display_date = display_date.replace(eng, ru)
             
@@ -1612,42 +1692,181 @@ async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        await query.message.reply_text("Выберите другую дату:", reply_markup=reply_markup)
+        await query.edit_message_text(
+            message_text,
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
+        
         return SELECT_DATE
 
+    except Exception as e:
+        logger.error(f"Ошибка в select_doctor: {e}", exc_info=True)
+        await query.message.reply_text("❌ Произошла ошибка при выборе врача. Попробуйте еще раз.")
+        return ConversationHandler.END
+
+async def select_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработка выбора даты"""
+    query = update.callback_query
+    
+    try:
+        await query.answer()
         
-    for i, slot in enumerate(all_slots):
-        if slot in occupied_slots:
-            # Занятый слот
-            row.append(InlineKeyboardButton(f"❌ {slot}", callback_data=f"busy_{slot}"))
-        else:
-            # Свободный слот
-            row.append(InlineKeyboardButton(f"✅ {slot}", callback_data=f"time_{slot}"))
+        if query.data == "cancel":
+            await query.edit_message_text("Запись отменена.")
+            return ConversationHandler.END
+        
+        if query.data == "back_to_doctors":
+            # Возврат к выбору врачей
+            doctors = db.get_doctors()
+            keyboard = []
+            for doctor in doctors:
+                # Обрезаем длинные имена
+                name = doctor['name']
+                if len(name) > 25:
+                    name = name[:22] + "..."
+                
+                specialty = doctor.get('specialty', 'Специалист')
+                if len(specialty) > 20:
+                    specialty = specialty[:17] + "..."
+                
+                # Если врач в отпуске
+                vacation_text = ""
+                if doctor.get('return_date'):
+                     from datetime import date
+                     if isinstance(doctor['return_date'], date) and doctor['return_date'] >= date.today():
+                         vacation_text = f" (🏖 до {doctor['return_date'].strftime('%d.%m')})"
+
+                button_text = f"👨‍⚕️ {name} - {specialty}{vacation_text}"
+                keyboard.append([InlineKeyboardButton(button_text, callback_data=f"doctor_{doctor['id']}")])
             
-        if (i + 1) % 3 == 0:
+            keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.edit_message_text("Выберите врача:", reply_markup=reply_markup)
+            return SELECT_DOCTOR
+        
+        date = query.data.split('_')[1]
+        context.user_data['date'] = date
+        doctor_id = context.user_data.get('doctor_id')
+        
+        # Получаем занятые слоты из WordPress API
+        occupied_slots = []
+        if wp_api:
+            try:
+                occupied_slots = wp_api.get_occupied_slots(doctor_id=doctor_id, date=date)
+                logger.info(f"Получены занятые слоты из WordPress: {occupied_slots}")
+            except Exception as e:
+                logger.error(f"Ошибка получения слотов из WordPress: {e}")
+        
+        # Получаем расписание для конкретного врача (или используем стандартное)
+        doctor_schedule = DOCTOR_SCHEDULES.get(doctor_id, WORKING_HOURS)
+        
+        # Получаем ВСЕ слоты на день с учетом индивидуального расписания врача
+        all_slots = generate_day_slots(
+            start_time=doctor_schedule.get('start', '09:00'),
+            end_time=doctor_schedule.get('end', '18:00'),
+            lunch_start=doctor_schedule.get('lunch_start', '13:00'),
+            lunch_end=doctor_schedule.get('lunch_end', '14:00'),
+            slot_duration=APPOINTMENT_DURATION,
+            date_str=date
+        )
+        
+        # Создаём кнопки (по 3 в ряд)
+        keyboard = []
+        row = []
+        
+
+        # Если слотов нет (или все отфильтрованы)
+        if not all_slots:
+            message_text = f"❌ К сожалению, на {date} нет свободного времени."
+            
+            # Если сегодня и время прошло
+            try:
+                today_str = datetime.now().strftime('%Y-%m-%d')
+                if date == today_str:
+                    now_check = datetime.now()
+                    end_time_str = WORKING_HOURS.get('end', '18:00')
+                    end_check = datetime.strptime(f"{today_str} {end_time_str}", "%Y-%m-%d %H:%M")
+                    
+                    if now_check > end_check:
+                        message_text = (
+                            f"❌ <b>Запись на сегодня закрыта.</b>\n\n"
+                            f"Мы принимаем записи до {end_time_str}.\n"
+                            f"Пожалуйста, выберите другой день."
+                        )
+            except Exception as e:
+                logger.error(f"Ошибка проверки времени: {e}")
+
+            await query.edit_message_text(message_text, parse_mode='HTML')
+            
+            # Логика возврата к выбору даты
+            keyboard = []
+            today = datetime.now()
+            
+            for i in range(7):
+                date_opt = today + timedelta(days=i)
+                # Пропускаем воскресенье
+                if date_opt.weekday() == 6:
+                    continue
+                    
+                date_str = date_opt.strftime('%Y-%m-%d')
+                display_date = date_opt.strftime('%d.%m.%Y (%A)')
+                
+                days_ru = {
+                    'Monday': 'Пн', 'Tuesday': 'Вт', 'Wednesday': 'Ср',
+                    'Thursday': 'Чт', 'Friday': 'Пт', 'Saturday': 'Сб', 'Sunday': 'Вс'
+                }
+                for eng, ru in days_ru.items():
+                    display_date = display_date.replace(eng, ru)
+                
+                keyboard.append([InlineKeyboardButton(display_date, callback_data=f"date_{date_str}")])
+            
+            keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_doctors")])
+            keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.message.reply_text("Выберите другую дату:", reply_markup=reply_markup)
+            return SELECT_DATE
+
+            
+        for i, slot in enumerate(all_slots):
+            if slot in occupied_slots:
+                # Занятый слот
+                row.append(InlineKeyboardButton(f"❌ {slot}", callback_data=f"busy_{slot}"))
+            else:
+                # Свободный слот
+                row.append(InlineKeyboardButton(f"✅ {slot}", callback_data=f"time_{slot}"))
+                
+            if (i + 1) % 3 == 0:
+                keyboard.append(row)
+                row = []
+        
+        if row:
             keyboard.append(row)
-            row = []
-    
-    if row:
-        keyboard.append(row)
-    
-    keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_dates")])
-    keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    
-    # Формируем сообщение
-    available_count = len([s for s in all_slots if s not in occupied_slots])
-    
-    message = f"📅 Выберите время приёма на {date}:\n\n"
-    message += f"✅ Свободно: {available_count}\n"
-    message += f"❌ Занято: {len(occupied_slots)}\n"
-    
-    await query.edit_message_text(
-        message,
-        reply_markup=reply_markup
-    )
-    
-    return SELECT_TIME
+        
+        keyboard.append([InlineKeyboardButton("⬅️ Назад", callback_data="back_to_dates")])
+        keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="cancel")])
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        # Формируем сообщение
+        available_count = len([s for s in all_slots if s not in occupied_slots])
+        
+        message = f"📅 Выберите время приёма на {date}:\n\n"
+        message += f"✅ Свободно: {available_count}\n"
+        message += f"❌ Занято: {len(occupied_slots)}\n"
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=reply_markup
+        )
+        
+        return SELECT_TIME
+
+    except Exception as e:
+        logger.error(f"Ошибка в select_date: {e}", exc_info=True)
+        await query.message.reply_text("❌ Произошла ошибка при выборе даты. Попробуйте еще раз.")
+        return ConversationHandler.END
 
 async def select_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Выбор времени"""
@@ -1977,6 +2196,71 @@ async def post_init(application: Application):
     except Exception as e:
         logger.warning(f"⚠️ Не удалось установить команды: {e}")
 
+
+async def handle_sync_doctors(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Синхронизация врачей с WordPress"""
+    query = update.callback_query
+    
+    if update.effective_user.id not in ADMIN_IDS:
+        await query.answer("⛔ Нет доступа", show_alert=True)
+        return
+
+    if not wp_api:
+        await query.answer("❌ API не подключен", show_alert=True)
+        return
+        
+    await query.answer("⏳ Синхронизация...", show_alert=False)
+    
+    try:
+        # 1. Получаем врачей из WP
+        wp_doctors = await run_sync(wp_api.get_doctors)
+        
+        if not wp_doctors:
+            await query.edit_message_text(
+                "❌ Не удалось получить список врачей с сайта.\nПопробуйте позже.",
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Назад", callback_data="admin_doctors")]]),
+                parse_mode='HTML'
+            )
+            return
+
+        updated_count = 0
+        
+        for doc in wp_doctors:
+            # doc: {id, name, specialty, description}
+            wp_id = doc.get('id')
+            full_name = doc.get('name', '')
+            specialty = doc.get('specialty', '')
+            description = doc.get('description', '')
+            
+            # Парсим имя (Фамилия Имя Отчество)
+            parts = full_name.split()
+            last_name = parts[0] if len(parts) > 0 else "Unknown"
+            first_name = parts[1] if len(parts) > 1 else ""
+            middle_name = " ".join(parts[2:]) if len(parts) > 2 else ""
+            
+            # Обновляем/Добавляем в БД
+            success = await run_sync(
+                db.upsert_doctor,
+                wp_id=wp_id,
+                first_name=first_name,
+                last_name=last_name,
+                middle_name=middle_name,
+                specialty=specialty,
+                description=description,
+                is_active=1 # По умолчанию активен, если пришел с сайта
+            )
+            
+            if success:
+                updated_count += 1
+                
+        # Обновляем список и сообщаем результат
+        await query.answer(f"✅ Готово! Обработано врачей: {updated_count}", show_alert=True)
+        await show_doctor_management(update, context)
+        
+    except Exception as e:
+        logger.error(f"Ошибка синхронизации врачей: {e}")
+        await query.answer("❌ Произошла ошибка при синхронизации", show_alert=True)
+
 def main():
     """Запуск бота"""
     global db, wp_api # Make sure we affect the global variables used by handlers
@@ -2044,6 +2328,7 @@ def main():
     application.add_handler(CallbackQueryHandler(show_admin_statistics, pattern="^admin_stats$")) # Admin statistics
     application.add_handler(CallbackQueryHandler(show_pinned_numbers_callback, pattern="^admin_pinned$")) # Admin pinned numbers
     application.add_handler(CallbackQueryHandler(show_doctor_management, pattern="^admin_doctors$")) # Admin doctor management
+    # application.add_handler(CallbackQueryHandler(handle_sync_doctors, pattern="^admin_sync_doctors$")) # Sync doctors - DISABLED
     application.add_handler(CallbackQueryHandler(handle_doctor_status_change, pattern="^(toggle_doctor_|doc_perm_|doc_vacation_|vac_set_)")) # Doctor status changes
     application.add_handler(CallbackQueryHandler(show_list_callback, pattern="^admin_list$")) # Admin list from DB
     application.add_handler(CallbackQueryHandler(back_to_admin_panel_callback, pattern="^back_to_admin_panel$")) # Back to admin panel
